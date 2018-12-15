@@ -37,4 +37,11 @@ public class ProductController {
 	public String productList() {
 		return "product-list";
 	}
+	/**
+	 * 产品添加
+	 */
+	@RequestMapping("product-add.do")
+	public String productAdd() {
+		return "product-add";
+	}
 }
