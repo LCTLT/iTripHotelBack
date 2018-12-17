@@ -37,15 +37,27 @@
 		<input type="hidden" id="id" value="${user.id}">
 		<div class="row cl">
 		<div style="color:red;margin-left:26%;" id="massage"></div>
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机号：</label>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" value="${user.phone}" placeholder="" id="phone" name="roleName">
 			</div>
 		</div>
 		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">姓名：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="${user.name}" placeholder="" id="name" name="">
+			</div>
+		</div>
+		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3">密码：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="${user.pwd}" placeholder="" id="pwd" name="">
+				<input type="password" class="input-text" value="${user.pwd}" placeholder="" id="pwd" name="">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">确认密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="password" class="input-text" value="${user.pwd}" placeholder="" id="pwds" name="">
 			</div>
 		</div>
 		<div class="row cl">
@@ -54,24 +66,29 @@
 				<dl class="permission-list">
 					<dt>
 						<label>
-							用户中心</label>
+							<input type="radio" value="0" name="status" checked="checked" id="status">
+							超级管理员
+							<c:if test="${type eq 2}">
+								<input type="radio" value="1" name="status" id="status">
+								会员用户
+							</c:if>
+						</label>
 					</dt>
-					<dd>
-						<dl class="cl permission-list2">
-							<dt>
-								<label class="">
-									用户管理</label>
-							</dt>
-							<dd>
-								<label class="">
-									<input type="radio" value="0" name="status" <c:if test="${user.status eq 0}">checked="checked"</c:if> id="status">
-									超级管理员</label>
-								<label class="">
-									<input type="radio" value="1" name="status" <c:if test="${user.status eq 1}">checked="checked"</c:if> id="status">
-									会员用户</label>
-							</dd>
-						</dl>
-					</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">性别：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<dl class="permission-list">
+					<dt>
+						<label>
+							<input type="radio" value="1" name="sex" checked="checked" id="sex">
+							男
+							<input type="radio" value="0" name="sex" id="sex">
+							女
+						</label>
+					</dt>
 				</dl>
 			</div>
 		</div>
@@ -104,17 +121,29 @@ $(function(){
 	$("#admin-role-save").click(function(){
 		var phone = $.trim($("#phone").val());
 		var pwd = $.trim($("#pwd").val());
+		var pwds = $.trim($("#pwds").val());
+		var name = $.trim($("#name").val());
+		
 		var status = $("input[name=status]:checked").val();
+		var sex = $("input[name=sex]:checked").val();
 		//提示
 		var massage = $("#massage");
-		if(!(/(^[1][3456789][0-9]{9}$)/.test(phone))){
-			$("#massage").text("手机格式不正确");
+		if(phone == "" || phone.length < 3){
+			$("#massage").text("账号格式不正确");
 		}else if(pwd =="" || pwd.length < 6){
 			$("#massage").text("密码格式不正确");
-		}else if(status == undefined){
-			$("#massage").text("请选择用户类型");
+		}else if(name == ""){
+			$("#massage").text("请输入用户姓名");
+		}else if(pwds == "" || pwds.length < 6 || pwd != pwds){
+			$("#massage").text("密码不一致");
 		}else{
-			$.post("insertUser.do",{phone:phone,pwd:pwd,status:status},function(data){
+			$.post("insertUser.do",{
+				phone:phone,
+				pwd:pwd,
+				status:status,
+				name:name,
+				sex:sex
+				},function(data){
 				if(data == "1"){
 					layer.msg('添加成功!', {
 						icon : 1,
@@ -134,22 +163,34 @@ $(function(){
 	});
 	
 	$("#admin-role-save2").click(function(){
-		var phone = $("#phone").val();
-		var pwd = $("#pwd").val();
-		var status = $("input[name=status]:checked").val();
-		var massage = $("#massage");
+		var phone = $.trim($("#phone").val());
+		var pwd = $.trim($("#pwd").val());
+		var pwds = $.trim($("#pwds").val());
+		var name = $.trim($("#name").val());
 		var id = $("#id").val();
-		
-		if(!(/(^[1][3456789][0-9]{9}$)/.test(phone))){
-			$("#massage").text("手机格式不正确");
+		var status = $("input[name=status]:checked").val();
+		var sex = $("input[name=sex]:checked").val();
+		//提示
+		var massage = $("#massage");
+		if(phone == "" || phone.length < 3){
+			$("#massage").text("账号格式不正确");
 		}else if(pwd =="" || pwd.length < 6){
 			$("#massage").text("密码格式不正确");
-		}else if(status == undefined){
-			$("#massage").text("请选择用户类型");
+		}else if(name == ""){
+			$("#massage").text("请输入用户姓名");
+		}else if(pwds == "" || pwds.length < 6 || pwd != pwds){
+			$("#massage").text("密码不一致");
 		}else{
 			$.ajax({
 				url:"updateUser.do",
-				data:{id:id,phone:phone,pwd:pwd,status:status},
+				data:{
+					id:id,
+					phone:phone,
+					pwd:pwd,
+					name:name,
+					status:status,
+					sex:sex
+				},
 				type:"post",
 				success:function(data){
 					if(data == "1"){

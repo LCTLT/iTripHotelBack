@@ -56,11 +56,8 @@
 					<th width="20">ID</th>
 					<th width="70">角色名</th>
 					<th>用户列表</th>
-					<th>手机号</th>
+					<th>账号</th>
 					<th>性别</th>
-					<th>出生日期</th>
-					<th>邮箱地址</th>
-					<th width="200">住址</th>
 					<th width="">操作</th>
 				</tr>
 			</thead>
@@ -69,21 +66,24 @@
 					<tr class="text-c" name="checkTr">
 						<td><input type="checkbox" value="${user.id}" name="userName"></td>
 						<td>${user.id}</td>
-						<td><c:if test="${user.status == 0}">超级管理员</c:if> <c:if
-								test="${user.status == 1}">会员用户</c:if></td>
+						<td>超级管理员</td>
 						<td><a href="#">${user.name}</a></td>
 						<td>${user.phone}</td>
 						<td><c:if test="${user.sex == 0}">女</c:if> <c:if
 								test="${user.sex == 1}">男</c:if></td>
-						<td>${user.birthday}</td>
-						<td>${user.email}</td>
-						<td>${user.address}</td>
 						<td class="f-14"><a title="编辑"
 							href="admin-role-add.do?type=2&id=${user.id}"
 							style="text-decoration: none"><i class="Hui-iconfont">&#xe6df;</i></a>
-							<a title="删除" href="javascript:;"
-							onclick="admin_role_del(this,${user.id})" class="ml-5"
-							style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+							<c:if test="${userSession.id != user.id}">
+								<a title="删除" href="javascript:;"
+								onclick="admin_role_del(this,${user.id})" class="ml-5"
+								style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+							</c:if>
+							<c:if test="${userSession.id eq user.id}">
+								<a title="不可删除" href="javascript:;" class="ml-5"
+								style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+							</c:if>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

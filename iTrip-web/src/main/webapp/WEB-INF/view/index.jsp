@@ -110,7 +110,6 @@
 			<dd>
 				<ul>
 					<li><a data-href="admin-role.do" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-					<li><a data-href="admin-permission.do" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
 			   </ul>
 		</dd>
 	</dl>

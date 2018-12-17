@@ -17,8 +17,8 @@
 	<!-- 用户查询 -->
 	<select id="queryUserList" resultType="org.itrip.pojo.User">
 		select
-		<include refid="Base_Column_List" />
-		from user order by status asc limit #{pageNo},#{pageSize}
+		id,name,phone,sex,status 
+		from user where status = 0 order by id desc limit #{pageNo},#{pageSize}
 	</select>
 
 	<!-- 后台登录 -->
@@ -41,22 +41,22 @@
 			#{id}
 		</foreach>
 	</delete>
-
+	<!-- 数据总和 -->
 	<select id="countUser" resultType="int">
-		select COUNT(id) from user
+		select COUNT(id) from user where status = 0
 	</select>
 
 	<insert id="insertUser" parameterType="org.itrip.pojo.User">
-		INSERT INTO user(`id`,`phone`, `pwd`,`status`) VALUES
-		(null,#{phone},#{pwd},#{status});
+		INSERT INTO user(`id`,`name`,`phone`, `pwd`,`sex`,`status`) VALUES
+		(null,#{name},#{phone},#{pwd},#{sex},#{status});
 	</insert>
 
 	<update id="updateUser" parameterType="org.itrip.pojo.User">
-		UPDATE user SET phone=#{phone},pwd=#{pwd},status=#{status} WHERE id=#{id};
+		UPDATE user SET name=#{name},phone=#{phone},pwd=#{pwd},sex=#{sex},status=#{status} WHERE id=#{id};
 	</update>
 
 	<select id="queryUpdate" resultType="org.itrip.pojo.User">
-		select id,phone,pwd,status from user
+		select id,name,phone,pwd,sex,status from user
 		where id=#{id}
 	</select>
 </mapper>
