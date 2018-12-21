@@ -220,8 +220,47 @@ public class IndexController {
 	 * 删除的用户
 	 */
 	@RequestMapping("member-del.do")
-	public String memberDel() {
+	public String queryDelList(@RequestParam(value="datemin",required=false)String datemin,
+	@RequestParam(value="datemax",required=false)String datemax,@RequestParam(value="elist",required=false)String elist,HttpServletRequest request) {
+   
+	List<User> userList = userService.queryDelList(datemin,datemax,elist);
+	int count =userService.countDelUser();
+	request.setAttribute("count",count);
+	request.setAttribute("userList", userList);
+	request.setAttribute("ist",elist);
+	request.setAttribute("datemin",datemin);
+	request.setAttribute("datemax",datemax);
 		return "member-del";
+	}
+	/**
+	 * 还原删除用户
+	 */
+	@RequestMapping("updateDalUpdate.do")
+	@ResponseBody
+	public String updateDalUpdate(@RequestParam("id") int id) {
+		int result= userService.updateDalUpdate(id);
+		if(result>0) {
+			return "1";
+		}else {
+			return "0";
+		}
+		
+	}
+	/**
+	 * 彻底删除用户
+	 */
+	@RequestMapping("deleteDel.do")
+	@ResponseBody
+	public int deleteDel(@RequestParam("id")Integer id) throws UnsupportedEncodingException{
+		int i =userService.deleteDel(id);
+		return i;
+	}
+	
+	@RequestMapping("deleteDelList.do")
+	@ResponseBody
+	public int deleteDelList(HttpServletResponse response, HttpServletRequest request,int[] arr) throws IOException, ServletException {
+		int result = userService.deleteDelList(arr);
+		return result;
 	}
 	/**
 	 * 修改用户密码

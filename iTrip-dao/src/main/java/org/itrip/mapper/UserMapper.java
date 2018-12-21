@@ -41,4 +41,22 @@ public interface UserMapper {
 	 * 显示修改数据
 	 */
 	User queryUpdate(int id);
+	/**
+	 * 条件查询删除用户
+	 */
+	List<User> queryDelList(@Param("datemin")String datemin,@Param("datemax")String datemax,@Param("elist")String elist);
+	int countDelUser();
+	/**
+	 * 还原删除用户
+	 */
+	int updateDalUpdate(int id);
+	/**
+	 * 彻底删除用户
+	 */
+	int deleteDel(int id);
+
+	/**
+	 * 彻底多个用户
+	 */
+	Integer deleteDelList(int[] idarr);
 }

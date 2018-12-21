@@ -88,4 +88,25 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 	}
+	@Override
+	public List<User> queryDelList(String datemin, String datemax, String elist) {
+		// TODO Auto-generated method stub
+		return userMapper.queryDelList(datemin, datemax, elist);
+	}
+	@Override
+	public int updateDalUpdate(int id) {
+		return userMapper.updateDalUpdate(id);
+	}
+	@Override
+	public int countDelUser() {
+		return userMapper.countDelUser();
+	}
+	@Override
+	public int deleteDel(int id) {
+		return userMapper.deleteDel(id);
+	}
+	@Override
+	public Integer deleteDelList(int[] idarr) {
+		return userMapper.deleteDelList(idarr);
+	}
 }

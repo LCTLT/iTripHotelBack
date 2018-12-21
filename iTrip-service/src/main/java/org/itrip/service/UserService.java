@@ -21,4 +21,12 @@ public interface UserService {
 	int insertUser(User user);
 	int updateUser(User user);
 	User queryUpdate(int id);
+	/**
+	 * 删除页面
+	 */
+	List<User> queryDelList(String datemin,String datemax,String elist);
+	int updateDalUpdate(int id);
+	int countDelUser();
+	int deleteDel(int id);
+	Integer deleteDelList(int[] idarr);
 }

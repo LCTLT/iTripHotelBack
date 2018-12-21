@@ -63,4 +63,39 @@
 		select id,name,phone,pwd,sex,status from user
 		where id=#{id}
 	</select>
+	<!-- 条件查询删除用户 -->
+	<select id="queryDelList" resultType="org.itrip.pojo.User">
+		 select `id`, `name`,`phone`,`pwd`, `idcard`, `sex`, `birthday`, `email`, `address`, `status`, `delete`, `strat` from user
+         where `delete` =1		
+		 <if test="datemin !='' and datemin !=null">
+			and birthday>=#{datemin}
+		</if>
+		<if test="datemax !='' and datemax !=null" >
+		 	and birthday &lt;= #{datemax}
+		</if>
+		<if test="elist !='' and elist !=null" >
+		 	and name LIKE CONCAT ('%',#{elist},'%')
+		</if>	
+	</select>
+	<select id="countDelUser" resultType="int">
+		select COUNT(id) from user where `delete` =1
+	</select>
+	<!--还原删除用户-->
+	<update id="updateDalUpdate" parameterType="org.itrip.pojo.User">
+	UPDATE user SET `delete`=0 WHERE id=#{id};
+	</update>
+	
+	<!-- 彻底删除单个用户 -->
+	<delete id="deleteDel">
+		delete from user where id=#{id}
+	</delete>
+
+	<!-- 彻底删除多个用户 -->
+	<delete id="deleteDelList" parameterType="int">
+		delete from user where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 </mapper>

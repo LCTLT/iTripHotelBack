@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -26,14 +27,16 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 删除的用户<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
+<form action="member-del.do" method="post" id="from1">
 	<div class="text-c"> 日期范围：
-		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
+		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" name="datemin" class="input-text Wdate" style="width:120px;" value="${datemin}">
 		-
-		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="" name="">
-		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" name="datemax"  class="input-text Wdate" style="width:120px;" value="${datemax}">
+		<input type="text" class="input-text" style="width:250px" placeholder="输入会员名称" id="elist" name="elist" value="${ist}">
+		<input type="submit" class="btn btn-success radius" id="radius" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</input>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> </span> <span class="r">共有数据：<strong>88</strong> 条</span> </div>
+	</form>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> </span> <span class="r">共有数据：<strong>${count}</strong> 条</span> </div>
 	<div class="mt-20">
 	<table class="table table-border table-bordered table-hover table-bg table-sort">
 		<thead>
@@ -51,18 +54,21 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:forEach var="user" items="${requestScope.userList}">
 			<tr class="text-c">
-				<td><input type="checkbox" value="1" name=""></td>
-				<td>1</td>
-				<td><u style="cursor:pointer" class="text-primary" onclick="member_show('张三','member-show.html','10001','360','400')">张三</u></td>
-				<td>男</td>
-				<td>13000000000</td>
-				<td>admin@mail.com</td>
-				<td class="text-l">北京市 海淀区</td>
-				<td>2014-6-11 11:11:42</td>
-				<td class="td-status"><span class="label label-danger radius">已删除</span></td>
-				<td class="td-manage"><a style="text-decoration:none" href="javascript:;" onClick="member_huanyuan(this,'1')" title="还原"><i class="Hui-iconfont">&#xe66b;</i></a> <a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				<td><input type="checkbox" value="${user.id}" name="userName"></td>
+				<td><span name="id">${user.id}</span> </td>
+				<td><u style="cursor:pointer" class="text-primary" onclick="member_show('张三','member-show.html','10001','360','400')">${user.name}</u></td>
+				<td><c:if test="${user.sex == 0}">女</c:if> 
+				<c:if test="${user.sex == 1}">男</c:if></td>
+				<td>${user.phone}</td>
+				<td>${user.email}</td>
+				<td class="text-l">${user.address}</td>
+				<td>${user.birthday}</td>
+				<td class="td-status"><span class="label label-danger radius" id="delete" name="delete">已删除</span></td>
+				<td class="td-manage"><a style="text-decoration:none" href="javascript:;" onClick="member_huanyuan(this,'${user.id}')" title="还原"><i class="Hui-iconfont">&#xe66b;</i></a> <a title="删除" href="javascript:;" onclick="member_del(this,'${user.id}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 	</div>
@@ -92,28 +98,84 @@ $(function(){
 /*用户-还原*/
 function member_huanyuan(obj,id){
 	layer.confirm('确认要还原吗？',function(index){
+		$.post('updateDalUpdate.do',{id:id},function(date){
+			if(date=="1"){
+				$(obj).remove();
+				layer.msg('已还原!',{icon: 6,time:1000});
+			}else if(date=="2"){
+				layer.msg('还原失败!',{icon: 6,time:1000});
+			}
+		})
 		
-		$(obj).remove();
-		layer.msg('已还原!',{icon: 6,time:1000});
 	});
 }
 
 /*用户-删除*/
 function member_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
+	layer.confirm('角色删除须谨慎，确认要删除吗？', function(index) {
 		$.ajax({
-			type: 'POST',
-			url: '',
-			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
+			type : 'POST',
+			url : 'deleteDel.do',
+			data : {
+				id : id
 			},
-			error:function(data) {
+			dataType : 'text',
+			success : function(data) {	
+				if(data > 0){
+					$(obj).parents("tr").remove();
+					layer.msg('已删除!', {
+						icon : 1,
+						time : 1000
+					});
+					setTimeout(function(){
+						location = "member-del.do";
+					},2000);
+				}else{
+					layer.msg('删除失败!', {
+						icon : 1,
+						time : 1000
+					});
+				}
+			},
+			error : function(data) {
 				console.log(data.msg);
 			},
 		});		
 	});
+}
+//批量删除，获得所有id
+function datadel(obj) {
+	if (confirm('角色删除须谨慎，确认要删除吗？')) {
+		//获得选中所有value
+		var arr = [];
+		$("input[name=userName]:checked").each(function(index, item) {
+			arr[index] = $(item).val();
+		});
+		
+		if (arr.length == 0) {
+			alert("你还没有选择任何内容！");
+		}
+		if (arr.length > 0) {
+			$.get("deleteDelList.do", {
+				arr : arr.toString()
+			}, function(data) {						
+				if(data > 0){
+					$("input[name=userName]:checked").each(function(index, item) {
+						$(item).parent().parent().remove();
+					});
+					layer.msg('已删除!', {
+						icon : 1,
+						time : 1000
+					});
+				}else{
+					layer.msg('删除失败!', {
+						icon : 1,
+						time : 1000
+					});
+				}
+			});
+		}
+	}
 }
 </script> 
 </body>
