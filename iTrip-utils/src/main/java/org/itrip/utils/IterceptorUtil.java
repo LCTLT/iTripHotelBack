@@ -1,7 +1,5 @@
 package org.itrip.utils;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,14 +12,15 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 public class IterceptorUtil implements HandlerInterceptor {
-	private List<String> exceptUrls;  
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		if(request.getSession().getAttribute("userSession") == null) {
+		if(request.getSession().getAttribute("userSession") != null) {
+			return true;
+		}else {
 			response.sendRedirect("login.do");
 		}
-		return true;
+		return false;
 	}
 
 	@Override
@@ -35,14 +34,6 @@ public class IterceptorUtil implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		
-	}
-
-	public List<String> getExceptUrls() {
-		return exceptUrls;
-	}
-
-	public void setExceptUrls(List<String> exceptUrls) {
-		this.exceptUrls = exceptUrls;
 	}
 	
 

@@ -64,7 +64,7 @@
 			<tbody>
 				<c:forEach var="user" items="${requestScope.userList}">
 					<tr class="text-c" name="checkTr">
-						<td><input type="checkbox" value="${user.id}" name="userName"></td>
+						<td><input type="checkbox" value="${user.id}" name="userName" <c:if test="${userSession.id == user.id}">disabled</c:if>></td>
 						<td>${user.id}</td>
 						<td>超级管理员</td>
 						<td><a href="#">${user.name}</a></td>

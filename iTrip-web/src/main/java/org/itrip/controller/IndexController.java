@@ -75,6 +75,7 @@ public class IndexController {
 		request.setAttribute("pageTotel", PageUtil.pageTotel);
 		
 		request.setAttribute("userList", userList);
+		
 		return "admin-role";
 	}
 	/**
@@ -138,8 +139,8 @@ public class IndexController {
 	@ResponseBody
 	public int exit(HttpServletRequest request) {
 		int status = -1;
-		request.getSession().removeAttribute("user");
-		if(request.getSession().getAttribute("user") == null) {
+		request.getSession().removeAttribute("userSession");
+		if(request.getSession().getAttribute("userSession") == null) {
 			status = 1;
 		}else {
 			status = 0;

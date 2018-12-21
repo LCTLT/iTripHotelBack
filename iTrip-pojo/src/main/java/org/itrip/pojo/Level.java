@@ -1,12 +1,19 @@
 package org.itrip.pojo;
+
+import java.io.Serializable;
+
 /**
  * �����
  * @author Administrator
  *
  */
-public class Level {
+public class Level implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;//分类id
 	private String name;//分类名称
 	private int parentId;//父级分类

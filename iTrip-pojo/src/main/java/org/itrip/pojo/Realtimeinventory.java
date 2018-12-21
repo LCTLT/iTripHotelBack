@@ -1,5 +1,6 @@
 package org.itrip.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,8 +9,12 @@ import java.util.Date;
  *
  */
 
-public class Realtimeinventory {
+public class Realtimeinventory implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;//实时库存
 	private int hotelId;//酒店id
 	private int houseId;//房型id

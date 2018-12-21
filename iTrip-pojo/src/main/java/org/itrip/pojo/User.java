@@ -1,5 +1,6 @@
 package org.itrip.pojo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -7,7 +8,11 @@ import java.sql.Date;
  * @author Administrator
  *
  */
-public class User {
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;//主键id
 	private String name;//姓名
 	private String phone;//手机号（登录账号）

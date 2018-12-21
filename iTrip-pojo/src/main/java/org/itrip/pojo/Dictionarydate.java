@@ -1,12 +1,18 @@
 package org.itrip.pojo;
 
+import java.io.Serializable;
+
 /**
  * �ֵ���ϸ
  * @author Administrator
  *
  */
-public class Dictionarydate {
+public class Dictionarydate implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;   //字典id
 	private String typeCode;  //外键
 	private int dictCode;    //业务代码编号

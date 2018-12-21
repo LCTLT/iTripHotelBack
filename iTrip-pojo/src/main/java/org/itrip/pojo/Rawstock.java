@@ -1,11 +1,18 @@
 package org.itrip.pojo;
+
+import java.io.Serializable;
+
 /**
  * ԭʼ���
  * @author Administrator
  *
  */
-public class Rawstock {
+public class Rawstock implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;//主键id
 	private int productType;//酒店类型
 	private int hotelId;//房型id

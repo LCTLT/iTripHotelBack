@@ -9,17 +9,19 @@ import java.util.List;
 import org.itrip.mapper.UserMapper;
 import org.itrip.pojo.User;
 import org.itrip.service.UserService;
+import org.itrip.utils.redis.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+//	private RedisCache redis = new RedisCache();
 	@Autowired
 	UserMapper userMapper;
 	
 	@Override
 	public List<User> getQueryUserList(int pageNo,int pageSize) {
+		
 		pageNo = (pageNo-1)*pageSize;
 		return userMapper.queryUserList(pageNo,pageSize);
 	}
@@ -78,5 +80,12 @@ public class UserServiceImpl implements UserService {
 		
 		
 		
+	}
+	public boolean isBack(String name) {
+		if(name != null && !name.equals("")) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 }

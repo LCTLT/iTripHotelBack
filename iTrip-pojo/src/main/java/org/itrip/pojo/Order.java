@@ -1,5 +1,6 @@
 package org.itrip.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,8 +8,12 @@ import java.util.Date;
  * @author Administrator
  *
  */
-public class Order {
+public class Order implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;//主键id
 	private String orderNo;//订单编号
 	private int hotelId;//酒店id
