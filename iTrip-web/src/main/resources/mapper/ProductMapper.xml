@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itrip.mapper.ProductMapper">
+<!-- 酒店查询 -->
+	<select id="queryHotelList" resultType="org.itrip.pojo.Hotel">
+		select hotelId,hotelName,hotelAddress,hotelPrice,hotelIntro,hotelRatings,hotelRating,fileUrl,hotelphone from hotel order by hotelId asc
+	</select>
+<!-- 修改数据 -->
+	<update id="updateHotel" parameterType="org.itrip.pojo.Hotel">
+		UPDATE hotel SET hotelName=#{hotelName},hotelAddress=#{hotelAddress},hotelPrice=#{hotelPrice}
+		,hotelIntro=#{hotelIntro},hotelRatings=#{hotelRatings},hotelRating=#{hotelRating},fileUrl=#{fileUrl}
+		,hotelphone=#{hotelphone} WHERE hotelId=#{hotelId};
+	</update>
+<!-- 查询修改数据  -->
+	<select id="queryUpdateHotel" resultType="org.itrip.pojo.Hotel">
+		select hotelId,hotelName,hotelAddress,hotelPrice,hotelIntro,hotelRatings,level1,level2,level3,fileUrl,hotelphone,hotelRating from hotel
+		where hotelId=#{hotelId}
+	</select>
+<!-- 添加酒店数据 -->
+	<insert id="insertHotel" parameterType="org.itrip.pojo.Hotel">
+		INSERT INTO hotel(`hotelId`,`hotelName`,`hotelAddress`,`hotelRating`, `hotelPrice`,`hotelIntro`,`hotelRatings`,`level1`,`level2`,`level3`,`fileUrl`,`hotelphone`) VALUES
+		(null,#{hotelName},#{hotelAddress},#{hotelRating},#{hotelPrice},#{hotelIntro},#{hotelRatings},#{level1},#{level2},#{level3},#{fileUrl},#{hotelphone});
+	</insert>
+<!-- 查询123级分类 -->
+	<select id="queryType1" resultType="org.itrip.pojo.Level">
+		select id,name from level where type=1
+	</select>
+	<select id="queryType2" resultType="org.itrip.pojo.Level">
+		select id,name from level where type=2
+	</select>
+	<select id="queryType3" resultType="org.itrip.pojo.Level">
+		select id,name from level where type=3
+	</select>
+	<!-- 查询指定二级分类 -->
+	<select id="getLevel2" resultType="org.itrip.pojo.Level">
+		select id,`name`,type from `level` where parentId = #{id};
+	</select>
+	<!-- 删除单个用户 -->
+	<delete id="deleteHotel">
+		delete from hotel where hotelId=#{hotelId}
+	</delete>
+
+	<!-- 删除多个用户 -->
+	<delete id="deleteHotelList" parameterType="int">
+		delete from hotel where hotelId in
+		<foreach item="hotelId" collection="array" open="(" separator=","
+			close=")">
+			#{hotelId}
+		</foreach>
+	</delete>
+	<!-- 数据总和 -->
+	<select id="countHotel" resultType="int">
+		select COUNT(hotelId) from hotel
+	</select>
+	<select id="getQueryList" resultType="org.itrip.pojo.Dictionarydate">
+		select info from dictionarydate where typeCode = 'star'
+	</select>
+</mapper>

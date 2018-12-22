@@ -1,6 +1,5 @@
 package org.itrip.pojo;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,18 +8,14 @@ import java.util.Date;
  *
  */
 
-public class Hotel implements Serializable {
+public class Hotel {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private int hotelId;    //酒店id
 	private String productNo;  //产品编号
 	private String hotelName;  //酒店名称
 	private String hotelRating;  //酒店星级
 	private String hotelAddress;  //酒店星级
-	private String hotelPrice;  //酒店地址
+	private double hotelPrice;  //酒店地址
 	private String hotelIntro;  //酒店介绍
 	private String hotelTraffic;  //酒店交通
 	private double hotelRatings;  //酒店评分
@@ -33,6 +28,25 @@ public class Hotel implements Serializable {
 	private String hotelphone;  //酒店电话
 	
 	
+	public Hotel() {}
+	
+	public Hotel(int hotelId,String hotelName, String hotelAddress, double hotelPrice, String hotelIntro, double hotelRatings,
+			int level1, int level2, int level3, String fileUrl, String hotelphone,String hotelRating) {
+		super();
+		this.hotelId = hotelId;
+		this.hotelName = hotelName;
+		this.hotelAddress = hotelAddress;
+		this.hotelPrice = hotelPrice;
+		this.hotelIntro = hotelIntro;
+		this.hotelRatings = hotelRatings;
+		this.level1 = level1;
+		this.level2 = level2;
+		this.level3 = level3;
+		this.fileUrl = fileUrl;
+		this.hotelphone = hotelphone;
+		this.hotelRating=hotelRating;
+	}
+
 	public int getHotelId() {
 		return hotelId;
 	}
@@ -75,12 +89,15 @@ public class Hotel implements Serializable {
 	public void setHotelTraffic(String hotelTraffic) {
 		this.hotelTraffic = hotelTraffic;
 	}
+
 	public double getHotelRatings() {
 		return hotelRatings;
 	}
+
 	public void setHotelRatings(double hotelRatings) {
 		this.hotelRatings = hotelRatings;
 	}
+
 	public int getLevel1() {
 		return level1;
 	}
@@ -111,10 +128,11 @@ public class Hotel implements Serializable {
 	public void setHotelphone(String hotelphone) {
 		this.hotelphone = hotelphone;
 	}
-	public String getHotelPrice() {
+	
+	public double getHotelPrice() {
 		return hotelPrice;
 	}
-	public void setHotelPrice(String hotelPrice) {
+	public void setHotelPrice(double hotelPrice) {
 		this.hotelPrice = hotelPrice;
 	}
 	public Date getHotelCheckinTime() {

@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -22,23 +23,26 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>建材列表</title>
+<style type="text/css">
+ table{table-layout:fixed;word-bread:bread-all;}
+</style>
 <link rel="stylesheet" href="lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
 </head>
 <body class="pos-r">
-<div class="pos-a" style="width:200px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;">
+<div class="pos-a" style="width:120px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;">
 	<ul id="treeDemo" class="ztree"></ul>
 </div>
-<div style="margin-left:200px;">
-	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 酒店管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-	<div class="page-container">
+<div style="margin-left:120px;">
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 酒店管理 <span class="c-gray en">&gt;</span> 酒店列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<!-- <div class="page-container">
 		<div class="text-c"> 日期范围：
 			<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
 			-
 			<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
-			<input type="text" name="" id="" placeholder=" 产品名称" style="width:250px" class="input-text">
-			<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜产品</button>
-		</div>
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="product_add('添加产品','product-add.do')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+			<input type="text" name="" id="" placeholder=" 酒店名称" style="width:250px" class="input-text">
+			<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜酒店</button>
+		</div> -->
+		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="product_add('添加酒店','product-add.do?type=1&hotelId=0')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加酒店</a></span> <span class="r">共有数据：<strong>${count}</strong> 条</span> </div>
 		<div class="mt-20">
 			<table class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
@@ -46,29 +50,42 @@
 						<th width="40"><input name="" type="checkbox" value=""></th>
 						<th width="40">ID</th>
 						<th width="60">缩略图</th>
-						<th width="100">产品名称</th>
-						<th>描述</th>
-						<th width="100">单价</th>
+						<th width="100">酒店名称</th>
+						<th width="100">酒店地址</th>
+						<th width="60">酒店评分</th>
+						<th width="60">酒店星级</th>
+						<th width="100">联系电话</th>
+						<th width="100">酒店描述</th>
+						<th width="60">主页显示价格</th>
 						<th width="60">发布状态</th>
 						<th width="100">操作</th>
 					</tr>
 				</thead>
 				<tbody>
+				<c:forEach var="hotel" items="${hotelList}">
 					<tr class="text-c va-m">
-						<td><input name="" type="checkbox" value=""></td>
-						<td>001</td>
-						<td><a onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img width="60" class="product-thumb" src="temp/product/Thumb/6204.jpg"></a></td>
-						<td class="text-l"><a style="text-decoration:none" onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img title="国内品牌" src="static/h-ui.admin/images/cn.gif"> <b class="text-success">圣象</b> 哥本哈根橡木地板KS8373</a></td>
-						<td class="text-l">原木的外在,实木条形结构,色泽花纹自然,写意;款式设计吸取实木地板的天然去雕饰之美,在视觉上给人带来深邃联想.多款产品适合搭配不同的风格的室内装饰;功能流露出尊贵典雅的大气韵味。</td>
-						<td><span class="price">356.0</span> 元/平米</td>
+						<td><input name="userName" type="checkbox" value="${hotel.hotelId}"></td>
+						<td>${hotel.hotelId}</td>
+						<td><img width="60" class="product-thumb" src="${hotel.fileUrl}"></td>
+						<td class="text-l"><b class="text-success"></b>${hotel.hotelName}</td>
+						<td class="text-l">${hotel.hotelAddress}</td>
+						<td class="text-l">${hotel.hotelRatings}</td>
+						<td class="text-l">${hotel.hotelRating}</td>
+						<td class="text-l">${hotel.hotelphone}</td>	
+						<td class="text-l">
+						<div id="divContent" style="width: 100%;height: 70px;overflow: auto">
+						${hotel.hotelIntro}
+						</div>
+						</td>
+						<td class="text-l">${hotel.hotelPrice}</td>
 						<td class="td-status"><span class="label label-success radius">已发布</span></td>
-						<td class="td-manage"><a style="text-decoration:none" onClick="product_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_edit('产品编辑','product-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+						<td class="td-manage"><a style="text-decoration:none" onClick="product_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_edit('酒店编辑','product-add.do?type=2&hotelId=${hotel.hotelId}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_del(this,'${hotel.hotelId}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 					</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
 	</div>
-</div>
 
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
@@ -112,15 +129,17 @@ var setting = {
 
 var zNodes =[
 	{ id:1, pId:0, name:"一级分类", open:true},
+	<c:forEach items="${types1}" var="type1">
+		{ id:11, pId:1, name:"${type1.name}"},
+	</c:forEach>
 	{ id:11, pId:1, name:"二级分类"},
-	{ id:111, pId:11, name:"三级分类"},
-	{ id:112, pId:11, name:"三级分类"},
-	{ id:113, pId:11, name:"三级分类"},
-	{ id:114, pId:11, name:"三级分类"},
-	{ id:115, pId:11, name:"三级分类"},
-	{ id:12, pId:1, name:"二级分类 1-2"},
-	{ id:121, pId:12, name:"三级分类 1-2-1"},
-	{ id:122, pId:12, name:"三级分类 1-2-2"},
+	<c:forEach items="${types2}" var="type2">
+		{ id:111, pId:11, name:"${type2.name}"},
+	</c:forEach>
+	{ id:12, pId:1, name:"三级分类"},
+	<c:forEach items="${types3}" var="type3">
+		{ id:121, pId:12, name:"${type3.name}"},
+	</c:forEach>
 ];
 		
 		
@@ -220,17 +239,67 @@ function product_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',
-			url: '',
-			dataType: 'json',
+			url: 'product-delete.do',
+			data : {
+				hotelId : id
+			},
+			dataType: 'text',
 			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
+				if(data>0){
+					$(obj).parents("tr").remove();
+					layer.msg('已删除!',{
+						icon:1,
+						time:1000
+					});
+					setTimeout(function(){
+						location = "product-list.do";
+					},2000);
+				}else{
+					layer.msg('删除失败!', {
+						icon : 1,
+						time : 1000
+					});
+				}
 			},
 			error:function(data) {
 				console.log(data.msg);
 			},
 		});		
 	});
+}
+	//批量删除，获得所有id
+	function datadel(obj) {
+		if (confirm('删除多个酒店须谨慎，确认要删除吗？')) {
+			//获得选中所有value
+			var arr = [];
+			$("input[name=userName]:checked").each(function(index, item) {
+				arr[index] = $(item).val();
+			});
+			
+			if (arr.length == 0) {
+				alert("你还没有选择任何内容！");
+			}
+			if (arr.length > 0) {
+				$.get("product-deleteHotel.do", {
+					arr : arr.toString()
+				}, function(data) {						
+					if(data > 0){
+						$("input[name=userName]:checked").each(function(index, item) {
+							$(item).parent().parent().remove();
+						});
+						layer.msg('已删除!', {
+							icon : 1,
+							time : 1000
+						});
+					}else{
+						layer.msg('删除失败!', {
+							icon : 1,
+							time : 1000
+						});
+					}
+				});
+			}
+		}
 }
 </script>
 </body>
