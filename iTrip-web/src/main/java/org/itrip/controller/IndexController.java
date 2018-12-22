@@ -202,20 +202,7 @@ public class IndexController {
 			return "0";
 		}
 	}
-	/**
-	 * 用户管理
-	 */
-	@RequestMapping("member-list.do")
-	public String memberList() {
-		return "member-list";
-	}
-	/**
-	 * 添加用户
-	 */
-	@RequestMapping("member-add.do")
-	public String memberAdd() {
-		return "member-add";
-	}
+	
 	/**
 	 * 删除的用户
 	 */
@@ -262,13 +249,7 @@ public class IndexController {
 		int result = userService.deleteDelList(arr);
 		return result;
 	}
-	/**
-	 * 修改用户密码
-	 */
-	@RequestMapping("change-password.do")
-	public String changePassword() {
-		return "change-password";
-	}
+	
 	/**
 	 * 数据字典管理
 	 */
@@ -303,5 +284,109 @@ public class IndexController {
 		return "";
 	}
 	*/
-	
+	/**
+	 * 会员删除
+	 * @param id
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping("member-delete.do")
+	@ResponseBody
+	public int memberRoleUser(@RequestParam("id")Integer id) throws UnsupportedEncodingException{
+		int i =userService.deleteUser(id);
+		return i;
+	}
+	@RequestMapping("member-deleteUser.do")
+	@ResponseBody
+	public int memberRoleUserList(HttpServletResponse response, HttpServletRequest request,int[] arr) throws IOException, ServletException {
+		int result = userService.deleteUserList(arr);
+		return result;
+	}
+	/**
+	 * 添加会员用户
+	 */
+	@RequestMapping("addUser.do")
+	@ResponseBody
+	public String addUser(User user,HttpServletRequest request) {
+		int result = this.userService.addUser(user);
+		System.out.println(result);
+		if(result > 0) {
+			return "1";
+		}else {
+			return "0";
+		}
+	}
+	/**
+	 * 会员模糊查询
+	 */
+	@RequestMapping("memberquery.do")
+	public String queryUser(@RequestParam(value="query1",required=false)String abc,HttpServletRequest request) throws UnsupportedEncodingException {
+		System.out.println(abc);
+		List<User> ad=userService.queryUser(abc);
+		request.setAttribute("memberUser", ad);
+		return "member-list";
+	}
+	/**
+	 * 用户管理
+	 */
+	@RequestMapping("member-list.do")
+	public String memberList(HttpServletRequest request) throws UnsupportedEncodingException {
+		List<User> memberUser = userService.getmemberUser();
+		PageUtil.pageCount=userService.countUsers();
+		
+		request.setAttribute("count", PageUtil.pageCount);
+		
+		request.setAttribute("memberUser", memberUser);
+		return "member-list";
+	}
+	/**
+	 * 修改会员密码
+	 */
+	@RequestMapping("change-password.do")
+	public String changePassword(HttpServletRequest request,@RequestParam("type")int type,@RequestParam("id")int id) {
+		if(type == 2) {
+			request.setAttribute("user", userService.memberUserid(id));
+		}
+		request.setAttribute("type", type);
+		return "change-password";
+	}
+	/**
+	 *修改会员密码2
+	 */
+	@RequestMapping("change-passwordUser.do")
+	@ResponseBody
+	public String changePasswordUser(HttpServletRequest request,User user) {
+		int result=this.userService.changePasswordpwd(user);
+		System.out.println("修改状态值="+result);
+		if(result > 0) {
+			return "1";
+		}else {
+			return "0";
+		}
+	}
+	/**
+	 * 添加用户
+	 */
+	@RequestMapping("member-add.do")
+	public String memberAdd(HttpServletRequest request,@RequestParam("type")Integer type,@RequestParam("id")Integer id) {		
+		if(type == 2) {
+			request.setAttribute("user", userService.updateUserid(id));
+		}
+		request.setAttribute("type", type);
+		return "member-add";
+	}
+	/**
+	 *修改会员密码2
+	 */
+	@RequestMapping("menber_updateUser.do")
+	@ResponseBody
+	public String menberUpdateUser(User user,HttpServletRequest request) {
+		int result=this.userService.updateUserUser(user);
+		System.out.println("修改状态值="+result);
+		if(result > 0) {
+			return "1";
+		}else {
+			return "0";
+		}
+	}
 }

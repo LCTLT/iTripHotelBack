@@ -59,4 +59,38 @@ public interface UserMapper {
 	 * 彻底多个用户
 	 */
 	Integer deleteDelList(int[] idarr);
+	/**
+	 * 查询会员用户角色
+	 */
+	List<User> memberUser();
+	/**
+	 * 修改密码1
+	 */
+	User memberUserid(int id);
+	/**
+	 * 修改密码2
+	 */
+	int changePasswordpwd(User user);
+	/**
+	 * 修改会员用户1
+	 */
+	User updateUserid(int id);
+	/**
+	 * 修改会员用户2
+	 */
+	int updateUserUser(User user);
+
+	/**
+	 * 添加会员用户
+	 */
+	int addUser(User user);
+	/**
+	 * 会员模糊查询
+	 */
+	List<User> queryUser(@Param("_query11")String query11);
+	/**
+	 * 会员数据总和
+	 */
+	int countUsers();
+	
 }

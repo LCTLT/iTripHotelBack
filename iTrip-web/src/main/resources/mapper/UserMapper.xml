@@ -58,11 +58,59 @@
 	<update id="updateUser" parameterType="org.itrip.pojo.User">
 		UPDATE user SET name=#{name},phone=#{phone},pwd=#{pwd},sex=#{sex},status=#{status} WHERE id=#{id};
 	</update>
+	
+	<select id="countUsers" resultType="int">
+		select COUNT(id) from user where status =1
+	</select>
 
+
+	<select id="updateUserid" resultType="org.itrip.pojo.User">
+		SELECT * from user where id=#{id}
+	</select>
+
+	<update id="changePasswordpwd" parameterType="org.itrip.pojo.User">
+		UPDATE user SET pwd=#{pwd} WHERE  id=#{id}
+	</update>
+
+	
+	<update id="updateUserUser" parameterType="org.itrip.pojo.User">
+		UPDATE user SET name=#{name},phone=#{phone},
+		pwd=#{pwd},sex=#{sex},
+		idcard=#{idcard},
+		email=#{email},
+		address=#{address} WHERE id=#{id};
+	</update>
+
+
+
+	<select id="memberUserid" resultType="org.itrip.pojo.User">
+		SELECT id,name,pwd from user where id=#{id}
+	</select>
+
+	<insert id="addUser" parameterType="org.itrip.pojo.User">
+		INSERT INTO user(`id`,`name`, `phone`,`pwd`,`idcard`, `sex`,`birthday`,`email`, `address`) VALUES
+		(null,#{name},#{phone},#{pwd},#{idcard},#{sex},#{birthday},#{email},#{address});
+	</insert>
+
+	<select id="memberUser" resultType="org.itrip.pojo.User">
+		select * from user where status = 1  order by id desc
+	</select>
+
+
+		<select id="queryUser" resultType="org.itrip.pojo.User">
+			SELECT * FROM user WHERE status =1 
+			<if test="_query11 != null and _query11 != ''">
+			 and name LIKE CONCAT ('%',#{_query11},'%') or
+	 			   phone LIKE CONCAT ('%',#{_query11},'%') or
+					  email LIKE CONCAT ('%',#{_query11},'%')
+			</if>
+				
+	</select>
 	<select id="queryUpdate" resultType="org.itrip.pojo.User">
 		select id,name,phone,pwd,sex,status from user
 		where id=#{id}
 	</select>
+	
 	<!-- 条件查询删除用户 -->
 	<select id="queryDelList" resultType="org.itrip.pojo.User">
 		 select `id`, `name`,`phone`,`pwd`, `idcard`, `sex`, `birthday`, `email`, `address`, `status`, `delete`, `strat` from user

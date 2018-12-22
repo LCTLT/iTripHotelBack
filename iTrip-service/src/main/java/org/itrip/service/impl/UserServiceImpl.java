@@ -9,7 +9,6 @@ import java.util.List;
 import org.itrip.mapper.UserMapper;
 import org.itrip.pojo.User;
 import org.itrip.service.UserService;
-import org.itrip.utils.redis.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -108,5 +107,45 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Integer deleteDelList(int[] idarr) {
 		return userMapper.deleteDelList(idarr);
+	}
+	@Override
+	public User memberUserid(int id) {
+		// TODO Auto-generated method stub
+		return userMapper.memberUserid(id);
+	}
+	@Override
+	public List<User> getmemberUser() {
+		// TODO Auto-generated method stub
+		return userMapper.memberUser();
+	}
+	@Override
+	public int updateUserUser(User user) {
+		// TODO Auto-generated method stub
+		return userMapper.updateUserUser(user);
+	}
+	@Override
+	public User updateUserid(int id) {
+		// TODO Auto-generated method stub
+		return userMapper.updateUserid(id);
+	}
+	@Override
+	public int changePasswordpwd(User user) {
+		// TODO Auto-generated method stub
+		return userMapper.changePasswordpwd(user);
+	}
+	@Override
+	public List<User> queryUser(String query11) {
+		// TODO Auto-generated method stub
+		return userMapper.queryUser(query11);
+	}
+	@Override
+	public int countUsers() {
+		// TODO Auto-generated method stub
+		return userMapper.countUsers();
+	}
+	@Override
+	public int addUser(User user) {
+		// TODO Auto-generated method stub
+		return userMapper.addUser(user);
 	}
 }

@@ -29,4 +29,15 @@ public interface UserService {
 	int countDelUser();
 	int deleteDel(int id);
 	Integer deleteDelList(int[] idarr);
+	User memberUserid(int id);
+	/**
+	 * 会员管理
+	 */
+	List<User> getmemberUser();
+	int updateUserUser(User user);
+	User updateUserid(int id);
+	int changePasswordpwd(User user);
+	List<User> queryUser(String query11);
+	int countUsers();
+	int addUser(User user);
 }

@@ -18,12 +18,18 @@ public class User implements Serializable{
 	private String phone;//手机号（登录账号）
 	private String pwd;//登录密码
 	private int sex;//性别
+	private String idcard;//身份证号	
 	private Date birthday;//出生日期
 	private String email;//邮箱
 	private String address;//地址
 	private int status;//用户权限
 	private String numbs; //验证码
-	
+	public String getIdcard() {
+		return idcard;
+	}
+	public void setIdcard(String idcard) {
+		this.idcard = idcard;
+	}
 	public String getNumbs() {
 		return numbs;
 	}
