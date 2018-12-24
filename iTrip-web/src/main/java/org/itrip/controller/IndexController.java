@@ -321,8 +321,11 @@ public class IndexController {
 	 */
 	@RequestMapping("memberquery.do")
 	public String queryUser(@RequestParam(value="query1",required=false)String abc,HttpServletRequest request) throws UnsupportedEncodingException {
-		System.out.println(abc);
+		request.setAttribute("name", abc);
 		List<User> ad=userService.queryUser(abc);
+		PageUtil.pageCount=userService.countUsers();
+		
+		request.setAttribute("count", PageUtil.pageCount);
 		request.setAttribute("memberUser", ad);
 		return "member-list";
 	}

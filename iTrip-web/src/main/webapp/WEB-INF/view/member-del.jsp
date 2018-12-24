@@ -100,8 +100,11 @@ function member_huanyuan(obj,id){
 	layer.confirm('确认要还原吗？',function(index){
 		$.post('updateDalUpdate.do',{id:id},function(date){
 			if(date=="1"){
-				$(obj).remove();
+				$(obj).parent().parent().remove();
 				layer.msg('已还原!',{icon: 6,time:1000});
+				setTimeout(function(){
+					location.reload();
+				}, 1500);
 			}else if(date=="2"){
 				layer.msg('还原失败!',{icon: 6,time:1000});
 			}
@@ -128,8 +131,8 @@ function member_del(obj,id){
 						time : 1000
 					});
 					setTimeout(function(){
-						location = "member-del.do";
-					},2000);
+						location.reload();
+					},1500);
 				}else{
 					layer.msg('删除失败!', {
 						icon : 1,
@@ -167,6 +170,9 @@ function datadel(obj) {
 						icon : 1,
 						time : 1000
 					});
+					setTimeout(function(){
+						location.reload();
+					},1500);
 				}else{
 					layer.msg('删除失败!', {
 						icon : 1,

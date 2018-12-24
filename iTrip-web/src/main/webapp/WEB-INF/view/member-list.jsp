@@ -31,7 +31,7 @@
 	<div class="text-c">
 		<!-- <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
 		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;"> -->
-		<input type="text" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="" name="query1"> 
+		<input type="text" class="input-text" style="width:250px" placeholder="输入会员名称" id="" name="query1" value="${name}"> 
 		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
 		
 	</div>
@@ -119,6 +119,9 @@ function datadel(obj) {
 						icon : 1,
 						time : 1000
 					});
+					setTimeout(function(){
+						location.reload();
+					}, 1500);
 				}else{
 					layer.msg('删除失败!', {
 						icon : 1,

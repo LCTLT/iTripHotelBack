@@ -3,7 +3,7 @@
 <mapper namespace="org.itrip.mapper.ProductMapper">
 <!-- 酒店查询 -->
 	<select id="queryHotelList" resultType="org.itrip.pojo.Hotel">
-		select hotelId,hotelName,hotelAddress,hotelPrice,hotelIntro,hotelRatings,hotelRating,fileUrl,hotelphone from hotel order by hotelId asc
+		select hotelId,productNo,hotelName,hotelAddress,hotelPrice,hotelIntro,hotelRatings,hotelRating,fileUrl,hotelphone from hotel order by hotelId asc
 	</select>
 <!-- 修改数据 -->
 	<update id="updateHotel" parameterType="org.itrip.pojo.Hotel">
@@ -18,7 +18,7 @@
 	</select>
 <!-- 添加酒店数据 -->
 	<insert id="insertHotel" parameterType="org.itrip.pojo.Hotel">
-		INSERT INTO hotel(`hotelId`,`hotelName`,`hotelAddress`,`hotelRating`, `hotelPrice`,`hotelIntro`,`hotelRatings`,`level1`,`level2`,`level3`,`fileUrl`,`hotelphone`) VALUES
+		INSERT INTO hotel(`hotelId`,`productNo`,`hotelName`,`hotelAddress`,`hotelRating`, `hotelPrice`,`hotelIntro`,`hotelRatings`,`level1`,`level2`,`level3`,`fileUrl`,`hotelphone`) VALUES
 		(null,#{hotelName},#{hotelAddress},#{hotelRating},#{hotelPrice},#{hotelIntro},#{hotelRatings},#{level1},#{level2},#{level3},#{fileUrl},#{hotelphone});
 	</insert>
 <!-- 查询123级分类 -->

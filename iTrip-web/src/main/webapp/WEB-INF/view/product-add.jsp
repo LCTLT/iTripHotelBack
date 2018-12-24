@@ -175,7 +175,7 @@ $(function(){
 			var level2 = $("#level2");
 			level2.html("");
 			//拼接的字符
-			var option = '<option>请选择</option>';
+			var option = '';
 			//添加
 			for (var i = 0; i < result.length; i++) {
 				option +='<option value="'+result[i].id+'">'+result[i].name+'</option>';
@@ -219,6 +219,23 @@ $(function(){
 				time : 2000
 			});return false;}
 		}
+		if(form.level1.value=="" || form.level1.value== "请选择"){
+			{layer.msg('请选择酒店一级分类!', {
+				icon : 2,
+				time : 2000
+			});return false;}
+		}
+		if(form.hotelRatings.value==""){
+			{layer.msg('酒店评分不能为空!', {
+				icon : 2,
+				time : 2000
+			});return false;}
+		}else if(!((/^[0-5]{1}.[0-5]{1}$/).test(form.hotelRatings.value))){
+			{layer.msg('酒店评分为0.1-5.0分!', {
+				icon : 2,
+				time : 2000
+			});return false;}
+		}
 		if(form.hotelAddress.value=="0"){
 			{layer.msg('酒店星级不能为空!', {
 				icon : 2,
@@ -230,15 +247,30 @@ $(function(){
 				icon : 2,
 				time : 2000
 			});return false;}
+		}else if(!((/^[1][3456789][0-9]{9}$/).test(form.hotelphone.value))){
+			{layer.msg('联系电话格式不正确!', {
+				icon : 2,
+				time : 2000
+			});return false;}
 		}
 		if(form.hotelPrice.value==""){
 			{layer.msg('请填写酒店价格!', {
 				icon : 2,
 				time : 2000
 			});return false;}
+		}else if(!((/^[0-9]{1,10}$/).test(form.hotelPrice.value))){
+			{layer.msg('酒店价格格式不正确!', {
+				icon : 2,
+				time : 2000
+			});return false;}
+		}
+		if(form.file.value==""){
+			{layer.msg('请选择酒店图片!', {
+				icon : 2,
+				time : 2000
+			});return false;}
 		}
 	});
-	
 });
 </script>
 </body>

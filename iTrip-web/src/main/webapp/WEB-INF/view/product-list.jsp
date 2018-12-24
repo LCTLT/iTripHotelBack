@@ -86,7 +86,6 @@
 			</table>
 		</div>
 	</div>
-
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
@@ -125,23 +124,7 @@ var setting = {
 			}
 		}
 	}
-};
-
-var zNodes =[
-	{ id:1, pId:0, name:"一级分类", open:true},
-	<c:forEach items="${types1}" var="type1">
-		{ id:11, pId:1, name:"${type1.name}"},
-	</c:forEach>
-	{ id:11, pId:1, name:"二级分类"},
-	<c:forEach items="${types2}" var="type2">
-		{ id:111, pId:11, name:"${type2.name}"},
-	</c:forEach>
-	{ id:12, pId:1, name:"三级分类"},
-	<c:forEach items="${types3}" var="type3">
-		{ id:121, pId:12, name:"${type3.name}"},
-	</c:forEach>
-];
-		
+};	
 		
 		
 $(document).ready(function(){
@@ -252,8 +235,8 @@ function product_del(obj,id){
 						time:1000
 					});
 					setTimeout(function(){
-						location = "product-list.do";
-					},2000);
+						location.reload();
+					},1500);
 				}else{
 					layer.msg('删除失败!', {
 						icon : 1,
@@ -291,6 +274,9 @@ function product_del(obj,id){
 							icon : 1,
 							time : 1000
 						});
+						setTimeout(function(){
+							location.reload();
+						},1500);
 					}else{
 						layer.msg('删除失败!', {
 							icon : 1,

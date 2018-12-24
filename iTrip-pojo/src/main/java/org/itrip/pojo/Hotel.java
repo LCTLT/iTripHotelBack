@@ -30,7 +30,7 @@ public class Hotel {
 	
 	public Hotel() {}
 	
-	public Hotel(int hotelId,String hotelName, String hotelAddress, double hotelPrice, String hotelIntro, double hotelRatings,
+	public Hotel(int hotelId,String productNo,String hotelName, String hotelAddress, double hotelPrice, String hotelIntro, double hotelRatings,
 			int level1, int level2, int level3, String fileUrl, String hotelphone,String hotelRating) {
 		super();
 		this.hotelId = hotelId;
@@ -45,6 +45,7 @@ public class Hotel {
 		this.fileUrl = fileUrl;
 		this.hotelphone = hotelphone;
 		this.hotelRating=hotelRating;
+		this.productNo = productNo;
 	}
 
 	public int getHotelId() {

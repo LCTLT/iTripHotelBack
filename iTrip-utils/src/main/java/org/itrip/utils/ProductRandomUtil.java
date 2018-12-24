@@ -9,10 +9,10 @@ import java.util.Random;
  */
 public class ProductRandomUtil {
 	/**
-	 * 生成随机订单号
+	 * 生成随机订单号	
 	 * @return
 	 */
-	public String productNo() {
+	public static String productNo() {
 		StringBuffer sb = new StringBuffer();
 		char[] A_z = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
         Random r = new Random(); 

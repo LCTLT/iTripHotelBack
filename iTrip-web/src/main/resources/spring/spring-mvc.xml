@@ -44,7 +44,7 @@
 		<!-- 文件大小最大值 上传文件大小限制为10M，10*1024*1024 -->
 		<property name="maxUploadSize" value="10485760" />
 		<!-- 内存中的最大值 -->
-		<property name="maxInMemorySize" value="4096" />
+		<property name="maxInMemorySize" value="60000" />
 	</bean>
 	<!--文件上传 end -->
 
@@ -102,17 +102,17 @@
 	<!-- springmvc 消息转换器配置结束 -->
 
 <!--配置拦截器 -->
-<mvc:interceptors>
-<!-- 配置子拦截器1 -->
+<!-- <mvc:interceptors>
+配置子拦截器1
 		<mvc:interceptor>
-		<!-- 配置拦截所有请求 -->
+		配置拦截所有请求
 			<mvc:mapping path="/*.do" />
-			<!-- 配置不拦截指定资源请求 --> 
+			配置不拦截指定资源请求 
 			<mvc:exclude-mapping path="/login.do"/>
 			<mvc:exclude-mapping path="/loginlist.do"/>
 			<mvc:exclude-mapping path="/code.do"/>
-			<!-- 拦截器类地址 -->
+			拦截器类地址
 			<bean class="org.itrip.utils.IterceptorUtil"></bean>
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 </beans>

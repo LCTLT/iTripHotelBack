@@ -51,7 +51,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="${user.pwd}" placeholder="" id="pwd" name="pwd">
+				<input type="password" class="input-text" value="${user.pwd}" placeholder="" id="pwd" name="pwd">
 			</div>
 		</div>
 			<div class="row cl">
@@ -59,13 +59,13 @@
 			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
 					<label class="">
-					<input type="radio" value="0" name="sex" <c:if test="${user.status eq 0}">checked="checked"</c:if> id="sex">
+					<input type="radio" value="1" name="sex" id="sex" checked>
 					男</label>
 					
 				</div>
 				<div class="radio-box">
 					<label class="">
-					<input type="radio" value="1" name="sex" <c:if test="${user.status eq 1}">checked="checked"</c:if> id="sex">
+					<input type="radio" value="0" name="sex" <c:if test="${user.status eq 1}">checked</c:if> id="sex">
 					女</label>
 				</div>				
 			</div>
@@ -124,6 +124,8 @@ $(function(){
 
 	
 	$("#admin-role-save").click(function(){
+		//身份证号码格式
+		var testCard = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
 		var name = $("#name").val(); //获得name参数
 		var phone= $("#phone").val();
 		var pwd= $("#pwd").val();
@@ -134,15 +136,31 @@ $(function(){
 		//提示
 		var massage = $("#massage");
 		if(name == ""){
-			$("#massage").text("请填写用户名");
+			{layer.msg('请填写用户名!', {
+				icon : 2,
+				time : 2000
+			});return false;}
 		}else if(!(/(^[1][3456789][0-9]{9}$)/.test(phone))){
-			$("#massage").text("手机格式不正确");
+			{layer.msg('手机格式不正确!', {
+				icon : 2,
+				time : 2000
+			});return false;}
 		}else if(pwd =="" || pwd.length < 6){
-			$("#massage").text("密码格式不正确");
+			{layer.msg('密码格式不正确!', {
+				icon : 2,
+				time : 2000
+			});return false;}
 		}else if(sex == undefined){
-			$("#massage").text("请选择性别");
+			{layer.msg('请选择性别!', {
+				icon : 2,
+				time : 2000
+			});return false;}
+		}else if(!(testCard.test(idcard))){
+			{layer.msg('身份证格式不正确!', {
+				icon : 2,
+				time : 2000
+			});return false;}
 		}else{
-			
 			$.post("addUser.do",{
 				name:name,
 				phone:phone,
@@ -183,11 +201,9 @@ $(function(){
 		var massage = $("#massage");
 		
 		if(!(/(^[1][3456789][0-9]{9}$)/.test(phone))){
-			$("#massage").text("手机格式不正确1");
+			$("#massage").text("手机格式不正确!");
 		}else if(pwd =="" || pwd.length < 6){
-			$("#massage").text("密码格式不正确1");
-		}else if(sex == undefined){
-			$("#massage").text("请选择性别类型1");
+			$("#massage").text("密码格式不正确!");
 		}else{
 			$.ajax({
 				url:"menber_updateUser.do",

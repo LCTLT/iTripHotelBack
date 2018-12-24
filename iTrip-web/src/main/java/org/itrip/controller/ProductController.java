@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.itrip.pojo.Hotel;
 import org.itrip.pojo.Level;
 import org.itrip.service.ProductService;
+import org.itrip.utils.ProductRandomUtil;
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -108,8 +109,7 @@ public class ProductController {
 		}
 		return null;
 	}
-
-
+	
 	/**
 	 * 添加
 	 * @param hotel
@@ -132,15 +132,15 @@ public class ProductController {
 		double hotelPrice = Double.parseDouble(request.getParameter("hotelPrice"));
 		String hotelIntro = request.getParameter("hotelIntro");
 		String hotelRating=request.getParameter("hotelRating");
+		//生成订单号
+		String productNo = ProductRandomUtil.productNo();
 		String fileUrl = null;
 		//如果文件不为空，写入上传路径
 		if(!file.isEmpty()) {
 			//上传文件路径
-			String path = request.getServletContext().getRealPath("/static/images/");
-			//获得数据库路径
+			String path = "D:\\myHotel\\uploadFile";
+			//数据库路径
 			fileUrl = "static/images/"+file.getOriginalFilename();
-			System.out.println("文件路径="+path);
-
 
 			//上传文件名
 			String filename = file.getOriginalFilename();
@@ -149,10 +149,11 @@ public class ProductController {
 			if (!filepath.getParentFile().exists()) { 
 				filepath.getParentFile().mkdirs();
 			}
-			//将上传文件保存到一个目标文件当中
-			file.transferTo(new File(path + File.separator + filename));
+			//将上传文件保存到目标文件夹中
+			file.transferTo(filepath);
+			
 		}
-		Hotel hotels = new Hotel( 0,hotelName,  hotelAddress,  hotelPrice,  hotelIntro,  hotelRatings,
+		Hotel hotels = new Hotel( 0,productNo,hotelName,  hotelAddress,  hotelPrice,  hotelIntro,  hotelRatings,
 				 level1,  level2,  level3,  fileUrl,  hotelphone,hotelRating);
 		
 		int result=this.productService.insertHotel(hotels);
@@ -162,6 +163,7 @@ public class ProductController {
 		}else {
 			return "forward:/product-list.do";
 		}
+		
 	}
 
 	/**
@@ -186,10 +188,9 @@ public class ProductController {
 		//如果文件不为空，写入上传路径
 		if(!file.isEmpty()) {
 			//上传文件路径
-			String path = request.getServletContext().getRealPath("/static/images/");
-			//获得数据库路径
+			String path = "D:\\myHotel\\uploadFile";
+			//数据库路径
 			fileUrl = "static/images/"+file.getOriginalFilename();
-			System.out.println("文件路径="+path);
 
 			//上传文件名
 			String filename = file.getOriginalFilename();
@@ -198,12 +199,13 @@ public class ProductController {
 			if (!filepath.getParentFile().exists()) { 
 				filepath.getParentFile().mkdirs();
 			}
-			//将上传文件保存到一个目标文件当中
-			file.transferTo(new File(path + File.separator + filename));
+			//将上传文件保存到目标文件夹中
+			file.transferTo(filepath);
+			
 		}else {
 			fileUrl = request.getParameter("fileUrl");
 		}
-		Hotel hotels = new Hotel(Integer.valueOf(id), hotelName,  hotelAddress,  hotelPrice,  hotelIntro,  hotelRatings,
+		Hotel hotels = new Hotel(Integer.valueOf(id),"", hotelName,  hotelAddress,  hotelPrice,  hotelIntro,  hotelRatings,
 				 level1,  level2,  level3,  fileUrl,  hotelphone,hotelRating);
 		int result=this.productService.updateHotel(hotels);
 		System.out.println("修改状态值="+result);
