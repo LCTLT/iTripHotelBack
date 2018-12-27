@@ -175,7 +175,7 @@ $(function(){
 			var level2 = $("#level2");
 			level2.html("");
 			//拼接的字符
-			var option = '';
+			var option = '<option>请选择</option>';
 			//添加
 			for (var i = 0; i < result.length; i++) {
 				option +='<option value="'+result[i].id+'">'+result[i].name+'</option>';
@@ -190,7 +190,7 @@ $(function(){
 			return;
 		}
 		//获取选中的id
-		var id = $(this).val();s
+		var id = $(this).val();
 		$.getJSON("level2-list.do",{id:id},function(result){
 			//清空三级分类
 			var level3 = $("#level3");
@@ -221,6 +221,12 @@ $(function(){
 		}
 		if(form.level1.value=="" || form.level1.value== "请选择"){
 			{layer.msg('请选择酒店一级分类!', {
+				icon : 2,
+				time : 2000
+			});return false;}
+		}
+		if(form.level2.value=="" || form.level2.value== "请选择"){
+			{layer.msg('请选择酒店二级分类!', {
 				icon : 2,
 				time : 2000
 			});return false;}

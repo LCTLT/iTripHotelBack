@@ -138,9 +138,9 @@ public class ProductController {
 		//如果文件不为空，写入上传路径
 		if(!file.isEmpty()) {
 			//上传文件路径
-			String path = "D:\\myHotel\\uploadFile";
+			String path = "D:/myHotel/uploadFile";
 			//数据库路径
-			fileUrl = "static/images/"+file.getOriginalFilename();
+			fileUrl = "/uploadFile/"+file.getOriginalFilename();
 
 			//上传文件名
 			String filename = file.getOriginalFilename();
@@ -190,7 +190,7 @@ public class ProductController {
 			//上传文件路径
 			String path = "D:\\myHotel\\uploadFile";
 			//数据库路径
-			fileUrl = "static/images/"+file.getOriginalFilename();
+			fileUrl = "/uploadFile/"+file.getOriginalFilename();
 
 			//上传文件名
 			String filename = file.getOriginalFilename();

@@ -1,12 +1,6 @@
 package org.itrip.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.Inet4Address;
-import java.net.Inet6Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.itrip.pojo.User;
 import org.itrip.service.UserService;
+import org.itrip.utils.CheckUtil;
 import org.itrip.utils.ImageUtil;
-import org.itrip.utils.LoginDate;
 import org.itrip.utils.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 /**
  * 用户管理
  * @author Administrator
@@ -105,6 +98,8 @@ public class IndexController {
 		//判断图片验证码
 		String numb = (String)request.getSession().getAttribute("code");
 		if(numb != null && numb.equalsIgnoreCase(user.getNumbs())) {
+			//加密比较
+			user.setPwd(CheckUtil.getSha1(user.getPwd()));
 			user = userService.getloginUser(user);
 			if(user != null) {
 				request.getSession().setAttribute("userSession", user);
@@ -181,6 +176,7 @@ public class IndexController {
 	@RequestMapping("insertUser.do")
 	@ResponseBody
 	public String insertUser(User user,HttpServletRequest request) {
+		user.setPwd(CheckUtil.getSha1(user.getPwd()));
 		int result = this.userService.insertUser(user);
 		if(result > 0) {
 			return "1";
@@ -194,8 +190,8 @@ public class IndexController {
 	@RequestMapping("updateUser.do")
 	@ResponseBody
 	public String updateUser(User user,HttpServletRequest request) {
+		user.setPwd(CheckUtil.getSha1(user.getPwd()));
 		int result=this.userService.updateUser(user);
-		System.out.println("修改状态值="+result);
 		if(result > 0) {
 			return "1";
 		}else {
@@ -308,6 +304,8 @@ public class IndexController {
 	@RequestMapping("addUser.do")
 	@ResponseBody
 	public String addUser(User user,HttpServletRequest request) {
+		//会员密码加密
+		user.setPwd(CheckUtil.getSha1(user.getPwd()));
 		int result = this.userService.addUser(user);
 		System.out.println(result);
 		if(result > 0) {
@@ -359,8 +357,8 @@ public class IndexController {
 	@RequestMapping("change-passwordUser.do")
 	@ResponseBody
 	public String changePasswordUser(HttpServletRequest request,User user) {
+		user.setPwd(CheckUtil.getSha1(user.getPwd()));
 		int result=this.userService.changePasswordpwd(user);
-		System.out.println("修改状态值="+result);
 		if(result > 0) {
 			return "1";
 		}else {
@@ -384,8 +382,8 @@ public class IndexController {
 	@RequestMapping("menber_updateUser.do")
 	@ResponseBody
 	public String menberUpdateUser(User user,HttpServletRequest request) {
+		user.setPwd(CheckUtil.getSha1(user.getPwd()));
 		int result=this.userService.updateUserUser(user);
-		System.out.println("修改状态值="+result);
 		if(result > 0) {
 			return "1";
 		}else {

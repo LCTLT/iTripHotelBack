@@ -18,8 +18,8 @@
 	</select>
 <!-- 添加酒店数据 -->
 	<insert id="insertHotel" parameterType="org.itrip.pojo.Hotel">
-		INSERT INTO hotel(`hotelId`,`productNo`,`hotelName`,`hotelAddress`,`hotelRating`, `hotelPrice`,`hotelIntro`,`hotelRatings`,`level1`,`level2`,`level3`,`fileUrl`,`hotelphone`) VALUES
-		(null,#{hotelName},#{hotelAddress},#{hotelRating},#{hotelPrice},#{hotelIntro},#{hotelRatings},#{level1},#{level2},#{level3},#{fileUrl},#{hotelphone});
+		INSERT INTO hotel(`productNo`,`hotelName`,`hotelAddress`,`hotelRating`, `hotelPrice`,`hotelIntro`,`hotelRatings`,`level1`,`level2`,`level3`,`fileUrl`,`hotelphone`) VALUES
+		(#{productNo},#{hotelName},#{hotelAddress},#{hotelRating},#{hotelPrice},#{hotelIntro},#{hotelRatings},#{level1},#{level2},#{level3},#{fileUrl},#{hotelphone});
 	</insert>
 <!-- 查询123级分类 -->
 	<select id="queryType1" resultType="org.itrip.pojo.Level">
