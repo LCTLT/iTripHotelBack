@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itrip.mapper.SystemMapper">
+<!-- 字典表页面查询 -->
+
+	<select id="listdictionarydate" resultType="org.itrip.pojo.Dictionarydate">
+		select * from dictionarydate order by id desc
+	</select>
+	
+	<select id="SystemId" resultType="org.itrip.pojo.Dictionarydate">
+	select * from dictionarydate where id=#{id}
+	</select>
+	
+	<update id="systemdictionarydate" parameterType="org.itrip.pojo.Dictionarydate">
+		UPDATE dictionarydate SET typeCode=#{typeCode},dictCode=#{dictCode},info=#{info},typeName=#{typeName} WHERE id=#{id};
+	</update>
+	
+	<!-- 删除单个用户 -->
+	<delete id="systemdelete" parameterType="int">
+		DELETE from dictionarydate where id=#{id}
+	</delete>
+
+	<!-- 删除多个用户 -->
+	<delete id="systemroledelete" parameterType="int">
+		DELETE from dictionarydate where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 添加数据 -->
+	<insert id="systemroleadd" parameterType="org.itrip.pojo.Dictionarydate">
+		INSERT INTO dictionarydate(`id`,`typeCode`,`dictCode`, `info`,`typeName`) VALUES
+		(null,#{typeCode},#{dictCode},#{info},#{typeName});
+	</insert>
+	
+	<select id="systemCount" resultType="int">
+		select count(id) from dictionarydate 
+	</select>
+
+</mapper>
+
+

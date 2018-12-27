@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>	
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -31,57 +32,57 @@
 	数据字典
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
-<div class="page-container">
-	<div class="text-c"> 字典名称:
-		<input type="text" class="input-text" id="" name="" style="width:150px">
-		表名:
-		<span class="select-box inline">
-		<select class="select" id="" name="">
-			<option value="0">选择一个系统表名</option>
-			<option value="AccountInfo">AccountInfo</option>
-			<option value="AdminInfo">AdminInfo</option>
-		</select>
-		</span>
-		字段名:
-		<span class="select-box inline">
-		<select class="select" id="" name="">
-		</select>
-		</span>
-		<input type="hidden" id="" name="">
-		<button type="submit" class="btn btn-primary radius" id="" name=""><i class="Hui-iconfont">&#xe600;</i> 添加字典</button>
+<div class="page-container">	
+	<div class="text-c">
+	<div style="color:red;margin-left:26%;" id="massage"></div>
+		对应外键:
+		<input type="text" class="input-text" id="typeCode" name="" style="width:80px">
+		配置项名称:
+		<input type="text" class="input-text" id="info" name="" style="width:80px">
+		义务代码编号:
+		<input type="text" class="input-text" id="dictCode" name="" style="width:80px">
+		字段说明:
+		<input type="text" class="input-text" id="typeName" name="" style="width:80px">
+		<button type="button" class="btn btn-primary radius" id="sace1" name="sace1"><i class="Hui-iconfont">&#xe600;</i>添加字典</button>
 	</div>
+
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
 		<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
 		</span>
-		<span class="r">共有数据：<strong>54</strong> 条</span>
-	</div>
+		<span class="r">共有数据：<strong>${count}</strong> 条</span>
+	</div> 
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="80">ID</th>
-					<th>名称</th>
-					<th width="105">表名</th>
-					<th width="105">字段名</th>
-					<th width="100">操作</th>
+					<th width="100">ID</th>
+					<th>对应外键</th>
+					<th width="135">业务代码编号</th>
+					<th width="135">配置项名称</th>
+					<th width="120">字段说明</th>
+					<th width="120">操作</th>
 				</tr>
 			</thead>
 			<tbody>
+			 <c:forEach var="system" items="${requestScope.systemlist}">
 				<tr class="text-c">
-					<td><input type="checkbox" value="" name=""></td>
-					<td>0001</td>
-					<td>城市</td>
-					<td>city</td>
-					<td>city</td>
-					<td class="f-14"><a style="text-decoration:none" onclick="system_data_edit('角色编辑','system-data-edit.html','0001','400','310')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
-						<a title="删除" href="javascript:;" onclick="system_data_del(this,'10001')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					<td><input type="checkbox" value="${system.id}" name="userName"></td>
+					<td>${system.id}</td>
+					<td>${system.typeCode}</td>
+					<td>${system.dictCode}</td>
+					<td>${system.info}</td>
+					<td>${system.typeName}</td>
+					<td class="f-14"><a style="text-decoration:none" href="system-add.do?id=${system.id}" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+	<a title="删除" href="javascript:;" onclick="system_data_del(this,'${system.id}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 				</tr>
+			</c:forEach>
 			</tbody>
 		</table>
 	</div>
 </div>
+<input type="hidden" id="password"  value="${sessionScope.userSession.pwd}">
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
@@ -93,6 +94,9 @@
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
+
+
+
 $('.table-sort').dataTable({
 	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
 	"bStateSave": true,//状态保存
@@ -101,26 +105,147 @@ $('.table-sort').dataTable({
 	  {"orderable":false,"aTargets":[0,5]}// 制定列不参与排序
 	]
 });
-/*数据字典-编辑*/
-function system_data_edit(title,url,id,w,h){
-  layer_show(title,url,w,h);
+
+/*用户-批量删除*/
+ 
+function datadel(obj) {
+	 layer.prompt({
+		    formType: 1
+		    ,title: '敏感操作，请输入登入密码'
+		  }, function(value, index){
+			  if($("#password").val() != value ){
+				  layer.msg('密码错误!', {
+						icon : 5,
+						time : 1000
+		 			});
+				  return;
+			  }else{
+				layer.confirm('角色删除须谨慎，确认要删除吗？', function(index) {
+					var arr = [];
+					$("input[name=userName]:checked").each(function(index, item) {
+						arr[index] = $(item).val();
+					});
+					
+					if (arr.length == 0) {
+						layer.msg('没有选择任何用户!', {
+							icon : 5,
+							time : 1000
+			 			});
+					}
+					if (arr.length > 0) {
+						$.get("system-deleteUser.do", {
+							arr : arr.toString()
+						}, function(data) {						
+							if(data > 0){
+								$("input[name=userName]:checked").each(function(index, item) {
+									$(item).parent().parent().remove();
+								});
+								layer.msg('已删除!', {
+									icon : 1,
+									time : 1000
+								});
+								setTimeout(function(){
+									location.reload();
+								}, 1500);
+							}else{
+								layer.msg('删除失败!', {
+									icon : 1,
+									time : 1000
+								});
+							}
+						});
+					}
+				});
+			  }
+		  });
 }
-/*数据字典-删除*/
-function system_data_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
+
+/*数据字典-编辑*/
+$("#sace1").click(function(){
+	var typeCode = $("#typeCode").val(); //获得name参数
+	var info= $("#info").val();
+	var dictCode= $("#dictCode").val();
+	var typeName= $("#typeName").val();
+	//提示
+	var massage = $("#massage");
+	
+	if(typeCode == "" || info=="" || dictCode=="" || typeName==""){
+		$("#massage").text("请确认填写完整！");
+	}else{
 		$.ajax({
-			type: 'POST',
-			url: '',
-			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
-			},
-			error:function(data) {
-				console.log(data.msg);
-			},
+			url:"system-role—add.do",
+			data:{
+				typeCode:typeCode,
+				info:info,
+				dictCode:dictCode,
+				typeName:typeName
+				},
+			type:"post",
+			success:function(data){
+				if(data == "1"){
+					layer.msg('添加成功!', {
+						icon : 1,
+						time : 1000
+					});
+					setTimeout(function(){
+						location = "system-data.do";
+					}, 2000);
+				}else{
+					layer.msg('添加失败!', {
+						icon : 1,
+						time : 1000
+					});
+				}				
+			}
 		});
-	});
+	}
+});
+
+/*数据字典-删除*/
+function system_data_del(obj, id) {	
+	layer.prompt({
+	    formType: 1
+	    ,title: '敏感操作，请输入登入密码'
+	  }, function(value, index){
+		  if($("#password").val() != value ){
+			  layer.msg('密码错误!', {
+					icon : 5,
+					time : 1000
+	 			});
+			  return;
+		  }else{
+			layer.confirm('角色删除须谨慎，确认要删除吗？', function(index) {
+				$.ajax({
+					type : 'POST',
+					url : 'system-delete.do',
+					data : {
+						id : id
+					},
+					dataType : 'text',
+					success : function(data) {	
+						if(data > 0){
+							$(obj).parents("tr").remove();
+							layer.msg('已删除!', {
+								icon : 1,
+								time : 1000
+							});
+							setTimeout(function(){
+								location = "system-data.do";
+							},2000);
+						}else{
+							layer.msg('删除失败!', {
+								icon : 1,
+								time : 1000
+							});
+						}
+					},
+					error : function(data) {
+						console.log(data.msg);
+					},
+				});
+			});
+		  }
+	  });
 }
 </script>
 </body>
