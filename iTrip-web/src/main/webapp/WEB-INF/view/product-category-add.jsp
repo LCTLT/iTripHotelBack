@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -11,7 +12,6 @@
 <!--[if lt IE 9]>
 <script type="text/javascript" src="lib/html5shiv.js"></script>
 <script type="text/javascript" src="lib/respond.min.js"></script>
-
 <![endif]-->
 <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
@@ -25,20 +25,54 @@
 </head>
 <body>
 <div class="page-container">
-	<form action="" method="post" class="form form-horizontal" id="form-user-add">
+	<form action="productsava.do" method="post" class="form form-horizontal" id="form-user-add" name="from">
+	<div class="row cl" id="le1" style="display:none">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>一级分类：</label>
+			<div class="formControls col-xs-8 col-sm-9"><span class="select-box">
+				<select name="parentId" id="level1" class="select">
+				<c:forEach items="${types1}" var="type1">
+					<option value="${type1.id}" <c:if test="${type1.id eq hotel.level1}">selected</c:if>>${type1.name}</option>
+				</c:forEach>
+				</select></span>
+			</div>
+		</div>
+		<div class="row cl" id="le2" style="display:none">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>二级分类：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="parentId" id="level2" class="select">
+					<c:forEach items="${types2}" var="type2">
+					<option value="${type2.id}" <c:if test="${type2.id eq hotel.level2}">selected</c:if>>${type2.name}</option>
+				</c:forEach>
+				</select>
+				</span> </div>
+		</div>
+		<div class="row cl" id="le3" style="display:none">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>三级分类：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="level3" id="level3" class="select">
+					<c:forEach items="${types3}" var="type3">
+					<option value="${type3.id}" <c:if test="${type3.id eq hotel.level3}">selected</c:if>>${type3.name}</option>
+				</c:forEach>
+				</select>
+				</span>
+			 </div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择要添加的分类类型：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="type" id="level0" class="select">
+				<option value="1">一级分类</option>
+				<option value="2">二级分类</option>
+				<option value="3">三级分类</option>
+				</select>
+				</span> </div>
+		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">
 				<span class="c-red">*</span>
 				分类名称：</label>
 			<div class="formControls col-xs-6 col-sm-6">
-				<input type="text" class="input-text" value="" placeholder="" id="user-name" name="product-category-name">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">备注：</label>
-			<div class="formControls col-xs-6 col-sm-6">
-				<textarea name="" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" onKeyUp="$.Huitextarealength(this,100)"></textarea>
-				<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+				<input type="text" class="input-text" value="" placeholder="" id="user-name" name="name">
 			</div>
 		</div>
 		<div class="row cl">
@@ -60,8 +94,90 @@
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
 $(function(){
+	//一级分类下拉 加载二级分类
+	$("#level0").change(function(){
+		if($(this).val() == "1"){
+			$("#level1 option:selected").val(0);
+			$("#le1").css("display","none");
+			$("#le2").css("display","none");
+			$("#le3").css("display","none");
+			return;
+		}
+		if($(this).val() == "2"){
+			$("#le1").css("display","");
+			$("#le2").css("display","none");
+			levelDisabled();
+			return;
+		}
+		if($(this).val() == "3"){
+			$("#le1").css("display","");
+			$("#le2").css("display","");
+			var id = $("#level1").val();
+			if($("#level2").val() == null){
+				querylevel(id);
+			}
+			return;
+		}
+	});
+	//一级分类下拉 加载二级分类
+	$("#level1").change(function(){
+		if($(this).val() == "请选择"){
+			$("#level2").html("");
+			return;
+		}
+		//获取选中的id
+		var id = $(this).val();
+		querylevel(id);
+		levelDisabled();
+	}); 
 	
+	$("#form-user-add").submit(function(){
+		var level0 = $("#level0").val();
+		if(level0 == 3){
+			$("#level1").attr("name","")
+		}else if(level0 == 1){
+			$("#level1").children("option").each(function(index,item){
+				$(item).val("0");
+			}) 
+		}
+		if(from.name.value==""){
+			{layer.msg('分类名称不能为空!', {
+				icon : 2,
+				time : 2000
+			});return false;}
+		}
+	});
 });
+function querylevel(id){
+    $.ajaxSettings.async = false; //把异步变为同步等待回调函数success完成才执行后面的语句
+	$.getJSON("level2-list.do",{id:id},function(result){
+		//清空二级分类
+		var level2 = $("#level2");
+		level2.html("");
+		//拼接的字符
+		var option = '';
+		//添加
+		for (var i = 0; i < result.length; i++) {
+			option +='<option value="'+result[i].id+'">'+result[i].name+'</option>';
+		}
+		level2.append(option);
+	});
+}
+function levelDisabled(){
+	var level2 = $("#level2").val();
+	var level0 = $("#level0").val();
+	console.log("level2="+level2);
+	console.log(level2==null);
+	if(level0 == 3 && level2 == null){
+		$("#user-name").val("不可添加");
+		$("#user-name").attr("disabled","disabled");
+		$("input[type=submit]").attr("disabled","disabled");	
+	}else{
+		$("#user-name").val("");
+		$("#user-name").removeAttr("disabled");
+		$("input[type=submit]").removeAttr("disabled");
+	}
+}
 </script>
 </body>
 </html>

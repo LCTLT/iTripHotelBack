@@ -61,4 +61,20 @@ public interface ProductMapper {
 	 * 读取酒店星级
 	 */
 	List<Dictionarydate> getQueryList();
+	/**
+	 * 分类管理添加
+	 */
+	int savaLevel(Level level);
+	/**
+	 * 查询分类
+	 */
+	List<Level> seleLevel();
+	/**
+	 * 修改分类
+	 */
+	int updateLevel(Level level);
+	/**
+	 * 删除分类
+	 */
+	int deleLevel(int id);
 }

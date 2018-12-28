@@ -86,4 +86,28 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.getQueryList();
 	}
 
+	@Override
+	public int savaLevel(Level level) {
+		// TODO Auto-generated method stub
+		return productMapper.savaLevel(level);
+	}
+
+	@Override
+	public List<Level> seleLevel() {
+		// TODO Auto-generated method stub
+		return productMapper.seleLevel();
+	}
+
+	@Override
+	public int updateLevel(Level level) {
+		// TODO Auto-generated method stub
+		return productMapper.updateLevel(level);
+	}
+
+	@Override
+	public int deleLevel(int id) {
+		// TODO Auto-generated method stub
+		return productMapper.deleLevel(id);
+	}
+
 }

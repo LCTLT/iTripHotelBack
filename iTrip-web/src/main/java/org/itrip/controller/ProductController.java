@@ -37,6 +37,17 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 
+	@RequestMapping("productsava.do")
+	public String  productsava(HttpServletRequest request,Level level) {
+		int sava=productService.savaLevel(level);
+		System.out.println("是否添加成功          "+sava);
+		if (sava>0) {
+			return "product-category-add";
+		}else {
+			return "product-category-add";
+		}
+	}
+	
 	/**
 	 * 品牌管理
 	 */
@@ -48,14 +59,17 @@ public class ProductController {
 	 * 分类管理
 	 */
 	@RequestMapping("product-category.do")
-	public String productCategory() {
+	public String productCategory(HttpServletRequest request) {
+		List<Level> levels=productService.seleLevel();
+		request.setAttribute("level", levels);
 		return "product-category";
 	}
 	/**
 	 * 分类显示
 	 */
 	@RequestMapping("product-category-add.do")
-	public String productCategoryAdd() {
+	public String productCategoryAdd(HttpServletRequest request) {
+		request.setAttribute("types1", productService.queryType1());
 		return "product-category-add";
 	}
 	/**
@@ -138,9 +152,9 @@ public class ProductController {
 		//如果文件不为空，写入上传路径
 		if(!file.isEmpty()) {
 			//上传文件路径
-			String path = "D:/myHotel/uploadFile";
+			String path = "D:\\myHotel\\uploadFile";
 			//数据库路径
-			fileUrl = "/uploadFile/"+file.getOriginalFilename();
+			fileUrl = "static/images/"+file.getOriginalFilename();
 
 			//上传文件名
 			String filename = file.getOriginalFilename();
@@ -190,7 +204,7 @@ public class ProductController {
 			//上传文件路径
 			String path = "D:\\myHotel\\uploadFile";
 			//数据库路径
-			fileUrl = "/uploadFile/"+file.getOriginalFilename();
+			fileUrl = "static/images/"+file.getOriginalFilename();
 
 			//上传文件名
 			String filename = file.getOriginalFilename();
@@ -246,5 +260,35 @@ public class ProductController {
 		int result = productService.deleteHotelList(arr);
 		return result;
 	}
-
+	
+	/**
+	 * 修改分类
+	 * @param request
+	 * @param level
+	 * @return
+	 */
+	@RequestMapping("product-updateLevel.do")
+	public String productUpdateLevle(HttpServletRequest request,Level level) {
+		int result=this.productService.updateLevel(level);
+		System.out.println("分类修改状态值="+result);
+		if(result > 0) {
+			return "forward:/product-category.do";
+		}else {
+			return "forward:/product-category.do";
+		}
+	}
+	
+	/**
+	 * 删除分类
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("product-deleLevel.do")
+	@ResponseBody
+	public int productDeleLevel(@RequestParam("id")int id) {
+		int resu=this.productService.deleLevel(id);
+		System.out.println("int i="+id+"/");
+		return resu;
+	}
 }
