@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.itrip.mapper.UserMapper">
-
-	<!-- 开启redis缓存，如不想缓存的数据加上 useCache=”false” 不写为默认开启状态-->
-	<cache type="org.itrip.utils.redis.RedisCache" />
 	
 	<resultMap id="BaseResultMap" type="org.itrip.pojo.User">
 		<id column="id" property="id" jdbcType="INTEGER" />
@@ -12,11 +9,9 @@
 		<result column="password" property="password"
 			jdbcType="VARCHAR" />
 	</resultMap>
-	
-	<cache eviction="LRU" type="org.itrip.utils.redis.LoggingRedisCache"/>
 	<!-- 数据库字段 -->
 	<sql id="Base_Column_List">
-		id, name, phone,sex,birthday,email,address,status
+		id, name, phone,pwd,sex,birthday,email,address,status
 	</sql>
 	<!-- 用户查询 -->
 	<select id="queryUserList" resultType="org.itrip.pojo.User">

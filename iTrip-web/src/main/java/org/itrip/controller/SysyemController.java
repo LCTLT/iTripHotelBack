@@ -7,9 +7,12 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.itrip.pojo.Dictionarydate;
+import org.itrip.pojo.User;
 import org.itrip.service.SystemService;
+import org.itrip.utils.CheckUtil;
 import org.itrip.utils.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -99,7 +102,25 @@ public class SysyemController {
 		}
 		
 	}
-	
+	/**
+	 * 敏感操作密码验证
+	 */
+	@RequestMapping("boolpwd.do")
+	@ResponseBody
+	public String checkBoolPwd(@RequestParam("pwd")String pwd,HttpSession session) {
+		try {
+			//获取session
+			User user = (User)session.getAttribute("userSession");
+			
+			if(user.getPwd().equals(CheckUtil.getSha1(pwd))) {
+				//验证成功
+				return "1";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "0"; //验证失败
+	}
 	
 	
 }

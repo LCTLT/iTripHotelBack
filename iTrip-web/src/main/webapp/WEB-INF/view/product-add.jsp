@@ -236,7 +236,7 @@ $(function(){
 				icon : 2,
 				time : 2000
 			});return false;}
-		}else if(!((/^[0-5]{1}.[0-5]{1}$/).test(form.hotelRatings.value))){
+		}else if(!((/^[0-5]{1}.[0-5]{1}|[0-5]$/).test(form.hotelRatings.value))){
 			{layer.msg('酒店评分为0.1-5.0分!', {
 				icon : 2,
 				time : 2000

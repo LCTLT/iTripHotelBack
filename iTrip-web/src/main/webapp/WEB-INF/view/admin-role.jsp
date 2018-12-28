@@ -36,7 +36,7 @@
 			href="javascript:location.replace(location.href);" title="刷新"><i
 			class="Hui-iconfont">&#xe68f;</i></a>
 	</nav>
-	
+
 	<div class="page-container">
 		<div class="cl pd-5 bg-1 bk-gray">
 			<span class="l"> <a href="javascript:;" onclick="datadel()"
@@ -65,7 +65,8 @@
 			<tbody>
 				<c:forEach var="user" items="${requestScope.userList}">
 					<tr class="text-c" name="checkTr">
-						<td><input type="checkbox" value="${user.id}" name="userName" <c:if test="${userSession.id == user.id}">disabled</c:if>></td>
+						<td><input type="checkbox" value="${user.id}" name="userName"
+							<c:if test="${userSession.id == user.id}">disabled</c:if>></td>
 						<td>${user.id}</td>
 						<td>超级管理员</td>
 						<td><a href="#">${user.name}</a></td>
@@ -77,14 +78,12 @@
 							style="text-decoration: none"><i class="Hui-iconfont">&#xe6df;</i></a>
 							<c:if test="${userSession.id != user.id}">
 								<a title="删除" href="javascript:;"
-								onclick="admin_role_del(this,${user.id})" class="ml-5"
-								style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-							</c:if>
-							<c:if test="${userSession.id eq user.id}">
+									onclick="admin_role_del(this,${user.id})" class="ml-5"
+									style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+							</c:if> <c:if test="${userSession.id eq user.id}">
 								<a title="不可删除" href="javascript:;" class="ml-5"
-								style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-							</c:if>
-						</td>
+									style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+							</c:if></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -140,71 +139,102 @@
 		function admin_role_edit(title, url, id, w, h) {
 			layer_show(title, url, w, h);
 		}
+		
 		function admin_role_del(obj, id) {
-			layer.confirm('角色删除须谨慎，确认要删除吗？', function(index) {
-				$.ajax({
-					type : 'POST',
-					url : 'admin-delete.do',
-					data : {
-						id : id
-					},
-					dataType : 'text',
-					success : function(data) {	
-						if(data > 0){
-							$(obj).parents("tr").remove();
-							layer.msg('已删除!', {
-								icon : 1,
-								time : 1000
+			layer.prompt({
+				formType : 1,
+				title : '敏感操作，请输入登入密码'
+			}, function(value, index) {
+				$.post("boolpwd.do",{pwd:value},function(data){
+					if (data == "0") {
+						layer.msg('密码错误!', {
+							icon : 5,
+							time : 1000
+						});
+						return;
+				    } else {
+						layer.confirm('角色删除须谨慎，确认要删除吗？', function(index) {
+							$.ajax({
+								type : 'POST',
+								url : 'admin-delete.do',
+								data : {
+									id : id
+								},
+								dataType : 'text',
+								success : function(data) {	
+									if(data > 0){
+										$(obj).parents("tr").remove();
+										layer.msg('已删除!', {
+											icon : 1,
+											time : 1000
+										});
+										setTimeout(function(){
+											location = "admin-role.do";
+										},2000);
+									}else{
+										layer.msg('删除失败!', {
+											icon : 1,
+											time : 1000
+										});
+									}
+								},
+								error : function(data) {
+									console.log(data.msg);
+								},
 							});
-							setTimeout(function(){
-								location = "admin-role.do";
-							},2000);
-						}else{
-							layer.msg('删除失败!', {
-								icon : 1,
-								time : 1000
-							});
-						}
-					},
-					error : function(data) {
-						console.log(data.msg);
-					},
+						});
+				    }
 				});
 			});
 		}
 		//批量删除，获得所有id
 		function datadel(obj) {
-			if (confirm('角色删除须谨慎，确认要删除吗？')) {
-				//获得选中所有value
-				var arr = [];
-				$("input[name=userName]:checked").each(function(index, item) {
-					arr[index] = $(item).val();
-				});
-				
-				if (arr.length == 0) {
-					alert("你还没有选择任何内容！");
-				}
-				if (arr.length > 0) {
-					$.get("admin-deleteUser.do", {
-						arr : arr.toString()
-					}, function(data) {						
-						if(data > 0){
+			layer.prompt({
+				formType : 1,
+				title : '敏感操作，请输入登入密码'
+			}, function(value, index) {
+				$.post("boolpwd.do",{pwd:value},function(data){
+					if (data == "0") {
+						layer.msg('密码错误!', {
+							icon : 5,
+							time : 1000
+						});
+						return;
+				    } else {
+					    layer.confirm('角色删除须谨慎，确认要删除吗？', function(index) {
+							//获得选中所有value
+							var arr = [];
 							$("input[name=userName]:checked").each(function(index, item) {
-								$(item).parent().parent().remove();
+								arr[index] = $(item).val();
 							});
-							layer.msg('已删除!', {
-								icon : 1,
-								time : 1000
-							});
-						}else{
-							layer.msg('删除失败!', {
-								icon : 1,
-								time : 1000
-							});
-						}
-					});
-				}
-			}
+							
+							if (arr.length == 0) {
+								alert("你还没有选择任何内容！");
+							}
+							if (arr.length > 0) {
+								$.get("admin-deleteUser.do", {
+									arr : arr.toString()
+								}, function(data) {						
+									if(data > 0){
+										$("input[name=userName]:checked").each(function(index, item) {
+											$(item).parent().parent().remove();
+										});
+										layer.msg('已删除!', {
+											icon : 1,
+											time : 1000
+										});
+									}else{
+										layer.msg('删除失败!', {
+											icon : 1,
+											time : 1000
+										});
+									}
+								});
+							}
+					    });
+				    }
+				});
+			});
 		}
 	</script>
 </body>

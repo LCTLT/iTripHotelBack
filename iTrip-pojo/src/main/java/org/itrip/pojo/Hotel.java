@@ -1,5 +1,6 @@
 package org.itrip.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,8 +9,12 @@ import java.util.Date;
  *
  */
 
-public class Hotel {
+public class Hotel implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int hotelId;    //酒店id
 	private String productNo;  //产品编号
 	private String hotelName;  //酒店名称

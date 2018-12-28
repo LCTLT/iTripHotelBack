@@ -245,15 +245,6 @@ public class IndexController {
 		int result = userService.deleteDelList(arr);
 		return result;
 	}
-	
-	/**
-	 * 数据字典管理
-	 */
-	@RequestMapping("system-data.do")
-	public String systemData() {
-		return "system-data";
-	}
-	
 	/**
 	 * 获取本机ip
 	 * @throws UnknownHostException 

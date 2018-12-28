@@ -7,34 +7,52 @@
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <!--[if lt IE 9]>
 <script type="text/javascript" src="lib/html5shiv.js"></script>
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css"
+	href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui.admin/css/style.css" />
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>建材列表</title>
 <style type="text/css">
- table{table-layout:fixed;word-bread:bread-all;}
+table {
+	table-layout: fixed;
+	word-bread: bread-all;
+}
 </style>
-<link rel="stylesheet" href="lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="lib/zTree/v3/css/zTreeStyle/zTreeStyle.css"
+	type="text/css">
 </head>
 <body class="pos-r">
-<div class="pos-a" style="width:120px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;">
-	<ul id="treeDemo" class="ztree"></ul>
-</div>
-<div style="margin-left:120px;">
-	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 酒店管理 <span class="c-gray en">&gt;</span> 酒店列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-	<!-- <div class="page-container">
+	<div class="pos-a"
+		style="width: 120px; left: 0; top: 0; bottom: 0; height: 100%; border-right: 1px solid #e5e5e5; background-color: #f5f5f5; overflow: auto;">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div style="margin-left: 120px;">
+		<nav class="breadcrumb">
+			<i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
+			酒店管理 <span class="c-gray en">&gt;</span> 酒店列表 <a
+				class="btn btn-success radius r"
+				style="line-height: 1.6em; margin-top: 3px"
+				href="javascript:location.replace(location.href);" title="刷新"><i
+				class="Hui-iconfont">&#xe68f;</i></a>
+		</nav>
+		<!-- <div class="page-container">
 		<div class="text-c"> 日期范围：
 			<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
 			-
@@ -42,9 +60,18 @@
 			<input type="text" name="" id="" placeholder=" 酒店名称" style="width:250px" class="input-text">
 			<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜酒店</button>
 		</div> -->
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="product_add('添加酒店','product-add.do?type=1&hotelId=0')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加酒店</a></span> <span class="r">共有数据：<strong>${count}</strong> 条</span> </div>
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l"><a href="javascript:;" onclick="datadel()"
+				class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i>
+					批量删除</a> <a class="btn btn-primary radius"
+				onclick="product_add('添加酒店','product-add.do?type=1&hotelId=0')"
+				href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加酒店</a></span> <span
+				class="r">共有数据：<strong>${count}</strong> 条
+			</span>
+		</div>
 		<div class="mt-20">
-			<table class="table table-border table-bordered table-bg table-hover table-sort">
+			<table
+				class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
 						<th width="40"><input name="" type="checkbox" value=""></th>
@@ -62,42 +89,57 @@
 					</tr>
 				</thead>
 				<tbody>
-				<c:forEach var="hotel" items="${hotelList}">
-					<tr class="text-c va-m">
-						<td><input name="userName" type="checkbox" value="${hotel.hotelId}"></td>
-						<td>${hotel.hotelId}</td>
-						<td><img width="60" class="product-thumb" src="${hotel.fileUrl}"></td>
-						<td class="text-l"><b class="text-success"></b>${hotel.hotelName}</td>
-						<td class="text-l">${hotel.hotelAddress}</td>
-						<td class="text-l">${hotel.hotelRatings}</td>
-						<td class="text-l">${hotel.hotelRating}</td>
-						<td class="text-l">${hotel.hotelphone}</td>	
-						<td class="text-l">
-						<div id="divContent" style="width: 100%;height: 70px;overflow: auto">
-						${hotel.hotelIntro}
-						</div>
-						</td>
-						<td class="text-l">${hotel.hotelPrice}</td>
-						<td class="td-status"><span class="label label-success radius">已发布</span></td>
-						<td class="td-manage"><a style="text-decoration:none" onClick="product_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_edit('酒店编辑','product-add.do?type=2&hotelId=${hotel.hotelId}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_del(this,'${hotel.hotelId}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-					</tr>
+					<c:forEach var="hotel" items="${hotelList}">
+						<tr class="text-c va-m">
+							<td><input name="userName" type="checkbox"
+								value="${hotel.hotelId}"></td>
+							<td>${hotel.hotelId}</td>
+							<td><img width="60" class="product-thumb"
+								src="${hotel.fileUrl}"></td>
+							<td class="text-l"><b class="text-success"></b>${hotel.hotelName}</td>
+							<td class="text-l">${hotel.hotelAddress}</td>
+							<td class="text-l">${hotel.hotelRatings}</td>
+							<td class="text-l">${hotel.hotelRating}</td>
+							<td class="text-l">${hotel.hotelphone}</td>
+							<td class="text-l">
+								<div id="divContent"
+									style="width: 100%; height: 70px; overflow: auto">
+									${hotel.hotelIntro}</div>
+							</td>
+							<td class="text-l">${hotel.hotelPrice}</td>
+							<td class="td-status"><span
+								class="label label-success radius">已发布</span></td>
+							<td class="td-manage"><a style="text-decoration: none"
+								onClick="product_stop(this,'10001')" href="javascript:;"
+								title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a
+								style="text-decoration: none" class="ml-5"
+								onClick="product_edit('酒店编辑','product-add.do?type=2&hotelId=${hotel.hotelId}','10001')"
+								href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+								<a style="text-decoration: none" class="ml-5"
+								onClick="product_del(this,'${hotel.hotelId}')"
+								href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
 	</div>
-<!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
-<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
-<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+	<!--_footer 作为公共模版分离出去-->
+	<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+	<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+	<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
+	<!--/_footer 作为公共模版分离出去-->
 
-<!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
-<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script> 
-<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
-<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
-<script type="text/javascript">
+	<!--请在下方写此页面业务相关的脚本-->
+	<script type="text/javascript"
+		src="lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
+	<script type="text/javascript"
+		src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	<script type="text/javascript"
+		src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+	<script type="text/javascript">
 var setting = {
 	view: {
 		dblClickExpand: false,
@@ -219,73 +261,104 @@ function product_edit(title,url,id){
 
 /*产品-删除*/
 function product_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
-		$.ajax({
-			type: 'POST',
-			url: 'product-delete.do',
-			data : {
-				hotelId : id
-			},
-			dataType: 'text',
-			success: function(data){
-				if(data>0){
-					$(obj).parents("tr").remove();
-					layer.msg('已删除!',{
-						icon:1,
-						time:1000
-					});
-					setTimeout(function(){
-						location.reload();
-					},1500);
-				}else{
-					layer.msg('删除失败!', {
-						icon : 1,
-						time : 1000
-					});
-				}
-			},
-			error:function(data) {
-				console.log(data.msg);
-			},
-		});		
+	layer.prompt({
+		formType : 1,
+		title : '敏感操作，请输入登入密码'
+	}, function(value, index) {
+		$.post("boolpwd.do",{pwd:value},function(data){
+			if (data == "0") {
+				layer.msg('密码错误!', {
+					icon : 5,
+					time : 1000
+				});
+				return;
+		    } else {
+				layer.confirm('删除需谨慎,确认要删除吗？',function(index){
+					$.ajax({
+						type: 'POST',
+						url: 'product-delete.do',
+						data : {
+							hotelId : id
+						},
+						dataType: 'text',
+						success: function(data){
+							if(data>0){
+								$(obj).parents("tr").remove();
+								layer.msg('已删除!',{
+									icon:1,
+									time:1000
+								});
+								setTimeout(function(){
+									location.reload();
+								},1500);
+							}else{
+								layer.msg('删除失败!', {
+									icon : 1,
+									time : 1000
+								});
+							}
+						},
+						error:function(data) {
+							console.log(data.msg);
+						},
+					});		
+				});
+		    }
+		});
 	});
+		
 }
 	//批量删除，获得所有id
 	function datadel(obj) {
-		if (confirm('删除多个酒店须谨慎，确认要删除吗？')) {
-			//获得选中所有value
-			var arr = [];
-			$("input[name=userName]:checked").each(function(index, item) {
-				arr[index] = $(item).val();
-			});
-			
-			if (arr.length == 0) {
-				alert("你还没有选择任何内容！");
-			}
-			if (arr.length > 0) {
-				$.get("product-deleteHotel.do", {
-					arr : arr.toString()
-				}, function(data) {						
-					if(data > 0){
+		layer.prompt({
+			formType : 1,
+			title : '敏感操作，请输入登入密码'
+		}, function(value, index) {
+			$.post("boolpwd.do",{pwd:value},function(data){
+				if (data == "0") {
+					layer.msg('密码错误!', {
+						icon : 5,
+						time : 1000
+					});
+					return;
+			    } else {
+					if (confirm('删除多个酒店须谨慎，确认要删除吗？')) {
+						//获得选中所有value
+						var arr = [];
 						$("input[name=userName]:checked").each(function(index, item) {
-							$(item).parent().parent().remove();
+							arr[index] = $(item).val();
 						});
-						layer.msg('已删除!', {
-							icon : 1,
-							time : 1000
-						});
-						setTimeout(function(){
-							location.reload();
-						},1500);
-					}else{
-						layer.msg('删除失败!', {
-							icon : 1,
-							time : 1000
-						});
+						
+						if (arr.length == 0) {
+							alert("你还没有选择任何内容！");
+						}
+						if (arr.length > 0) {
+							$.get("product-deleteHotel.do", {
+								arr : arr.toString()
+							}, function(data) {						
+								if(data > 0){
+									$("input[name=userName]:checked").each(function(index, item) {
+										$(item).parent().parent().remove();
+									});
+									layer.msg('已删除!', {
+										icon : 1,
+										time : 1000
+									});
+									setTimeout(function(){
+										location.reload();
+									},1500);
+								}else{
+									layer.msg('删除失败!', {
+										icon : 1,
+										time : 1000
+									});
+								}
+							});
+						}
 					}
-				});
-			}
-		}
+			    }
+			});
+		});
 }
 </script>
 </body>
