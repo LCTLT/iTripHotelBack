@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -12,11 +13,17 @@
 <script type="text/javascript" src="lib/html5shiv.js"></script>
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css"
+	href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="static/css/pagination.css" />
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -27,44 +34,50 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 房型管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="text-c">
-		<form class="Huiform" method="post" action="" target="_self">
-			<input type="text" placeholder="分类名称" value="" class="input-text" style="width:120px">
-			<span class="btn-upload form-group">
-			<input class="input-text upload-url" type="text" name="uploadfile-2" id="uploadfile-2" readonly style="width:200px">
-			<a href="javascript:void();" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i> 上传logo</a>
-			<input type="file" multiple name="file-2" class="input-file">
-			</span> <span class="select-box" style="width:150px">
-			<select class="select" name="brandclass" size="1">
-				<option value="1" selected>国内品牌</option>
-				<option value="0">国外品牌</option>
-			</select>
-			</span><button type="button" class="btn btn-success" id="" name="" onClick="picture_colume_add(this);"><i class="Hui-iconfont">&#xe600;</i> 添加</button>
+		<form class="product-brand.do" method="post" action="" target="_self">
+		<input type="text" class="input-text" style="width:250px" placeholder="输入房型名称" id="house" name="house" value="${ist}">
+		<input type="submit" class="btn btn-success radius" id="radius" name=""><i class="Hui-iconfont">&#xe665;</i>搜索房型</input>
 		</form>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span>&nbsp;&nbsp;&nbsp;<a class="btn btn-primary radius" href="javascript:;" onclick="product_add('添加房型','product-brand-add.do?type=1&hotelId=0')"><i class="Hui-iconfont">&#xe600;</i>添加房型</a> <span class="r">共有数据：<strong>${count}</strong> 条</span> </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-sort">
 			<thead>
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="70">ID</th>
-					<th width="80">排序</th>
-					<th width="200">LOGO</th>
-					<th width="120">品牌名称</th>
-					<th>具体描述</th>
+					<th width="25">ID</th>
+					<th width="80">酒店名称</th>
+					<th width="35">房间类型</th>
+					<th width="200">房间简介</th>
+					<th width="30">价格</th>
+					<th width="30">饮食</th>
 					<th width="100">操作</th>
 				</tr>
 			</thead>
 			<tbody>
+				<c:forEach var="hotel" items="${requestScope.hotel}">
 				<tr class="text-c">
-					<td><input name="" type="checkbox" value=""></td>
-					<td>1</td>
-					<td><input type="text" class="input-text text-c" value="1"></td>
-					<td><img src="temp/brand/dongpeng.jpeg"></td>
-					<td class="text-l"><img title="国内品牌" src="static/h-ui.admin/images/cn.gif"> 东鹏</td>
-					<td class="text-l">东鹏陶瓷被评为“中国名牌”、“国家免检产品”、“中国驰名商标”、http://www.dongpeng.net/</td>
-					<td class="f-14 product-brand-manage"><a style="text-decoration:none" onClick="product_brand_edit('品牌编辑','codeing.html','1')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="active_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					<td><input name="userName" type="checkbox" value="${hotel.hotelId}"></td>
+					<td><span name="id">${hotel.hotelId}</span></td>
+					<td>${hotel.hotelName}</td>
+					<td>${hotel.houseType}</td>
+					<td class="text-l">
+					<div id="divContent" style="width: 100%;height: 70px;overflow: auto">
+						${hotel.contentOne},${hotel.contentTow},${hotel.contentThree},${hotel.contentFour},${hotel.contentFive}
+						</div>
+						</td>
+					<td>${hotel.housePrice}</td>
+					<td>
+					<c:if test="${hotel.isHavingBreakfast eq 1}">
+					   含早餐
+					</c:if>
+					<c:if test="${hotel.isHavingBreakfast eq 0}">
+					   不含早餐
+					</c:if>
+					</td>
+					<td class="f-14 product-brand-manage"><a style="text-decoration:none" onclick="product_edit('修改房型','product-brand-add.do?type=2&hotelId=${hotel.hotelId}&houseId=${hotel.houseId}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="member_del(this,'${hotelId}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 				</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>
@@ -88,6 +101,95 @@ $('.table-sort').dataTable({
 	  {"orderable":false,"aTargets":[0,6]}// 制定列不参与排序
 	]
 });
+
+/*产品-添加*/
+function product_add(title,url){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+/*产品-编辑*/
+function product_edit(title,url,id){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+/*用户-删除*/
+function member_del(obj,id){
+	layer.confirm('角色删除须谨慎，确认要删除吗？', function(index) {
+		$.ajax({
+			type : 'POST',
+			url : 'product-brand-del.do',
+			data : {
+				id : id
+			},
+			dataType : 'text',
+			success : function(data) {	
+				if(data > 0){
+					$(obj).parents("tr").remove();
+					layer.msg('已删除!', {
+						icon : 1,
+						time : 1000
+					});
+					setTimeout(function(){
+						location.reload();
+					},1500);
+				}else{
+					layer.msg('删除失败!', {
+						icon : 1,
+						time : 1000
+					});
+				}
+			},
+			error : function(data) {
+				console.log(data.msg);
+			},
+		});		
+	});
+}
+//批量删除，获得所有id
+function datadel(obj) {
+	if (confirm('角色删除须谨慎，确认要删除吗？')) {
+		//获得选中所有value
+		var arr = [];
+		$("input[name=userName]:checked").each(function(index, item) {
+			arr[index] = $(item).val();
+		});
+		
+		if (arr.length == 0) {
+			alert("你还没有选择任何内容！");
+		}
+		if (arr.length > 0) {
+			$.get("product-brand-delList.do", {
+				arr : arr.toString()
+			}, function(data) {						
+				if(data > 0){
+					$("input[name=userName]:checked").each(function(index, item) {
+						$(item).parent().parent().remove();
+					});
+					layer.msg('已删除!', {
+						icon : 1,
+						time : 1000
+					});
+					setTimeout(function(){
+						location.reload();
+					},1500);
+				}else{
+					layer.msg('删除失败!', {
+						icon : 1,
+						time : 1000
+					});
+				}
+			});
+		}
+	  }
+	}
 </script>
 </body>
 </html>

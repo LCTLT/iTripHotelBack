@@ -28,8 +28,14 @@ public class House implements Serializable {
 	private String createBy;//创建人
 	private Date modifyDate;//修改时间
 	private String modifide;//修改人
+	private String hotelName;  //酒店名称
 	
-	
+	public String getHotelName() {
+		return hotelName;
+	}
+	public void setHotelName(String hotelName) {
+		this.hotelName = hotelName;
+	}
 	public int getHouseId() {
 		return houseId;
 	}

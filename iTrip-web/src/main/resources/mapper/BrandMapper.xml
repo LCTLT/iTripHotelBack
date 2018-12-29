@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itrip.mapper.BrandMapper">
+	
+	<select id="querylist" resultType="org.itrip.pojo.House">
+    select a.houseId,a.hotelId,a.houseType,a.housePrice,a.contentOne,a.isHavingBreakfast,
+    a.contentTow,a.contentThree,a.contentFour,a.contentFive,
+	(select hotelName  from hotel b where a.hotelId = b.hotelId) as hotelName 
+	from house a 
+	<where>
+	<if test="house!='' and house!=null">
+	houseType LIKE CONCAT ('%',#{house},'%')
+	</if>
+	</where>
+	</select>
+	
+	<select id="queryList" resultType="int">
+	select count(1) from house
+	<where>
+	<if test="house!='' and house!=null">
+	houseType LIKE CONCAT ('%',#{house},'%')
+	</if>
+	</where>
+	</select>
+	
+	<delete id="deleteDel">
+	     delete from house where hotelId=#{id}
+	</delete>
+	
+	<delete id="deleteDelList" parameterType="int">
+	delete from house where  hotelId in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<select id="queryType4" resultType="org.itrip.pojo.House">
+	select houseId,houseType,housePrice,contentOne,isHavingBreakfast,
+    contentTow,contentThree,contentFour,contentFive  from house
+    where  houseId=#{houseId}
+	</select>
+	
+	<select id="querylevel4" resultType="org.itrip.pojo.Hotel">
+	select hotelId,level1,level2,level3,hotelName from hotel
+	<where>
+	<if test="level1!='' and level1!=null">
+	   level1=#{level1}
+	</if>
+	<if test="level2!='' and level2!=null">
+	   and level2=#{level2}
+	</if>
+	<if test="level3!='' and level3!=null">
+	   and level3=#{level3}
+	</if>
+	</where>
+	</select>
+	
+	<insert id="insertHouse" >
+	INSERT INTO  house (hotelId,houseType,housePrice,isHavingBreakfast,contentOne,contentTow,contentThree,contentFour,
+    contentFive,creationDate,createBy) VALUES (#{hotelId},#{houseType},
+    #{housePrice},#{isHavingBreakfast}, #{contentOne},#{contentTow},#{contentThree},
+    #{contentFour},#{contentFive},now(),#{createBy});
+	</insert>
+	
+	<update id="updateHouse" parameterType="org.itrip.pojo.House">
+	UPDATE house SET houseType=#{houseType},housePrice=#{housePrice},isHavingBreakfast=#{isHavingBreakfast},
+    contentOne=#{contentOne},contentTow=#{contentTow},contentThree=#{contentThree},contentFour=#{contentFour},contentFive=#{contentFive},
+    creationDate=now(),createBy=#{createBy} WHERE houseId=#{houseId} 
+	</update>
+</mapper>
