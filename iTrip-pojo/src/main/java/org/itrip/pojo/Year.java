@@ -1,16 +1,20 @@
 package org.itrip.pojo;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.springframework.core.serializer.support.SerializationFailedException;
 
 /**
  * 生成本年
  * @author Administrator
  *
  */
-public class Year {
+public class Year implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	//单位
 	private Integer numPrice = 10000;
 	
@@ -55,7 +59,6 @@ public class Year {
 			 String[] array = currentTime.split("-");
 			 //年
 			 year = Integer.valueOf(array[0]);
-			 
 			 //开始时间
 			 this.setOne1(array[0]+"-"+"1-"+"1");
 			 this.setThree1(array[0]+"-"+"3-"+"1");

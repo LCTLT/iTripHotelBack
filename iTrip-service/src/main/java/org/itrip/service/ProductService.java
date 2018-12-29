@@ -2,6 +2,7 @@ package org.itrip.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.itrip.pojo.Dictionarydate;
 import org.itrip.pojo.Hotel;
 import org.itrip.pojo.Level;
@@ -64,7 +65,7 @@ public interface ProductService {
 	/**
 	 * 查询分类
 	 */
-	List<Level> seleLevel();
+	List<Level> seleLevel(String name);
 	/**
 	 * 修改分类
 	 */
@@ -73,4 +74,8 @@ public interface ProductService {
 	 * 删除分类
 	 */
 	int deleLevel(int id);
+	/**
+	 * 查询分类是否可删除
+	 */
+	int getSelectCount(@Param("id")Integer id);
 }

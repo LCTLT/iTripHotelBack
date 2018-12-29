@@ -30,6 +30,8 @@ $(function() {
 			prefix = "";
 		}
 		if(nameType == "price"){
+			//销售额保留4位小数
+			deci = 4;
 			suffix = "万";
 			prefix = "￥";
 		}else{
@@ -44,20 +46,25 @@ $(function() {
 		var $type = $("#dataType");
 		//调用方法通过ajax从后台获取数据
 		nameType = $type.val();
-		if(nameType == "price"){ //销售额选中
-			//销售额保留4位小数
-			deci = 4;
-			//数据描述
-			dataName = "销售额";
-			suffix = "万";
-			prefix = "￥";
-			getDataByTypePrice($type.val());
-		}else{  //订单数选中
-			deci = 0;
-			dataName = "订单数";
-			suffix = "笔";
+		if(chart == null || chart == "pie"){
+			suffix = "%";
 			prefix = "";
-			getDataByType($type.val());
+		}else{
+			if(nameType == "price"){ //销售额选中
+				//销售额保留4位小数
+				deci = 4;
+				//数据描述
+				dataName = "销售额";
+				suffix = "万";
+				prefix = "￥";
+				getDataByTypePrice($type.val());
+			}else{  //订单数选中
+				deci = 0;
+				dataName = "订单数";
+				suffix = "笔";
+				prefix = "";
+				getDataByType($type.val());
+			}
 		}
 		Highcharts.chart('container', getChat(chart));
 	});

@@ -68,7 +68,11 @@ public interface ProductMapper {
 	/**
 	 * 查询分类
 	 */
-	List<Level> seleLevel();
+	List<Level> seleLevel(@Param("parentId")Integer parentId);
+	/**
+	 * 根据name查询
+	 */
+	Level getQueryNameLevel(@Param("name")String name);
 	/**
 	 * 修改分类
 	 */
@@ -77,4 +81,8 @@ public interface ProductMapper {
 	 * 删除分类
 	 */
 	int deleLevel(int id);
+	/**
+	 * 查询分类是否可删除
+	 */
+	int getSelectCount(@Param("id")Integer id);
 }

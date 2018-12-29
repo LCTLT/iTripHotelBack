@@ -16,6 +16,7 @@
 <title>我的桌面</title>
 </head>
 <body>
+<!-- 访问前台图片 http://localhost:8090/hotels/static/images/1-1.jpg-->
 <div class="page-container">
 	<p class="f-20 text-success">欢迎使用乐游旅游<span class="f-14">v3.1</span>后台管理系统！</p>
 	<p>登录次数：0 </p>

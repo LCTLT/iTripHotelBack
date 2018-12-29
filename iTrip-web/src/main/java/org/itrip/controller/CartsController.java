@@ -23,9 +23,6 @@ public class CartsController {
 	public String carts5() {
 		return "charts-5";
 	}
-	/**
-	 * 进入折线统计图
-	 */
 	
 	/**
 	 * 异步加载订单数统计图数据

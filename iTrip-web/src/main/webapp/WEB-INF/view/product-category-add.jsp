@@ -25,7 +25,7 @@
 </head>
 <body>
 <div class="page-container">
-	<form action="productsava.do" method="post" class="form form-horizontal" id="form-user-add" name="from">
+	<form class="form form-horizontal" id="form-user-add">
 	<div class="row cl" id="le1" style="display:none">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>一级分类：</label>
 			<div class="formControls col-xs-8 col-sm-9"><span class="select-box">
@@ -77,7 +77,7 @@
 		</div>
 		<div class="row cl">
 			<div class="col-9 col-offset-2">
-				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				<input class="btn btn-primary radius" type="button" value="&nbsp;&nbsp;提交&nbsp;&nbsp;"/>
 			</div>
 		</div>
 	</form>
@@ -93,7 +93,38 @@
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
+function sunmits(){
+/* 	$.post("productsava.do",$("#form-user-add").serialize(),function(data){
+		if(data == "1")
+	}); */
+}
 $(function(){
+	$("input[type=button]").click(function(){
+		if($("#user-name").val().trim() == ""){
+			{layer.msg('请输入分类名称!', {
+				icon : 2,
+				time : 1500
+			});return false;}
+		}else{
+			$.post("productsava.do",$("#form-user-add").serialize(),function(data){
+				if(data >= 1){
+					{layer.msg('添加成功!', {
+						icon : 1,
+						time : 1500
+					})}
+					setTimeout(function(){
+						parent.location.reload();
+					}, 1000);
+				}else{
+					{layer.msg('添加失败!', {
+						icon : 2,
+						time : 1500
+					});return false;}
+				}
+			});
+		}
+	});
+	
 	//一级分类下拉 加载二级分类
 	$("#level0").change(function(){
 		if($(this).val() == "1"){

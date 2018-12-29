@@ -38,14 +38,10 @@ public class ProductController {
 	ProductService productService;
 
 	@RequestMapping("productsava.do")
-	public String  productsava(HttpServletRequest request,Level level) {
+	@ResponseBody
+	public Integer  productsava(HttpServletRequest request,Level level) {
 		int sava=productService.savaLevel(level);
-		System.out.println("是否添加成功          "+sava);
-		if (sava>0) {
-			return "product-category-add";
-		}else {
-			return "product-category-add";
-		}
+		return sava;
 	}
 	
 	/**
@@ -60,7 +56,9 @@ public class ProductController {
 	 */
 	@RequestMapping("product-category.do")
 	public String productCategory(HttpServletRequest request) {
-		List<Level> levels=productService.seleLevel();
+		String name = request.getParameter("name");
+		request.setAttribute("name", name);
+		List<Level> levels=productService.seleLevel(name);
 		request.setAttribute("level", levels);
 		return "product-category";
 	}
@@ -289,6 +287,16 @@ public class ProductController {
 	public int productDeleLevel(@RequestParam("id")int id) {
 		int resu=this.productService.deleLevel(id);
 		System.out.println("int i="+id+"/");
+		return resu;
+	}
+	/**
+	 * 分类是否可被删除
+	 * 作者：  lgx
+	 */
+	@RequestMapping("product-levelDel.do")
+	@ResponseBody
+	public int productDeleLevel(@RequestParam("id")Integer id) {
+		int resu=this.productService.getSelectCount(id);
 		return resu;
 	}
 }

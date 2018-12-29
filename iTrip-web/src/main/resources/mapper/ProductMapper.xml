@@ -61,14 +61,30 @@
 	</insert>
 	<!-- 查询分类 -->
 	<select id="seleLevel" resultType="org.itrip.pojo.Level">
-		select id,name,parentId,type from level order by id desc
+		select id,name,parentId,type from level
+		<where>
+		<if test="parentId != null and parentId != 0">
+			and parentId = #{parentId}
+		</if>
+		</where>
+		order by type asc
 	</select>
 	<!-- 修改分类 -->
 	<update id="updateLevel" parameterType="org.itrip.pojo.Level">
 		update level set name=#{name},parentId=#{parentId},type=#{type} where id=#{id}
 	</update>
+	
 	<!-- 删除分类 -->
 	<delete id="deleLevel">
 		delete from level where id=#{id} or parentId=#{id}
 	</delete>
+	<!-- 查询分类是否可删除 -->
+	<select id="getSelectCount" resultType="int">
+		select count(1) from `level` where parentId = #{id}
+	</select>
+	<!-- 更具name查询某一个id -->
+	<select id="getQueryNameLevel" resultType="org.itrip.pojo.Level">
+		select id,name,parentId,type from `level` where name=#{name};
+	</select>
+	
 </mapper>
