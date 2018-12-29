@@ -27,22 +27,25 @@ public class BrandController {
 	
 	@RequestMapping("product-brand.do")
 	public String querylist(HttpServletRequest request) {
-		String house = request.getParameter("house");
-		List<House> hotel = brandService.querylist(house);
-		int  count = brandService.queryList();
+		String houseName = request.getParameter("house");
+		List<House> house = brandService.querylist(houseName);
+		int count = brandService.queryList(houseName);
 		request.setAttribute("count",count);
-		request.setAttribute("hotel",hotel);
-		request.setAttribute("ist",house);
+		request.setAttribute("hotel",house);
+		request.setAttribute("ist",houseName);
 		return "product-brand";
 	}
 	@RequestMapping("product-brand-del.do")
+	@ResponseBody
 	public int deleteDel(@RequestParam("id")Integer id,HttpServletRequest request) {
 		int i = brandService.deleteDel(id);
 		return i;
 	}
 	@RequestMapping("product-brand-delList.do")
+	@ResponseBody
 	public int deleteDelList(HttpServletRequest request,int[] arr) {
 		int i = brandService.deleteDelList(arr);
+		System.out.println("删除状态值：="+i);
 		return i;
 	}
 	
@@ -50,22 +53,24 @@ public class BrandController {
 	 * 判断添加或修改进入页面
 	 */
 	@RequestMapping("product-brand-add.do")
-	public String productAdd(Hotel hotel,HttpServletRequest request,@RequestParam("type")int type,@RequestParam("hotelId")int id,@RequestParam("houseId")int houseId) {
+	public String productAdd(HttpServletRequest request,@RequestParam("type")int type,@RequestParam("houseId")int id) {
+		List<Level> queryType1 = productService.queryType1();
 		if(type == 2) {
-			Hotel hotels = this.productService.queryUpdateHotel(id);
+			//查询出房型
+			House house = brandService.queryType4(id);
+			request.setAttribute("House", house);
+			//根据房型的id查询出酒店内容
+			Hotel hotels = this.productService.queryUpdateHotel(house.getHotelId());
 			request.setAttribute("hotel", hotels);
-			House house = brandService.queryType4(houseId);
-			request.setAttribute("House",house);
 			if(hotels.getLevel2() > 0) {
-				request.setAttribute("types2", productService.getLevel2(hotels.getLevel1()));
+				request.setAttribute("types2",this.productService.getLevel2(hotels.getLevel1()));
 			}
 			if(hotels.getLevel3() > 0) {
 				request.setAttribute("types3", productService.getLevel2(hotels.getLevel2()));
 			}
 		}
-		request.setAttribute("types1", productService.queryType1());
-		//查询酒店星级
-		request.setAttribute("dictionarydate", productService.getQueryList());
+		
+		request.setAttribute("types1", queryType1);
 		request.setAttribute("type",type);
 		return "product-brand-add";
 	}
@@ -76,26 +81,19 @@ public class BrandController {
    * @return
    */
 	@RequestMapping("product-brand-add1.do")
-	public String insertlist(House house,HttpServletRequest request) {
+	@ResponseBody
+	public Integer insertlist(House house,HttpServletRequest request) {
         int result = brandService.insertHouse(house);
-        if(result>0) {
-        	return "forward:/product-brand.do";
-        }else {
-        	return "forward:/product-brand-add.do";
-        }
+        return result;
 	}
 	/**
-	 * 修改房间类型
+	 * 修改房间
 	 */
 	@RequestMapping("updateHouse.do")
-	public String updateHouse(House house,HttpServletRequest request) {
+	@ResponseBody
+	public Integer updateHouse(House house,HttpServletRequest request) {
 		int result = brandService.updateHouse(house);
-		 if(result>0) {
-			 System.out.println("成功");
-        	return "forward:/product-brand.do";
-        }else {
-        	return "forward:/product-brand-add.do";
-        }
+		return result;
 	}
 	/*
 	 * 加载二、三级分类
@@ -107,7 +105,7 @@ public class BrandController {
 		return JSON.toJSONString(list);
 	}
 	/*
-	 * 加载二、三级分类
+	 * 加载酒店
 	 */
 	@RequestMapping("level2-list2.do")
 	@ResponseBody

@@ -43,14 +43,6 @@ public class ProductController {
 		int sava=productService.savaLevel(level);
 		return sava;
 	}
-	
-	/**
-	 * 品牌管理
-	 */
-	@RequestMapping("product-brand.do")
-	public String productBrand() {
-		return "product-brand";
-	}
 	/**
 	 * 分类管理
 	 */

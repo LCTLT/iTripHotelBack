@@ -225,7 +225,7 @@
 										});
 									}else{
 										layer.msg('删除失败!', {
-											icon : 1,
+											icon : 2,
 											time : 1000
 										});
 									}

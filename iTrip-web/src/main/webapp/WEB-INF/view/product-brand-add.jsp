@@ -27,15 +27,17 @@
 </head>
 <body>
 <div class="page-container">
-	<form  <c:if test="${type eq 1}">action="product-brand-add1.do"</c:if><c:if test="${type eq 2}">action="updateHouse.do"</c:if>  method="post" class="form form-horizontal" id="form-article-add" name="form">
-	<input type="hidden" name="type" value="${type}">
-	<input type="hidden" name="houseId" value="${House.houseId}">
-	<input type="hidden" name="createBy" value="${userSession.phone}">
+<input type="hidden" name="type" value="${type}">
+	<form class="form form-horizontal" id="form-article-add">
+	<c:if test="${type eq 2}">
+		<input type="hidden" name="houseId" value="${House.houseId}">
+	</c:if>
+	<input type="hidden" name="createBy" value="${userSession.name}">
 	<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>酒店范围：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 	        <select name="level1" id="level1" class="select">
-				<option>请选择</option>
+				<option value="0">请选择</option>
 				<c:forEach items="${types1}" var="type1">
 					<option value="${type1.id}" <c:if test="${type1.id eq hotel.level1}">selected</c:if>>${type1.name}</option>
 				</c:forEach>
@@ -46,17 +48,18 @@
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>酒店省份：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="level2" id="level2" class="select">
+				<option value="0">请选择</option>
 					<c:forEach items="${types2}" var="type2">
 					<option value="${type2.id}" <c:if test="${type2.id eq hotel.level2}">selected</c:if>>${type2.name}</option>
 				</c:forEach>
 				</select>
-	    </select>
 	    </span> </div>
 	    </div>
 	    <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>酒店城市：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="level3" id="level3" class="select">
+				<option value="0">请选择</option>
 					<c:forEach items="${types3}" var="type3">
 					<option value="${type3.id}"<c:if test="${type3.id eq hotel.level3}">selected</c:if>>${type3.name}</option>
 				</c:forEach>
@@ -67,10 +70,10 @@
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>酒店名称：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="hotelId" id="level4" class="select">
-				<option>请选择</option>
-				<c:forEach items="${types4}" var="types4">
-					<option value="${types4.hotelId}" <c:if test="${types4.hotelId eq house.hotelId}">selected</c:if>>${types4.hotelName}</option>
-				</c:forEach>
+				<option value="0">请选择</option>
+				<c:if test="${type eq 2}">
+					<option value="${hotel.hotelId}" selected>${hotel.hotelName}</option>
+				</c:if>
 				</select>
 				</span> </div>
 		</div>
@@ -128,7 +131,7 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button class="btn btn-default radius" type="submit">&nbsp;&nbsp;添加&nbsp;&nbsp;</button>
+				<button class="btn btn-default radius" type="button" id="btn">&nbsp;&nbsp;添加&nbsp;&nbsp;</button>
 				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
@@ -148,6 +151,50 @@
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script> 
 <script type="text/javascript" src="lib/webuploader/0.1.5/webuploader.min.js"></script> 
 <script type="text/javascript">
+$(function(){
+	$("#btn").click(function(){
+		var type = $("input[name=type]").val();
+		if(type == 1){ //添加
+			$.post("product-brand-add1.do",$("#form-article-add").serialize(),function(result){
+				if(result >= 1){
+					layer.msg('添加成功!', {
+						icon : 1,
+						time : 1000
+					});
+					setTimeout(function(){
+						location = "product-brand.do";
+					}, 1500);
+				}else{
+					layer.msg('添加失败!', {
+						icon : 2,
+						time : 1000
+					});
+				}
+			});;
+		}else{  //修改
+			$.post("updateHouse.do",$("#form-article-add").serialize(),function(result){
+				if(result >= 1){
+					layer.msg('修改成功!', {
+						icon : 1,
+						time : 1000
+					});
+					setTimeout(function(){
+						location = "product-brand.do";
+					}, 1500);
+				}else{
+					layer.msg('修改失败!', {
+						icon : 2,
+						time : 1000
+					});
+				}
+			});;
+		}
+		
+	});
+});
+
+
+
 function article_save(){
 	alert("刷新父级的时候会自动关闭弹层。")
 	window.parent.location.reload();
@@ -156,33 +203,37 @@ function article_save(){
 
 //一级分类下拉 加载二级分类
 $("#level1").change(function(){
-	if($(this).val() == "请选择"){
+	if($(this).val() == "0"){
 		$("#level2").html("");
 		$("#level3").html("");
+		//刷新一次酒店
+		queryLevel();
 		return;
+	}else{
+		//获取选中的id
+		var id = $(this).val();
+		$.ajaxSettings.async = false;
+		$.getJSON("level2-list1.do",{id:id},function(result){
+			//清空二级分类
+			var level2 = $("#level2");
+			level2.html("");
+			//拼接的字符
+			var option = '<option value="0">请选择</option>';
+			//添加
+			for (var i = 0; i < result.length; i++) {
+				option +='<option value="'+result[i].id+'">'+result[i].name+'</option>';
+			}
+			level2.append(option);
+		});
 	}
-	//获取选中的id
-	var id = $(this).val();
-	$.ajaxSettings.async = false;
-	$.getJSON("level2-list1.do",{id:id},function(result){
-		//清空二级分类
-		var level2 = $("#level2");
-		level2.html("");
-		//拼接的字符
-		var option = '<option>请选择</option>';
-		//添加
-		for (var i = 0; i < result.length; i++) {
-			option +='<option value="'+result[i].id+'">'+result[i].name+'</option>';
-		}
-		level2.append(option);
-	});
 	queryLevel();
 });
 //二级分类下拉 加载三级分类
 $("#level2").change(function(){
-	if($(this).val() == "请选择"){
-		var level3 = $("#level3");
+	if($(this).val() == "0"){
 		$("#level3").html("");
+		//刷新一次酒店
+		queryLevel();
 		return;
 	}
 	//获取选中的id
@@ -193,7 +244,7 @@ $("#level2").change(function(){
 		var level3 = $("#level3");
 		level3.html("");
 		//拼接的字符
-		var option = '';
+		var option = '<option value="0">请选择</option>';
 		//添加
 		for (var i = 0; i < result.length; i++) {
 			option +='<option value="'+result[i].id+'">'+result[i].name+'</option>';
@@ -205,10 +256,6 @@ $("#level2").change(function(){
 
 //三级分类下拉 加载四级分类
 $("#level3").change(function(){
-	if($(this).val() == "请选择"){
-		$("#level4").html("");
-		return;
-	}
 	queryLevel();
 });
 function queryLevel(){
@@ -216,9 +263,14 @@ function queryLevel(){
 	var level1 = $("#level1").val();
 	var level2 = $("#level2").val();
 	var level3 = $("#level3").val();
+	if(level2 == "" || level2 == null){
+		level2 = 0;
+	}
+	if(level3 == "" || level3 == null){
+		level3 = 0;
+	}
 	$.ajaxSettings.async = false;
 	$.getJSON("level2-list2.do",{level1:level1,level2:level2,level3:level3},function(result){
-		console.log(result);
 		//清空四级分类
 		var level4 = $("#level4");
 		level4.html("");

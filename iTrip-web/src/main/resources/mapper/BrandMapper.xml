@@ -14,21 +14,21 @@
 	</where>
 	</select>
 	
-	<select id="queryList" resultType="int">
+	<select id="getCount" resultType="int">
 	select count(1) from house
 	<where>
-	<if test="house!='' and house!=null">
-	houseType LIKE CONCAT ('%',#{house},'%')
+	<if test="houseName!='' and houseName!=null">
+		houseType LIKE CONCAT ('%',#{houseName},'%')
 	</if>
 	</where>
 	</select>
 	
 	<delete id="deleteDel">
-	     delete from house where hotelId=#{id}
+	     delete from house where houseId=#{id}
 	</delete>
 	
 	<delete id="deleteDelList" parameterType="int">
-	delete from house where  hotelId in
+		delete from house where houseId in
 		<foreach item="id" collection="array" open="(" separator=","
 			close=")">
 			#{id}
@@ -36,7 +36,7 @@
 	</delete>
 	
 	<select id="queryType4" resultType="org.itrip.pojo.House">
-	select houseId,houseType,housePrice,contentOne,isHavingBreakfast,
+	select houseId,hotelId,houseType,housePrice,contentOne,isHavingBreakfast,
     contentTow,contentThree,contentFour,contentFive  from house
     where  houseId=#{houseId}
 	</select>
@@ -57,15 +57,15 @@
 	</select>
 	
 	<insert id="insertHouse" >
-	INSERT INTO  house (hotelId,houseType,housePrice,isHavingBreakfast,contentOne,contentTow,contentThree,contentFour,
-    contentFive,creationDate,createBy) VALUES (#{hotelId},#{houseType},
-    #{housePrice},#{isHavingBreakfast}, #{contentOne},#{contentTow},#{contentThree},
-    #{contentFour},#{contentFive},now(),#{createBy});
+		INSERT INTO  house (hotelId,houseType,housePrice,isHavingBreakfast,contentOne,contentTow,contentThree,contentFour,
+	    contentFive,creationDate,createBy) VALUES (#{hotelId},#{houseType},
+	    #{housePrice},#{isHavingBreakfast}, #{contentOne},#{contentTow},#{contentThree},
+	    #{contentFour},#{contentFive},now(),#{createBy});
 	</insert>
 	
 	<update id="updateHouse" parameterType="org.itrip.pojo.House">
-	UPDATE house SET houseType=#{houseType},housePrice=#{housePrice},isHavingBreakfast=#{isHavingBreakfast},
-    contentOne=#{contentOne},contentTow=#{contentTow},contentThree=#{contentThree},contentFour=#{contentFour},contentFive=#{contentFive},
-    creationDate=now(),createBy=#{createBy} WHERE houseId=#{houseId} 
+		UPDATE house SET houseType=#{houseType},housePrice=#{housePrice},isHavingBreakfast=#{isHavingBreakfast},
+	    contentOne=#{contentOne},contentTow=#{contentTow},contentThree=#{contentThree},contentFour=#{contentFour},contentFive=#{contentFive},
+	    creationDate=now(),createBy=#{createBy} WHERE houseId=#{houseId} 
 	</update>
 </mapper>

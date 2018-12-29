@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.itrip.pojo.Hotel;
 import org.itrip.pojo.House;
-import org.itrip.pojo.Level;
 
 public interface BrandMapper {
    /**
@@ -15,7 +14,7 @@ public interface BrandMapper {
 	/**
 	 * 查询数据量
 	 */
-	int queryList();
+	int getCount(@Param("houseName")String houseName);
 	/**
 	 * 删除
 	 */
