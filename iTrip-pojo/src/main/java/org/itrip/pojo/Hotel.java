@@ -15,7 +15,7 @@ public class Hotel implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int hotelId;    //酒店id
+	private Integer hotelId;    //酒店id
 	private String productNo;  //产品编号
 	private String hotelName;  //酒店名称
 	private String hotelRating;  //酒店星级
@@ -53,12 +53,15 @@ public class Hotel implements Serializable{
 		this.productNo = productNo;
 	}
 
-	public int getHotelId() {
+	
+	public Integer getHotelId() {
 		return hotelId;
 	}
-	public void setHotelId(int hotelId) {
+
+	public void setHotelId(Integer hotelId) {
 		this.hotelId = hotelId;
 	}
+
 	public String getProductNo() {
 		return productNo;
 	}

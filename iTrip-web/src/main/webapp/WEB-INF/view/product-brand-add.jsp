@@ -163,7 +163,7 @@ $(function(){
 				icon : 2,
 				time : 1000
 			});
-		}else if(!((/^[1-9][0-9]{1,7}$/).test($("input[name=housePrice]").val()))){
+		}else if(!((/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/).test($("input[name=housePrice]").val()))){
 			layer.msg('房间价格格式不正确!', {
 				icon : 2,
 				time : 1000

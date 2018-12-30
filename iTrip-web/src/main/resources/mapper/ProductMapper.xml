@@ -3,7 +3,8 @@
 <mapper namespace="org.itrip.mapper.ProductMapper">
 <!-- 酒店查询 -->
 	<select id="queryHotelList" resultType="org.itrip.pojo.Hotel">
-		select hotelId,productNo,hotelName,hotelAddress,hotelPrice,hotelIntro,hotelRatings,hotelRating,fileUrl,hotelphone from hotel order by hotelId asc
+		select hotelId,productNo,hotelName,hotelAddress,hotelPrice,hotelIntro,hotelRatings,hotelRating,fileUrl,hotelphone from hotel
+		order by hotelId asc
 	</select>
 <!-- 修改数据 -->
 	<update id="updateHotel" parameterType="org.itrip.pojo.Hotel">
@@ -35,12 +36,15 @@
 	<select id="getLevel2" resultType="org.itrip.pojo.Level">
 		select id,`name`,type from `level` where parentId = #{id};
 	</select>
-	<!-- 删除单个用户 -->
+	<!-- 删除单个酒店 -->
 	<delete id="deleteHotel">
 		delete from hotel where hotelId=#{hotelId}
 	</delete>
-
-	<!-- 删除多个用户 -->
+	<!-- 酒店下房型删除 -->
+	<delete id="deleteHouse">
+		delete from house where hotelId = #{hotelId}
+	</delete>
+	<!-- 删除多个酒店 -->
 	<delete id="deleteHotelList" parameterType="int">
 		delete from hotel where hotelId in
 		<foreach item="hotelId" collection="array" open="(" separator=","

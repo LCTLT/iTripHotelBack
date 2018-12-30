@@ -10,7 +10,11 @@ public interface BrandMapper {
    /**
        * 显示房型数据
     */
-	List<House> querylist(@Param("house")String house);
+	List<House> querylist(@Param("house")String house,@Param("hotelId")Integer hotelId);
+	/**
+	 * 根据酒店名称查询酒店id
+	 */
+	Hotel queryHotelId(@Param("hotelName")String hotelName);
 	/**
 	 * 查询数据量
 	 */

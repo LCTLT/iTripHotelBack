@@ -61,13 +61,28 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int deleteHotel(int hotelId) {
 		// TODO Auto-generated method stub
-		return productMapper.deleteHotel(hotelId);
+		try {
+			System.out.println(hotelId);
+			int deleteHotel = 0;
+			deleteHotel = productMapper.deleteHouse(hotelId);
+			deleteHotel = productMapper.deleteHotel(hotelId);
+			return deleteHotel;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	@Override
 	public Integer deleteHotelList(int[] idarr) {
-		// TODO Auto-generated method stub
-		return productMapper.deleteHotelList(idarr);
+		//循环删除所有房型
+		if(idarr != null && idarr.length >0) {
+			for (int i = 0; i < idarr.length; i++) {
+				productMapper.deleteHouse(idarr[i]);
+			}
+		}
+		Integer deleteHotelList = productMapper.deleteHotelList(idarr);
+		return deleteHotelList;
 	}
 
 	@Override

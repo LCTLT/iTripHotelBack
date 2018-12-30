@@ -27,12 +27,14 @@ public class BrandController {
 	
 	@RequestMapping("product-brand.do")
 	public String querylist(HttpServletRequest request) {
-		String houseName = request.getParameter("house");
-		List<House> house = brandService.querylist(houseName);
+		String houseName = request.getParameter("houseName");
+		String hotelName = request.getParameter("hotelName");
+		List<House> house = brandService.querylist(houseName,hotelName);
 		int count = brandService.queryList(houseName);
 		request.setAttribute("count",count);
 		request.setAttribute("hotel",house);
 		request.setAttribute("ist",houseName);
+		request.setAttribute("hotelName",hotelName);
 		return "product-brand";
 	}
 	@RequestMapping("product-brand-del.do")

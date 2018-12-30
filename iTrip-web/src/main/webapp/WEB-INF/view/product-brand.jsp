@@ -40,7 +40,9 @@
 		<div class="text-c">
 			<form class="" method="post" action="product-brand.do" target="_self">
 				<input type="text" class="input-text" style="width: 250px"
-					placeholder="请输入房间类型" id="house" name="house" value="${ist}">
+					placeholder="请输入酒店名称" id="hotel" name="hotelName" value="${hotelName}">
+				<input type="text" class="input-text" style="width: 250px"
+					placeholder="请输入房间类型" id="house" name="houseName" value="${ist}">
 				<input type="submit" class="btn btn-success radius" id="radius"
 					name=""><i class="Hui-iconfont">&#xe665;</i>搜索房型</input>
 			</form>

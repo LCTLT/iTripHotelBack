@@ -9,9 +9,19 @@
 	from house a 
 	<where>
 	<if test="house!='' and house!=null">
-	houseType LIKE CONCAT ('%',#{house},'%')
+		and houseType LIKE CONCAT ('%',#{house},'%')
+	</if>
+	<if test="hotelId != null">
+		and hotelId = #{hotelId} 
 	</if>
 	</where>
+	</select>
+	<!-- 根据酒店Name查询酒店id -->
+	<select id="queryHotelId" resultType="org.itrip.pojo.Hotel">
+		select hotelId from hotel 
+		<if test="hotelName != null and hotelName != ''">
+			where hotelName LIKE CONCAT ('%',#{hotelName},'%')
+		</if>
 	</select>
 	
 	<select id="getCount" resultType="int">

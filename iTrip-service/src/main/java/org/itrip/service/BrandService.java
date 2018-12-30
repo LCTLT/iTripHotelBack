@@ -8,7 +8,7 @@ import org.itrip.pojo.House;
 import org.itrip.pojo.Level;
 
 public interface BrandService {
-	List<House> querylist(String house);
+	List<House> querylist(String house,String hotelName);
 	int queryList(String houseName);
 	int deleteDel(int id);
 	Integer deleteDelList(int[] idarr);

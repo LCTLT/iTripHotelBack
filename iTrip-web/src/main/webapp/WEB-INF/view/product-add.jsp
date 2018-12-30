@@ -80,7 +80,7 @@
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>酒店星级：</label>
-			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box"></span>
+			<div class="formControls col-xs-8 col-sm-9">
 			<select name="hotelRating" class="select">
 			<c:forEach var="dic" items="${dictionarydate}">
 				<option value="${dic.info}" <c:if test="${dic.info eq hotel.hotelRating}">selected</c:if>>${dic.info}</option>
@@ -264,7 +264,7 @@ $(function(){
 				icon : 2,
 				time : 2000
 			});return false;}
-		}else if(!((/^[1-9]{0-9}{1,7}|[1-9][0-9]{1,7}.[0-9]{1,4}$/).test(form.hotelPrice.value))){
+		}else if(!(/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/).test(form.hotelPrice.value)){
 			{layer.msg('酒店价格格式不正确!', {
 				icon : 2,
 				time : 2000

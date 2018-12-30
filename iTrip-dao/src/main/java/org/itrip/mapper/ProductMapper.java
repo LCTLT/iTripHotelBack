@@ -48,7 +48,10 @@ public interface ProductMapper {
 	 * 删除酒店
 	 */
 	int deleteHotel(int hotelId);
-
+	/**
+	 * 删除酒店房型
+	 */
+	int deleteHouse(@Param("hotelId")Integer hotelId);
 	/**
 	 * 删除多个酒店
 	 */

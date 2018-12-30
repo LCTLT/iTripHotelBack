@@ -14,9 +14,19 @@ public class BrandServiceImpl implements BrandService{
 	BrandMapper brandMapper;
 
 	@Override
-	public List<House> querylist(String house) {
-		// TODO Auto-generated method stub
-		return brandMapper.querylist(house);
+	public List<House> querylist(String houseName,String hotelName) {
+		System.out.println("hotelName="+hotelName);
+		//查询出酒店id
+		Hotel hotel = new Hotel();
+		if(hotelName != null && !hotelName.equals("")) {
+			hotel = brandMapper.queryHotelId(hotelName);
+			if(hotel == null) {
+				hotel = new Hotel();
+				hotel.setHotelId(0);
+			}
+		}
+		List<House> querylist = brandMapper.querylist(houseName,hotel.getHotelId());
+		return querylist;
 	}
 
 	@Override
