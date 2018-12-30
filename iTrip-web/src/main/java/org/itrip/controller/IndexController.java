@@ -28,6 +28,17 @@ public class IndexController {
 	@Autowired
 	UserService userService;
 	
+	/*
+	 * 修改验证唯一性
+	 */
+	@RequestMapping("loginUser.do")
+	@ResponseBody
+	public Integer loginUser(@RequestParam("phone")String phone) {
+		System.out.println("phone="+phone);
+		int result = userService.loginUser(phone);
+		return result;
+	}
+	
 	/**
 	 * 进入index
 	 */

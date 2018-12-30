@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface UserMapper {
+	
+	int countLoginUser(@Param("phone")String phone);
 	/**
 	 * 查询所有用户角色
 	 */

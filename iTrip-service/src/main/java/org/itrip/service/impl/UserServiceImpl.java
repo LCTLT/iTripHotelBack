@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.itrip.mapper.UserMapper;
 import org.itrip.pojo.User;
 import org.itrip.service.UserService;
@@ -18,6 +19,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserMapper userMapper;
 	
+	public int loginUser(@Param("phone")String phone) {
+		return userMapper.countLoginUser(phone);
+	}
 	@Override
 	public List<User> getQueryUserList(int pageNo,int pageSize) {
 		

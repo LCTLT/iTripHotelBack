@@ -13,6 +13,11 @@
 	<sql id="Base_Column_List">
 		id, name, phone,pwd,sex,birthday,email,address,status
 	</sql>
+	
+	<select id="countLoginUser" resultType="int" parameterType="String">
+	   select count(id) from user where phone=#{phone}
+	</select>
+	
 	<!-- 用户查询 -->
 	<select id="queryUserList" resultType="org.itrip.pojo.User">
 		select

@@ -161,31 +161,41 @@ $(function(){
 				time : 2000
 			});return false;}
 		}else{
-			$.post("addUser.do",{
-				name:name,
-				phone:phone,
-				pwd:pwd,
-				sex:sex,
-				idcard:idcard,
-				email:email,
-				address:address
-			},function(data){
-				
-				if(data == "1"){
-					layer.msg('添加成功!', {
-						icon : 1,
-						time : 1000
+			//验证唯一性
+			$.post("loginUser.do",{phone:phone},function(data){
+				if(data > 0){
+					layer.msg('手机号已存在!', {
+						icon : 2,
+						time : 2000
 					});
-					setTimeout(function(){
-						location = "member-list.do";
-					}, 2000);
+					return;
 				}else{
-					layer.msg('添加失败!', {
-						icon : 1,
-						time : 1000
+					$.post("addUser.do",{
+						name:name,
+						phone:phone,
+						pwd:pwd,
+						sex:sex,
+						idcard:idcard,
+						email:email,
+						address:address
+					},function(data){
+						if(data == "1"){
+							layer.msg('添加成功!', {
+								icon : 1,
+								time : 1000
+							});
+							setTimeout(function(){
+								location = "member-list.do";
+							}, 2000);
+						}else{
+							layer.msg('添加失败!', {
+								icon : 1,
+								time : 1000
+							});
+						}
 					});
 				}
-			});
+			}); 
 		}
 	});
 	$("#admin-role-save2").click(function(){
@@ -205,34 +215,45 @@ $(function(){
 		}else if(pwd =="" || pwd.length < 6){
 			$("#massage").text("密码格式不正确!");
 		}else{
-			$.ajax({
-				url:"menber_updateUser.do",
-				data:{id:id,
-					name:name,
-					phone:phone,
-					pwd:pwd,
-					sex:sex,
-					idcard:idcard,
-					email:email,
-					address:address},
-				type:"post",
-				success:function(data){
-					if(data == "1"){
-						layer.msg('修改成功!', {
-							icon : 1,
-							time : 1000
-						});
-						setTimeout(function(){
-							location = "member-list.do";
-						}, 2000);
-					}else{
-						layer.msg('修改失败!', {
-							icon : 1,
-							time : 1000
-						});
-					}				
+			//验证唯一性
+			$.post("loginUser.do",{phone:phone},function(data){
+				if(data > 0){
+					layer.msg('手机号已存在!', {
+						icon : 2,
+						time : 2000
+					});
+					return;
+				}else{
+					$.ajax({
+						url:"menber_updateUser.do",
+						data:{id:id,
+							name:name,
+							phone:phone,
+							pwd:pwd,
+							sex:sex,
+							idcard:idcard,
+							email:email,
+							address:address},
+						type:"post",
+						success:function(data){
+							if(data == "1"){
+								layer.msg('修改成功!', {
+									icon : 1,
+									time : 1000
+								});
+								setTimeout(function(){
+									location = "member-list.do";
+								}, 2000);
+							}else{
+								layer.msg('修改失败!', {
+									icon : 1,
+									time : 1000
+								});
+							}				
+						}
+					});
 				}
-			});
+		});
 		}
 	});
 	

@@ -2,10 +2,12 @@ package org.itrip.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.itrip.pojo.User;
 
 public interface UserService {
 	
+	public int loginUser(@Param("phone")String phone);
 	List<User> getQueryUserList(int pageNo,int pageSize);
 	/**
 	 * 用户登入
