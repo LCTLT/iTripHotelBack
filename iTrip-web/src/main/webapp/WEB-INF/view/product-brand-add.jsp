@@ -123,7 +123,6 @@
 			<label class="form-label col-xs-4 col-sm-2">饮食：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="isHavingBreakfast" id="isHavingBreakfast" class="select">
-				<option>请选择</option>
 					<option value="1" <c:if test="${House.isHavingBreakfast eq 1}">selected</c:if>>包含早餐</option>
 					<option value="0" <c:if test="${House.isHavingBreakfast eq 0}">selected</c:if>>不包含早餐</option>
 				</select>
@@ -154,6 +153,22 @@
 $(function(){
 	$("#btn").click(function(){
 		var type = $("input[name=type]").val();
+		if($("#level4").val() == 0 || $("#level4").val().trim() == ""){
+			layer.msg('请选择酒店名称!', {
+				icon : 2,
+				time : 1000
+			});
+		}else if($("input[name=houseType]").val().trim() == ""){
+			layer.msg('请输入房间类型!', {
+				icon : 2,
+				time : 1000
+			});
+		}else if(!((/^[1-9][0-9]{1,7}$/).test($("input[name=housePrice]").val()))){
+			layer.msg('房间价格格式不正确!', {
+				icon : 2,
+				time : 1000
+			});
+		}else{
 		if(type == 1){ //添加
 			$.post("product-brand-add1.do",$("#form-article-add").serialize(),function(result){
 				if(result >= 1){
@@ -187,7 +202,8 @@ $(function(){
 						time : 1000
 					});
 				}
-			});;
+			});
+		}
 		}
 		
 	});

@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,18 +12,14 @@ import org.itrip.pojo.Hotel;
 import org.itrip.pojo.Level;
 import org.itrip.service.ProductService;
 import org.itrip.utils.ProductRandomUtil;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
-import com.sun.javafx.css.StyleClassSet;
 /**
  * 产品管理
  * @author Administrator
@@ -144,7 +138,7 @@ public class ProductController {
 			//上传文件路径
 			String path = "D:\\myHotel\\uploadFile";
 			//数据库路径
-			fileUrl = "static/images/"+file.getOriginalFilename();
+			fileUrl = "/uploadFile/"+file.getOriginalFilename();
 
 			//上传文件名
 			String filename = file.getOriginalFilename();
@@ -194,7 +188,7 @@ public class ProductController {
 			//上传文件路径
 			String path = "D:\\myHotel\\uploadFile";
 			//数据库路径
-			fileUrl = "static/images/"+file.getOriginalFilename();
+			fileUrl = "/uploadFile/"+file.getOriginalFilename();
 
 			//上传文件名
 			String filename = file.getOriginalFilename();

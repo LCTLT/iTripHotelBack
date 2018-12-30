@@ -80,7 +80,7 @@
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>酒店星级：</label>
-			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box"></span>
 			<select name="hotelRating" class="select">
 			<c:forEach var="dic" items="${dictionarydate}">
 				<option value="${dic.info}" <c:if test="${dic.info eq hotel.hotelRating}">selected</c:if>>${dic.info}</option>
@@ -110,7 +110,7 @@
 						<span>本地文件路径：</span><span style="margin-left:10px;" id="img_spans" class="input-text">${hotel.fileUrl}</span>
 					</div>
 					<div class="imgs" onclick="document.getElementById('img_1').click()">选择图片</div>
-                    <input type="file" class="img" id="img_1" name="file" accept="image/jpg" onchange="l(this)"/>
+                    <input type="file" class="img" id="img_1" name="file" onchange="verificationPicFile(this)"/>
 				</div>
 			</div>
 		</div>
@@ -264,7 +264,7 @@ $(function(){
 				icon : 2,
 				time : 2000
 			});return false;}
-		}else if(!((/^[0-9]{1,10}$/).test(form.hotelPrice.value))){
+		}else if(!((/^[1-9]{0-9}{1,7}|[1-9][0-9]{1,7}.[0-9]{1,4}$/).test(form.hotelPrice.value))){
 			{layer.msg('酒店价格格式不正确!', {
 				icon : 2,
 				time : 2000
@@ -277,7 +277,34 @@ $(function(){
 			});return false;}
 		}
 	});
+	
 });
+//图片类型验证
+function verificationPicFile(file) {
+    var fileTypes = [".jpg", ".png"];
+    var filePath = file.value;
+    //当括号里面的值为0、空字符、false 、null 、undefined的时候就相当于false
+    if(filePath){
+        var isNext = false;
+        var fileEnd = filePath.substring(filePath.indexOf("."));
+        for (var i = 0; i < fileTypes.length; i++) {
+            if (fileTypes[i] == fileEnd) {
+                isNext = true;
+                break;
+            }
+        }
+        if (!isNext){
+        	{layer.msg('仅支持jpg、png格式!', {
+				icon : 2,
+				time : 2000
+			})}
+            file.value = "";
+            return false;
+        }
+    }else {
+        return false;
+    }
+}
 </script>
 </body>
 </html>
