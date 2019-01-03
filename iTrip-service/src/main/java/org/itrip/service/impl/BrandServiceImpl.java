@@ -5,6 +5,7 @@ import java.util.List;
 import org.itrip.mapper.BrandMapper;
 import org.itrip.pojo.Hotel;
 import org.itrip.pojo.House;
+import org.itrip.pojo.Rawstock;
 import org.itrip.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,18 @@ public class BrandServiceImpl implements BrandService{
 	public List<Hotel> querylevel4(Hotel hotel) {
 		// TODO Auto-generated method stub
 		return brandMapper.querylevel4(hotel);
+	}
+
+	@Override
+	public Rawstock queryType5(Integer houseId) {
+
+		return brandMapper.queryType5(houseId);
+	}
+
+	@Override
+	public int inserRawstock(Rawstock rawstock) {
+		// TODO Auto-generated method stub
+		return brandMapper.inserRawstock(rawstock);
 	}
 
 }

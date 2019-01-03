@@ -223,6 +223,9 @@
 											icon : 1,
 											time : 1000
 										});
+										setTimeout(function(){
+											location.reload();
+										}, 1500);
 									}else{
 										layer.msg('删除失败!', {
 											icon : 2,

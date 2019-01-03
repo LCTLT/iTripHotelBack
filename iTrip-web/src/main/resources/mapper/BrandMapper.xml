@@ -78,4 +78,12 @@
 	    contentOne=#{contentOne},contentTow=#{contentTow},contentThree=#{contentThree},contentFour=#{contentFour},contentFive=#{contentFive},
 	    creationDate=now(),createBy=#{createBy} WHERE houseId=#{houseId} 
 	</update>
+	
+	<!-- 库存增加 -->
+	<select id="queryType5" resultType="org.itrip.pojo.Rawstock">
+		select id,store from rawstock where houseId = #{houseId}
+	</select>
+	<insert id="inserRawstock" >
+		INSERT INTO rawstock VALUES(null,#{productType},#{hotelId},#{store})
+	</insert>
 </mapper>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.itrip.pojo.Hotel;
 import org.itrip.pojo.House;
+import org.itrip.pojo.Rawstock;
 
 public interface BrandMapper {
    /**
@@ -43,4 +44,14 @@ public interface BrandMapper {
 	 * 修改房型信息
 	 */
 	int updateHouse(House house);
+	/**
+	 * 库存增加
+	 * @return
+	 */
+	int inserRawstock(Rawstock rawstock);
+	/**
+	 * 根据房型id查询出库存
+	 * @return
+	 */
+	Rawstock queryType5(@Param("houseId")Integer houseId);
 }

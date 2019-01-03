@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.itrip.pojo.Hotel;
 import org.itrip.pojo.House;
 import org.itrip.pojo.Level;
+import org.itrip.pojo.Rawstock;
 import org.itrip.service.BrandService;
 import org.itrip.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,9 @@ public class BrandController {
 			//查询出房型
 			House house = brandService.queryType4(id);
 			request.setAttribute("House", house);
+
+			Rawstock rawstock=brandService.queryType5(house.getHouseId());
+			request.setAttribute("rawstock", rawstock);
 			//根据房型的id查询出酒店内容
 			Hotel hotels = this.productService.queryUpdateHotel(house.getHotelId());
 			request.setAttribute("hotel", hotels);
@@ -86,8 +90,16 @@ public class BrandController {
 	@ResponseBody
 	public Integer insertlist(House house,HttpServletRequest request) {
         int result = brandService.insertHouse(house);
+        if(result > 0) {
+        	 Rawstock rawstock = new Rawstock();
+        	 rawstock.setStore(Integer.valueOf(request.getParameter("store"))); //获得库存
+        	 rawstock.setProductType(house.getHotelId()); //酒店外键
+        	 rawstock.setHotelId(house.getHouseId()); //房型外键
+             brandService.inserRawstock(rawstock);
+        }
         return result;
 	}
+
 	/**
 	 * 修改房间
 	 */

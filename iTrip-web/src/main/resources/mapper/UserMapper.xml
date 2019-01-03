@@ -34,12 +34,12 @@
 
 	<!-- 删除单个用户 -->
 	<delete id="deleteUser">
-		update `user` set `delete` = 1 where id=#{id}
+		delete from `user` where id=#{id}
 	</delete>
 
 	<!-- 删除多个用户 -->
 	<delete id="deleteUserList" parameterType="int">
-		update `user` set `delete` = 1 where id in
+		delete from `user` where id in
 		<foreach item="id" collection="array" open="(" separator=","
 			close=")">
 			#{id}
