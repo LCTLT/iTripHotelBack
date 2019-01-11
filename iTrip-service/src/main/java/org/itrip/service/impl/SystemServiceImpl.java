@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.itrip.mapper.SystemMapper;
 import org.itrip.pojo.Dictionarydate;
+import org.itrip.pojo.Order;
 import org.itrip.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,42 @@ public class SystemServiceImpl implements SystemService  {
 	public int systemCount() {
 		return systemMapper.systemCount();
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public List<Order> orderQuery() {
+		return systemMapper.orderQuery();
+	}
+
+	@Override
+	public Order OrderUpdata(int id) {
+		return systemMapper.OrderUpdata(id);
+	}
+
+	@Override
+	public List<Dictionarydate> Orderlist() {
+		return systemMapper.Orderlist();
+	}
+
+	@Override
+	public int OrderListUpdate(Order order) {
+		return systemMapper.OrderListUpdate(order);
+	}
+
+	@Override
+	public int countorder() {
+		return systemMapper.countorder();
+	}
+
+	
 
 	
 }

@@ -39,6 +39,53 @@
 		select count(id) from dictionarydate 
 	</select>
 
+
+
+
+
+
+
+
+
+		<!-- 页面查询 -->
+		<select id="orderQuery" resultType="org.itrip.pojo.Order">
+			select a.*,b.info as info,c.hotelName as hotelName from `order` a
+				INNER JOIN dictionarydate b on a.orderStatus = b.dictCode 
+				INNER JOIN  hotel c on a.hotelId=c.hotelId
+				where b.typeCode = 'orderStatus'
+			order by a.id desc
+		</select>	
+		
+		<!-- 编辑查询 -->
+		<select id="OrderUpdata" resultType="org.itrip.pojo.Order">
+			select a.*,b.info as info,b.dictCode as dictCode,c.hotelName as hotelName,d.houseType as houseType,e.store as store,f.name as name
+				from `order` a
+				INNER JOIN dictionarydate b on a.orderStatus = b.dictCode 
+				INNER JOIN  hotel c on a.hotelId=c.hotelId
+				INNER JOIN  house d on a.houseId=d.houseId
+				INNER JOIN  rawstock e on a.houseId=e.houseId
+				INNER JOIN  user f on a.userId=f.id
+			where b.typeCode = 'orderStatus' and a.id=#{id}
+		</select>
+		
+		<select id="countorder" resultType="int">
+		SELECT COUNT(id) from `order` 
+		</select>
+		
+		<!-- 下拉列表框 -->
+		<select id="Orderlist" resultType="org.itrip.pojo.Dictionarydate">
+		SELECT * FROM dictionarydate WHERE typeCode = 'orderStatus'
+		</select>
+		
+		<!-- 点击修改 -->
+		<update id="OrderListUpdate" parameterType="org.itrip.pojo.Order">
+				UPDATE `order` SET
+				checkInDate=#{checkInDate},checkOutDate=#{checkOutDate},
+				payAmount=#{payAmount},place=#{place}
+				where id=#{id}
+		</update>
+	
+		
 </mapper>
 
 

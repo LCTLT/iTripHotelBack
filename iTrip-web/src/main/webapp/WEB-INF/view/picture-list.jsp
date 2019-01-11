@@ -1,5 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -33,7 +35,7 @@
 		<input type="text" name="" id="" placeholder="预定人名称" style="width:250px" class="input-text">
 		<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜订单</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a><span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a><span class="r">共有数据：<strong>${count}</strong> 条</span></span> </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
@@ -51,24 +53,31 @@
 				</tr>
 			</thead>
 			<tbody>
+			<c:forEach var="pricture" items="${requestScope.pricture}">
+				<input type="hidden" value="${picture.id}" id="id">
 				<tr class="text-c">
-					<td><input name="" type="checkbox" value=""></td>
-					<td>001</td>
-					<td>001</td>
-					<td>分类名称</td>
-					<td>1</td>
-					<td class="text-l">1</td>
-					<td class="text-c">标签</td>
-					<td>2014-6-11 11:11:42</td>
-					<td class="td-status"><span class="label label-success radius">已发布</span></td>
-					<td class="td-manage"><a style="text-decoration:none" class="ml-5" onClick="picture_edit('订单修改','picture-add.do','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="picture_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					<td><input name="" type="checkbox" value="${pricture.id}"></td>
+					<td>${pricture.id}</td>
+					<td>${pricture.orderNo}</td>
+					<td>${pricture.hotelName}</td>
+					<td><fmt:formatDate value="${pricture.checkInDate}" pattern="yyyy年MM月dd日HH点mm分ss秒"></fmt:formatDate></td>
+					<td class="text-l"><fmt:formatDate value="${pricture.checkOutDate}" pattern="yyyy年MM月dd日HH点mm分ss秒"></fmt:formatDate></td>
+					<td class="text-c">${pricture.payAmount}</td>
+					<td>${pricture.place}</td>
+					<td class="td-status"><span class="label label-success radius">${pricture.info}</span></td>
+					<td class="td-manage">
+					<a style="text-decoration:none" class="ml-5" href="picture-add.do?id=${pricture.id}" title="编辑">
+					<i class="Hui-iconfont">&#xe6df;</i></a> 
+					<a style="text-decoration:none" class="ml-5" onClick="picture_del(this,'10001')" href="javascript:;" title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
 				</tr>
+			</c:forEach>
 			</tbody>
 		</table>
 	</div>
 </div>
 
-<!--_footer 作为公共模版分离出去-->
+<!--_footer 作为公共模版分离出去 -->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 

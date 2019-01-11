@@ -2,6 +2,7 @@ package org.itrip.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.itrip.pojo.Dictionarydate;
+import org.itrip.pojo.Order;
 import org.itrip.pojo.User;
 import org.itrip.service.SystemService;
 import org.itrip.utils.CheckUtil;
@@ -25,6 +27,10 @@ public class SysyemController {
 	@Autowired
 	SystemService systemService;
 	
+	private static SimpleDateFormat forms = null;
+	static {
+		forms = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	}
 	/**
 	 * 字典表查询
 	 * @param request
@@ -121,6 +127,72 @@ public class SysyemController {
 		}
 		return "0"; //验证失败
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 订单查询
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("picture-list.do")
+	public String order(HttpServletRequest request) {
+		List<Order> list=systemService.orderQuery();
+		
+		PageUtil.pageCount=systemService.countorder();
+		request.setAttribute("count", PageUtil.pageCount);
+		
+		request.setAttribute("pricture", list);
+		return "picture-list";
+	}
+	
+	/**
+	 * 点击编辑
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("picture-add.do")
+	public String orderlist(HttpServletRequest request,@RequestParam("id")int id) {
+		List<Dictionarydate> list=systemService.Orderlist();
+		Order orderUpdata = systemService.OrderUpdata(id);
+		//格式化时间
+		orderUpdata.setCheckInDates(forms.format(orderUpdata.getCheckInDate()));
+		orderUpdata.setCheckOutDates(forms.format(orderUpdata.getCheckOutDate()));
+		request.setAttribute("picture", orderUpdata);
+		request.setAttribute("dictionarydate", list);
+		return "picture-add";
+	}
+	
+	
+	
+	@RequestMapping("picture-addList.do")
+	@ResponseBody
+	public 	String OrderListupdate(Order order) {
+		int result=this.systemService.OrderListUpdate(order);
+		System.out.println("修改状态值="+result);
+		if(result > 0) {
+			return "1";
+		}else {
+			return "0";
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

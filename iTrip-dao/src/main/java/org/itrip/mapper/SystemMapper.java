@@ -3,6 +3,7 @@ package org.itrip.mapper;
 import java.util.List;
 
 import org.itrip.pojo.Dictionarydate;
+import org.itrip.pojo.Order;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -36,7 +37,67 @@ public interface SystemMapper {
 	 * 数据总和
 	 */
 	int systemCount();
+	
+	
+	
+	
+	
+	
+	/**
+	 * 查询订单
+	 */
+	List<Order> orderQuery();
+	
+	/**
+	 * 点击编辑订单
+	 */
+	Order OrderUpdata(int id);
+	
+	/**
+	 * 查询字典表
+	 */
+	List<Dictionarydate> Orderlist();
+	
+	/**
+	 * 点击修改
+	 */
+	int OrderListUpdate(Order order);
+	
+	/**
+	 * 数据总和
+	 */
+	int countorder();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

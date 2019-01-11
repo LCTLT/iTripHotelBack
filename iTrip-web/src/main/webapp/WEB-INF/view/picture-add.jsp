@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -18,78 +19,85 @@
 </head>
 <body>
 <div class="page-container">
+	<div style="color:red;margin-left:26%;" id="massage"></div>
+		<input type="hidden" value="${picture.id}" id="id">
 	<form class="form form-horizontal" id="form-article-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>订单编号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="" readonly>
+				<input type="text" class="input-text" value="${picture.orderNo}" placeholder="" id="" name="" readonly>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">预定酒店：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="">
+				<input type="text" class="input-text" value="${picture.hotelName}" placeholder="" id="" name="" readonly>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">预定房型：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="${picture.houseType}" placeholder="" id="houseType" name="">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预定房间数量：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="">
+				<input type="text" class="input-text" value="${picture.store}" placeholder="" id="" name="">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">入住日期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" id="" class="input-text Wdate">
+				<input type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" value="${picture.checkInDates}" id="checkInDates" class="input-text Wdate">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">退房日期：</label>
 			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
-				<input type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" id="" class="input-text Wdate">
+				<input type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" value="${picture.checkOutDates}" id="checkOutDates" class="input-text Wdate">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>订单状态：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<select id="" name="" class="select"> <!-- 字典表查询 -->
-					
+					<c:forEach items="${dictionarydate}" var="dictionarydate">
+					<option value="${dictionarydate.dictCode}"<c:if test="${dictionarydate.dictCode eq 0}"></c:if>>${dictionarydate.info}</option>
+					<option value="${dictionarydate.dictCode}"<c:if test="${dictionarydate.dictCode eq 1}"></c:if>>${dictionarydate.info}</option>
+					<option value="${dictionarydate.dictCode}"<c:if test="${dictionarydate.dictCode eq 2}"></c:if>>${dictionarydate.info}</option>
+					<option value="${dictionarydate.dictCode}"<c:if test="${dictionarydate.dictCode eq 3}"></c:if>>${dictionarydate.info}</option>
+				</c:forEach>
 				</select>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>支付金额：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="">
+				<input type="text" class="input-text" value="${picture.payAmount}" placeholder="" id="payAmount" name="">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">出发地：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="0" placeholder="" id="" name="">
+				<input type="text" class="input-text" value="${picture.place}" placeholder="" id="place" name="">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">下单用户：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="0" placeholder="" id="" name="" readonly>
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">备注：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="0" placeholder="" id="" name="">
+				<input type="text" class="input-text" value="${picture.name}" placeholder="" id="" name="" readonly>
 			</div>
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onClick="article_save_submit();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i>修改</button>
+				<button id="all" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i>修改</button>
 				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
 	</form>
 </div>
-<!--_footer 作为公共模版分离出去-->
+<!--_footer 作为公共模版分离出去 -->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
@@ -107,7 +115,48 @@ function article_save(){
 	window.parent.location.reload();
 }
 
+
 $(function(){
+	$("#all").click(function(){
+		var checkInDates= $("#checkInDates").val();
+		var checkOutDates= $("#checkOutDates").val();
+		var payAmount= $("#payAmount").val();
+		var place=$("#place").val();
+		var id= $("#id").val();
+		//提示
+		var massage = $("#massage");
+		
+		if(checkInDates == ""|| checkOutDates == "" || payAmount == "" || place == ""){
+			$("#massage").text("请确认填写完!");
+		}else{
+			$.ajax({
+				url:"picture-addList.do",
+				data:{id:id,
+					checkInDates:checkInDates,
+					checkOutDates:checkOutDates,
+					payAmount:payAmount,
+					place:place},
+				type:"post",
+				success:function(data){
+					if(data == "1"){
+						layer.msg('修改成功!', {
+							icon : 1,
+							time : 1000
+						});
+						setTimeout(function(){
+							location = "picture-list.do";
+						}, 2000);
+					}else{
+						layer.msg('修改失败!', {
+							icon : 1,
+							time : 1000
+						});
+					}				
+				}
+			});
+		}
+	});
+	
 	$('.skin-minimal input').iCheck({
 		checkboxClass: 'icheckbox-blue',
 		radioClass: 'iradio-blue',
