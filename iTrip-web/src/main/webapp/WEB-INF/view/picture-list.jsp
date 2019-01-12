@@ -28,14 +28,17 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>订单管理 <span class="c-gray en">&gt;</span>订单跟踪 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<div class="text-c"> 日期范围：
-		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
+	<div class="text-c">
+	<form action="picture-list.do" method="post">
+	日期范围：
+		<input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" id="logmin" class="input-text Wdate" style="width:120px;" name="checkInDates" value="${order.checkInDates}">
 		-
-		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
-		<input type="text" name="" id="" placeholder="预定人名称" style="width:250px" class="input-text">
+		<input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" id="logmax" class="input-text Wdate" style="width:120px;" name="checkOutDates" value="${order.checkOutDates}">
+		<input type="text" id="" placeholder="预定人名称" style="width:250px" class="input-text" name="name" value="${order.name}">
 		<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜订单</button>
+	</form>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a><span class="r">共有数据：<strong>${count}</strong> 条</span></span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="picture_dels(this)" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a><span class="r">共有数据：<strong>${count}</strong> 条</span></span> </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
@@ -47,7 +50,7 @@
 					<th width="150">入住日期</th>
 					<th width="150">退房日期</th>
 					<th width="150">支付金额</th>
-					<th width="60">出发地</th>
+					<th width="60">预定人</th>
 					<th width="60">订单状态</th>
 					<th width="100">操作</th>
 				</tr>
@@ -56,19 +59,19 @@
 			<c:forEach var="pricture" items="${requestScope.pricture}">
 				<input type="hidden" value="${picture.id}" id="id">
 				<tr class="text-c">
-					<td><input name="" type="checkbox" value="${pricture.id}"></td>
+					<td><input name="prictureId" type="checkbox" value="${pricture.id}"></td>
 					<td>${pricture.id}</td>
 					<td>${pricture.orderNo}</td>
 					<td>${pricture.hotelName}</td>
 					<td><fmt:formatDate value="${pricture.checkInDate}" pattern="yyyy年MM月dd日HH点mm分ss秒"></fmt:formatDate></td>
 					<td class="text-l"><fmt:formatDate value="${pricture.checkOutDate}" pattern="yyyy年MM月dd日HH点mm分ss秒"></fmt:formatDate></td>
 					<td class="text-c">${pricture.payAmount}</td>
-					<td>${pricture.place}</td>
+					<td>${pricture.name}</td>
 					<td class="td-status"><span class="label label-success radius">${pricture.info}</span></td>
 					<td class="td-manage">
 					<a style="text-decoration:none" class="ml-5" href="picture-add.do?id=${pricture.id}" title="编辑">
 					<i class="Hui-iconfont">&#xe6df;</i></a> 
-					<a style="text-decoration:none" class="ml-5" onClick="picture_del(this,'10001')" href="javascript:;" title="删除">
+					<a style="text-decoration:none" class="ml-5" onClick="picture_del(this,${pricture.id})" href="javascript:;" title="删除">
 					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
 				</tr>
 			</c:forEach>
@@ -174,23 +177,103 @@ function picture_edit(title,url,id){
 	layer.full(index);
 }
 
-/*图片-删除*/
-function picture_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
-		$.ajax({
-			type: 'POST',
-			url: '',
-			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
-			},
-			error:function(data) {
-				console.log(data.msg);
-			},
-		});		
+function picture_del(obj, id) {
+	layer.prompt({
+		formType : 1,
+		title : '敏感操作，请输入登入密码'
+	}, function(value, index) {
+		$.post("boolpwd.do",{pwd:value},function(data){
+			if (data == "0") {
+				layer.msg('密码错误!', {
+					icon : 5,
+					time : 1000
+				});
+				return;
+		    } else {
+				layer.confirm('角色删除须谨慎，确认要删除吗？', function(index) {
+					$.ajax({
+						type : 'POST',
+						url : 'pic-delOne.do',
+						data : {
+							id : id
+						},
+						dataType : 'text',
+						success : function(data) {	
+							if(data > 0){
+								$(obj).parents("tr").remove();
+								layer.msg('已删除!', {
+									icon : 1,
+									time : 1000
+								});
+								setTimeout(function(){
+									location.reload();
+								},2000);
+							}else{
+								layer.msg('删除失败!', {
+									icon : 1,
+									time : 1000
+								});
+							}
+						},
+						error : function(data) {
+							console.log(data.msg);
+						},
+					});
+				});
+		    }
+		});
 	});
 }
+//批量删除，获得所有id
+function picture_dels(obj) {
+	layer.prompt({
+		formType : 1,
+		title : '敏感操作，请输入登入密码'
+	}, function(value, index) {
+		$.post("boolpwd.do",{pwd:value},function(data){
+			if (data == "0") {
+				layer.msg('密码错误!', {
+					icon : 5,
+					time : 1000
+				});
+				return;
+		    } else {
+			    layer.confirm('角色删除须谨慎，确认要删除吗？', function(index) {
+					//获得选中所有value
+					var arr = [];
+					$("input[name=prictureId]:checked").each(function(index, item) {
+						arr[index] = $(item).val();
+					});
+					
+					if (arr.length == 0) {
+						alert("你还没有选择任何内容！");
+					}
+					if (arr.length > 0) {
+						$.get("pic-dels.do", {
+							arr : arr.toString()
+						}, function(data) {						
+							if(data > 0){
+								layer.msg('已删除!', {
+									icon : 1,
+									time : 1000
+								});
+								setTimeout(function(){
+									location.reload();
+								}, 1500);
+							}else{
+								layer.msg('删除失败!', {
+									icon : 2,
+									time : 1000
+								});
+							}
+						});
+					}
+			    });
+		    }
+		});
+	});
+}
+
 </script>
 </body>
 </html>

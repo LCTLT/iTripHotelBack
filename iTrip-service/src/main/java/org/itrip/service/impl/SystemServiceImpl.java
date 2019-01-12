@@ -2,8 +2,10 @@ package org.itrip.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.itrip.mapper.SystemMapper;
 import org.itrip.pojo.Dictionarydate;
+import org.itrip.pojo.House;
 import org.itrip.pojo.Order;
 import org.itrip.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +62,8 @@ public class SystemServiceImpl implements SystemService  {
 	
 	
 	@Override
-	public List<Order> orderQuery() {
-		return systemMapper.orderQuery();
+	public List<Order> orderQuery(Order order) {
+		return systemMapper.orderQuery(order);
 	}
 
 	@Override
@@ -80,11 +82,27 @@ public class SystemServiceImpl implements SystemService  {
 	}
 
 	@Override
-	public int countorder() {
-		return systemMapper.countorder();
+	public int countorder(Order order) {
+		return systemMapper.countorder(order);
 	}
-
-	
+	/*
+	 * 查询所属酒店所有房间类型
+	 */
+	public List<House> getQueryHouseOrder(@Param("hotelId")Integer hotelId){
+		return systemMapper.getQueryHouseOrder(hotelId);
+	}
+	/**
+	 * 删除用户
+	 */
+	public int deletePicOne(@Param("id")int id) {
+		return systemMapper.deletePicOne(id);
+	}
+	/**
+	 * 删除多个用户
+	 */
+	public Integer deletePics(int[] idarr) {
+		return systemMapper.deletePics(idarr);
+	}
 
 	
 }

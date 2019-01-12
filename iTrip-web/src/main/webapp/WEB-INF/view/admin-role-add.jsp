@@ -66,12 +66,10 @@
 				<dl class="permission-list">
 					<dt>
 						<label>
-							<input type="radio" value="0" name="status" checked="checked" id="status">
-							超级管理员
-							<c:if test="${type eq 2}">
-								<input type="radio" value="1" name="status" id="status">
-								会员用户
-							</c:if>
+						<c:forEach var="status" items="${listStatus}">
+							<input type="radio" value="${status.dictCode}" name="status" checked="checked">
+							${status.info}
+						</c:forEach>
 						</label>
 					</dt>
 				</dl>
@@ -83,10 +81,10 @@
 				<dl class="permission-list">
 					<dt>
 						<label>
-							<input type="radio" value="1" name="sex" checked="checked" id="sex">
-							男
-							<input type="radio" value="0" name="sex" id="sex">
-							女
+						<c:forEach var="sex" items="${listSex}">
+							<input type="radio" value="${sex.dictCode}" name="sex" checked="checked">
+							${sex.info}
+						</c:forEach>
 						</label>
 					</dt>
 				</dl>
@@ -96,10 +94,10 @@
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 				<c:if test="${type eq 1}">
-					<botton type="button" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</botton>
+					<botton type="button" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 添加</botton>
 				</c:if>
 				<c:if test="${type eq 2}">
-					<botton type="button" class="btn btn-success radius" id="admin-role-save2" name="admin-role-save2"><i class="icon-ok"></i>确定</botton>
+					<botton type="button" class="btn btn-success radius" id="admin-role-save2" name="admin-role-save2"><i class="icon-ok"></i>修改</botton>
 				</c:if>
 			</div>
 		</div>
@@ -151,6 +149,7 @@ $(function(){
 					});
 					setTimeout(function(){
 						location = "admin-role.do";
+						article_save();
 					}, 2000);
 				}else{
 					layer.msg('添加失败!', {
@@ -200,6 +199,7 @@ $(function(){
 						});
 						setTimeout(function(){
 							location = "admin-role.do";
+							article_save();
 						}, 2000);
 					}else{
 						layer.msg('修改失败!', {
@@ -213,7 +213,9 @@ $(function(){
 		}
 	});
 	
-	
+	function article_save() {
+		window.parent.location.reload();
+	}
 	$(".permission-list dt input:checkbox").click(function(){
 		$(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
 	});

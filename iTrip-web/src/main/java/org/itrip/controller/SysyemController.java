@@ -26,11 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SysyemController {
 	@Autowired
 	SystemService systemService;
-	
-	private static SimpleDateFormat forms = null;
-	static {
-		forms = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	}
 	/**
 	 * 字典表查询
 	 * @param request
@@ -128,28 +123,17 @@ public class SysyemController {
 		return "0"; //验证失败
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * 订单查询
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping("picture-list.do")
-	public String order(HttpServletRequest request) {
-		List<Order> list=systemService.orderQuery();
-		
-		PageUtil.pageCount=systemService.countorder();
+	public String order(HttpServletRequest request,Order order) {
+		request.setAttribute("order", order);
+		List<Order> list=systemService.orderQuery(order);
+		PageUtil.pageCount=systemService.countorder(order);
 		request.setAttribute("count", PageUtil.pageCount);
-		
 		request.setAttribute("pricture", list);
 		return "picture-list";
 	}
@@ -162,11 +146,14 @@ public class SysyemController {
 	 */
 	@RequestMapping("picture-add.do")
 	public String orderlist(HttpServletRequest request,@RequestParam("id")int id) {
+		SimpleDateFormat forms = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<Dictionarydate> list=systemService.Orderlist();
 		Order orderUpdata = systemService.OrderUpdata(id);
-		//格式化时间
-		orderUpdata.setCheckInDates(forms.format(orderUpdata.getCheckInDate()));
-		orderUpdata.setCheckOutDates(forms.format(orderUpdata.getCheckOutDate()));
+		if(orderUpdata.getCheckInDate() != null && orderUpdata.getCheckOutDate() != null) {
+			orderUpdata.setCheckInDates(forms.format(orderUpdata.getCheckInDate()));
+			orderUpdata.setCheckOutDates(forms.format(orderUpdata.getCheckOutDate()));
+		}
+		request.setAttribute("house", systemService.getQueryHouseOrder(orderUpdata.getHotelId()));
 		request.setAttribute("picture", orderUpdata);
 		request.setAttribute("dictionarydate", list);
 		return "picture-add";
@@ -185,7 +172,25 @@ public class SysyemController {
 			return "0";
 		}
 	}
+	/**
+	 * 删除
+	 * @param id
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping("pic-delOne.do")
+	@ResponseBody
+	public int adminRoleUser(@RequestParam("id")Integer id) throws UnsupportedEncodingException{
+		int i =systemService.deletePicOne(id);
+		return i;
+	}
 	
+	@RequestMapping("pic-dels.do")
+	@ResponseBody
+	public int adminRoleUserList(HttpServletResponse response, HttpServletRequest request,int[] arr) throws IOException, ServletException {
+		int result = systemService.deletePics(arr);
+		return result;
+	}
 	
 	
 	

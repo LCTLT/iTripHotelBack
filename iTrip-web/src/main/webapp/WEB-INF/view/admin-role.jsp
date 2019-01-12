@@ -68,7 +68,7 @@
 						<td><input type="checkbox" value="${user.id}" name="userName"
 							<c:if test="${userSession.id == user.id}">disabled</c:if>></td>
 						<td>${user.id}</td>
-						<td>超级管理员</td>
+						<td>${user.info}</td>
 						<td><a href="#">${user.name}</a></td>
 						<td>${user.phone}</td>
 						<td><c:if test="${user.sex == 0}">女</c:if> <c:if
@@ -131,6 +131,7 @@
 				location = "admin-role.do?pageNo="+pageNo;
 			}
 		}
+		
 		/*管理员-角色-添加*/
 		function admin_role_add(title, url, w, h) {
 			layer_show(title, url, w, h);

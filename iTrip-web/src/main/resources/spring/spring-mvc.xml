@@ -101,18 +101,18 @@
 	</mvc:annotation-driven>
 	<!-- springmvc 消息转换器配置结束 -->
 
-<!--配置拦截器 
-<mvc:interceptors>
-配置子拦截器1
+<!-- 配置拦截器  -->
+<mvc:interceptors> 
+<!-- 配置子拦截器1 -->
 		<mvc:interceptor>
-		配置拦截所有请求
+		<!-- 配置拦截所有请求 -->
 			<mvc:mapping path="/*.do" />
-			配置不拦截指定资源请求 
+			<!-- 配置不拦截指定资源请求  -->
 			<mvc:exclude-mapping path="/login.do"/>
 			<mvc:exclude-mapping path="/loginlist.do"/>
 			<mvc:exclude-mapping path="/code.do"/>
-			拦截器类地址 
+			<!-- 拦截器类地址  -->
 			<bean class="org.itrip.utils.IterceptorUtil"></bean>
 		</mvc:interceptor>
-	</mvc:interceptors> -->
+	</mvc:interceptors>
 </beans>

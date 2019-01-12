@@ -3,11 +3,17 @@ package org.itrip.service;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.itrip.pojo.Dictionarydate;
 import org.itrip.pojo.User;
 
 public interface UserService {
 	
-	public int loginUser(@Param("phone")String phone);
+	/**
+	 * 读取字典
+	 */
+	List<Dictionarydate> getQuerySex(String typeCode);
+	
+	int loginUser(@Param("phone")String phone);
 	List<User> getQueryUserList(int pageNo,int pageSize);
 	/**
 	 * 用户登入

@@ -9,11 +9,17 @@
 		<result column="password" property="password"
 			jdbcType="VARCHAR" />
 	</resultMap>
+	
 	<!-- 数据库字段 -->
 	<sql id="Base_Column_List">
 		id, name, phone,pwd,sex,birthday,email,address,status
 	</sql>
 	
+	<!-- 读取字典 -->
+	<select id="getQuerySex" resultType="org.itrip.pojo.Dictionarydate">
+		select dictCode,info from dictionarydate where typeCode = #{typeCode}
+	</select>	
+		
 	<select id="countLoginUser" resultType="int" parameterType="String">
 	   select count(id) from user where phone=#{phone}
 	</select>
@@ -21,8 +27,9 @@
 	<!-- 用户查询 -->
 	<select id="queryUserList" resultType="org.itrip.pojo.User">
 		select
-		id,name,phone,sex,status 
-		from user where status = 0 order by id desc limit #{pageNo},#{pageSize}
+		a.id,a.name,a.phone,a.sex,a.status,b.info 
+		from `user` a INNER JOIN dictionarydate b on 
+		a.`status` = b.dictCode and b.typeCode = 'status' and a.`status` = 0 or a.`status` = 1 order by a.id desc limit #{pageNo},#{pageSize}
 	</select>
 
 	<!-- 后台登录 -->
@@ -60,7 +67,7 @@
 	</update>
 	
 	<select id="countUsers" resultType="int">
-		select COUNT(id) from user where status =1 and `delete` = 0
+		select COUNT(id) from user where status =2 and `delete` = 0
 	</select>
 
 
@@ -93,12 +100,12 @@
 	</insert>
 
 	<select id="memberUser" resultType="org.itrip.pojo.User">
-		select * from user where status = 1 and `delete` = 0  order by id desc
+		select * from user where status = 2 and `delete` = 0  order by id desc
 	</select>
 
 
 		<select id="queryUser" resultType="org.itrip.pojo.User">
-			SELECT * FROM user WHERE status =1 
+			SELECT * FROM user WHERE status =2 
 			<if test="_query11 != null and _query11 != ''">
 			 and name LIKE CONCAT ('%',#{_query11},'%') or
 	 			   phone LIKE CONCAT ('%',#{_query11},'%') or

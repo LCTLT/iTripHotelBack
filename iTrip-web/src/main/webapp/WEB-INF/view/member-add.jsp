@@ -57,12 +57,14 @@
 			<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
 			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+			<c:forEach var="sex" items="${listSex}">
 				<div class="radio-box">
 					<label class="">
-					<input type="radio" value="1" name="sex" id="sex" checked>
-					男</label>
-					
+					<input type="radio" value="${sex.dictCode}" name="sex" id="sex" <c:if test="${user.status eq 1}">checked</c:if>>
+					${sex.info}</label>
 				</div>
+			</c:forEach>
+				
 				<div class="radio-box">
 					<label class="">
 					<input type="radio" value="0" name="sex" <c:if test="${user.status eq 1}">checked</c:if> id="sex">
@@ -186,6 +188,7 @@ $(function(){
 							});
 							setTimeout(function(){
 								location = "member-list.do";
+								article_save();
 							}, 2000);
 						}else{
 							layer.msg('添加失败!', {
@@ -198,6 +201,10 @@ $(function(){
 			}); 
 		}
 	});
+	function article_save() {
+		window.parent.location.reload();
+	}
+	
 	$("#admin-role-save2").click(function(){
 		var name = $("#name").val(); //获得name参数
 		var phone= $("#phone").val();
@@ -243,6 +250,7 @@ $(function(){
 								});
 								setTimeout(function(){
 									location = "member-list.do";
+									article_save();
 								}, 2000);
 							}else{
 								layer.msg('修改失败!', {

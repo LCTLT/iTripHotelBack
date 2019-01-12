@@ -96,13 +96,10 @@ public class ProductController {
 
 	@RequestMapping("add_update.do")
 	public String add_update(Hotel hotel,@RequestParam(value="type",required=false)Integer type,HttpServletRequest request) {
-		System.out.println("--------------add---------------update------------------"+type);
 		request.setAttribute("type", type);
 		if(type==1) {
-			System.out.println("添加");
 			return "forward:/insertHotel.do";
 		}else if(type==2) {
-			System.out.println("修改");
 			return "forward:/updateHotel.do";
 		}
 		return null;
@@ -155,7 +152,6 @@ public class ProductController {
 				 level1,  level2,  level3,  fileUrl,  hotelphone,hotelRating);
 		
 		int result=this.productService.insertHotel(hotels);
-		System.out.println(result);
 		if (result>0) {
 			return "forward:/product-list.do";
 		}else {
@@ -206,7 +202,6 @@ public class ProductController {
 		Hotel hotels = new Hotel(Integer.valueOf(id),"", hotelName,  hotelAddress,  hotelPrice,  hotelIntro,  hotelRatings,
 				 level1,  level2,  level3,  fileUrl,  hotelphone,hotelRating);
 		int result=this.productService.updateHotel(hotels);
-		System.out.println("修改状态值="+result);
 		if(result > 0) {
 			return "forward:/product-list.do";
 		}else {
@@ -234,7 +229,6 @@ public class ProductController {
 	@ResponseBody
 	public int productDelete(@RequestParam("hotelId")Integer id) throws UnsupportedEncodingException{
 		int i =productService.deleteHotel(id);
-		System.out.println("int i="+id);
 		return i;
 	}
 
@@ -254,7 +248,6 @@ public class ProductController {
 	@RequestMapping("product-updateLevel.do")
 	public String productUpdateLevle(HttpServletRequest request,Level level) {
 		int result=this.productService.updateLevel(level);
-		System.out.println("分类修改状态值="+result);
 		if(result > 0) {
 			return "forward:/product-category.do";
 		}else {
@@ -272,7 +265,6 @@ public class ProductController {
 	@ResponseBody
 	public int productDeleLevel(@RequestParam("id")int id) {
 		int resu=this.productService.deleLevel(id);
-		System.out.println("int i="+id+"/");
 		return resu;
 	}
 	/**

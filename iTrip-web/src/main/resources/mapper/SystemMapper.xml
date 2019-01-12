@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.itrip.mapper.SystemMapper">
-<!-- 字典表页面查询 -->
+	<!-- 字典表页面查询 -->
 
-	<select id="listdictionarydate" resultType="org.itrip.pojo.Dictionarydate">
+	<select id="listdictionarydate"
+		resultType="org.itrip.pojo.Dictionarydate">
 		select * from dictionarydate order by id desc
 	</select>
-	
+
 	<select id="SystemId" resultType="org.itrip.pojo.Dictionarydate">
-	select * from dictionarydate where id=#{id}
+		select * from dictionarydate where id=#{id}
 	</select>
-	
-	<update id="systemdictionarydate" parameterType="org.itrip.pojo.Dictionarydate">
-		UPDATE dictionarydate SET typeCode=#{typeCode},dictCode=#{dictCode},info=#{info},typeName=#{typeName} WHERE id=#{id};
+
+	<update id="systemdictionarydate"
+		parameterType="org.itrip.pojo.Dictionarydate">
+		UPDATE dictionarydate SET
+		typeCode=#{typeCode},dictCode=#{dictCode},info=#{info},typeName=#{typeName}
+		WHERE id=#{id};
 	</update>
-	
+
 	<!-- 删除单个用户 -->
 	<delete id="systemdelete" parameterType="int">
-		DELETE from dictionarydate where id=#{id}
+		DELETE from
+		dictionarydate where id=#{id}
 	</delete>
 
 	<!-- 删除多个用户 -->
@@ -28,64 +33,100 @@
 			#{id}
 		</foreach>
 	</delete>
-	
+
 	<!-- 添加数据 -->
-	<insert id="systemroleadd" parameterType="org.itrip.pojo.Dictionarydate">
-		INSERT INTO dictionarydate(`id`,`typeCode`,`dictCode`, `info`,`typeName`) VALUES
+	<insert id="systemroleadd"
+		parameterType="org.itrip.pojo.Dictionarydate">
+		INSERT INTO dictionarydate(`id`,`typeCode`,`dictCode`,
+		`info`,`typeName`) VALUES
 		(null,#{typeCode},#{dictCode},#{info},#{typeName});
 	</insert>
-	
+
 	<select id="systemCount" resultType="int">
-		select count(id) from dictionarydate 
+		select count(id) from
+		dictionarydate
+	</select>
+	<!-- 页面查询 -->
+	<select id="orderQuery" resultType="org.itrip.pojo.Order">
+		select a.*,b.info as info,d.name,c.hotelName as hotelName from `order` a
+		INNER JOIN dictionarydate b on a.orderStatus = b.dictCode
+		INNER JOIN hotel c on a.hotelId=c.hotelId
+		inner join user d on a.userId = d.id
+		<where>
+			b.typeCode = 'orderStatus'
+			<if test="checkInDates != null and checkInDates != ''">
+				and #{checkInDates} &lt;= a.checkInDate
+			</if>
+			<if test="checkOutDates != null and checkOutDates != ''">
+				and #{checkOutDates} >= a.checkOutDate
+			</if>
+			<if test="name != null and name != ''">
+				and d.name LIKE CONCAT ('%',#{name},'%')
+			</if>
+		</where>
 	</select>
 
+	<!-- 编辑查询 -->
+	<select id="OrderUpdata" resultType="org.itrip.pojo.Order">
+		select a.*,b.info as info,b.dictCode as dictCode,c.hotelName as
+		hotelName,d.houseType as houseType,e.store as store,f.name as name
+		from `order` a
+		INNER JOIN dictionarydate b on a.orderStatus = b.dictCode
+		INNER JOIN hotel c on a.hotelId=c.hotelId
+		INNER JOIN house d on a.houseId=d.houseId
+		INNER JOIN rawstock e on a.houseId=e.houseId
+		INNER JOIN user f on a.userId=f.id
+		where b.typeCode = 'orderStatus' and a.id=#{id}
+	</select>
 
+	<select id="countorder" resultType="int">
+		SELECT COUNT(a.id) from `order` a
+		inner join user b on a.userId = b.id
+		<where>
+			<if test="checkInDates != null and checkInDates != ''">
+				and #{checkInDates} &lt;= a.checkInDate
+			</if>
+			<if test="checkOutDates != null and checkOutDates != ''">
+				and #{checkOutDates} >= a.checkOutDate
+			</if>
+			<if test="name != null and name != ''">
+				and b.name LIKE CONCAT ('%',#{name},'%')
+			</if>
+		</where>
+	</select>
 
+	<!-- 下拉列表框 -->
+	<select id="Orderlist"
+		resultType="org.itrip.pojo.Dictionarydate">
+		SELECT dictCode,info FROM dictionarydate WHERE typeCode =
+		'orderStatus'
+	</select>
 
-
-
-
-
-
-		<!-- 页面查询 -->
-		<select id="orderQuery" resultType="org.itrip.pojo.Order">
-			select a.*,b.info as info,c.hotelName as hotelName from `order` a
-				INNER JOIN dictionarydate b on a.orderStatus = b.dictCode 
-				INNER JOIN  hotel c on a.hotelId=c.hotelId
-				where b.typeCode = 'orderStatus'
-			order by a.id desc
-		</select>	
-		
-		<!-- 编辑查询 -->
-		<select id="OrderUpdata" resultType="org.itrip.pojo.Order">
-			select a.*,b.info as info,b.dictCode as dictCode,c.hotelName as hotelName,d.houseType as houseType,e.store as store,f.name as name
-				from `order` a
-				INNER JOIN dictionarydate b on a.orderStatus = b.dictCode 
-				INNER JOIN  hotel c on a.hotelId=c.hotelId
-				INNER JOIN  house d on a.houseId=d.houseId
-				INNER JOIN  rawstock e on a.houseId=e.houseId
-				INNER JOIN  user f on a.userId=f.id
-			where b.typeCode = 'orderStatus' and a.id=#{id}
-		</select>
-		
-		<select id="countorder" resultType="int">
-		SELECT COUNT(id) from `order` 
-		</select>
-		
-		<!-- 下拉列表框 -->
-		<select id="Orderlist" resultType="org.itrip.pojo.Dictionarydate">
-		SELECT * FROM dictionarydate WHERE typeCode = 'orderStatus'
-		</select>
-		
-		<!-- 点击修改 -->
-		<update id="OrderListUpdate" parameterType="org.itrip.pojo.Order">
-				UPDATE `order` SET
-				checkInDate=#{checkInDate},checkOutDate=#{checkOutDate},
-				payAmount=#{payAmount},place=#{place}
-				where id=#{id}
-		</update>
+	<!-- 点击修改 -->
+	<update id="OrderListUpdate"
+		parameterType="org.itrip.pojo.Order">
+		UPDATE `order` SET
+		checkInDate=#{checkInDates},checkOutDate=#{checkOutDates},
+		payAmount=#{payAmount},place=#{place}
+		where id=#{id}
+	</update>
+	<select id="getQueryHouseOrder" resultType="org.itrip.pojo.House">
+		select houseId,houseType from house where hotelId = #{hotelId}
+	</select>
 	
-		
+		<!-- 删除单个用户 -->
+	<delete id="deletePicOne">
+		delete from `order` where id=#{id}
+	</delete>
+
+	<!-- 删除多个用户 -->
+	<delete id="deletePics" parameterType="int">
+		delete from `order` where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 </mapper>
 
 

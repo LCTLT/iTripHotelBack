@@ -44,7 +44,7 @@
 				<input type="text" class="input-text" style="width: 250px"
 					placeholder="请输入房间类型" id="house" name="houseName" value="${ist}">
 				<input type="submit" class="btn btn-success radius" id="radius"
-					name=""><i class="Hui-iconfont">&#xe665;</i>搜索房型</input>
+					name="" value="搜索房型"></input>
 			</form>
 		</div>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">

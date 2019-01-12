@@ -56,7 +56,7 @@
                 <input type="text" class="input-text" style="width: 250px"
 					placeholder="输入分类名称" id="name" name="name" value="${name}">
 				<input type="submit" class="btn btn-success radius" id="radius"
-					name=""><i class="Hui-iconfont">&#xe665;</i> 搜分类</input>
+					name="" value="搜分类"></input>
 			</div>
 		</form>
 	</div>

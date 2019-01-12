@@ -3,11 +3,16 @@ package org.itrip.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.itrip.pojo.Dictionarydate;
 import org.itrip.pojo.User;
 import org.springframework.stereotype.Component;
 
 @Component
 public interface UserMapper {
+	/**
+	 * 读取字典
+	 */
+	List<Dictionarydate> getQuerySex(@Param("typeCode")String typeCode);
 	
 	int countLoginUser(@Param("phone")String phone);
 	/**

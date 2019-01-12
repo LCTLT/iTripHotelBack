@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.itrip.pojo.Dictionarydate;
 import org.itrip.pojo.User;
 import org.itrip.service.UserService;
 import org.itrip.utils.CheckUtil;
@@ -34,7 +35,6 @@ public class IndexController {
 	@RequestMapping("loginUser.do")
 	@ResponseBody
 	public Integer loginUser(@RequestParam("phone")String phone) {
-		System.out.println("phone="+phone);
 		int result = userService.loginUser(phone);
 		return result;
 	}
@@ -87,10 +87,15 @@ public class IndexController {
 	 */
 	@RequestMapping("admin-role-add.do")
 	public String adminRoleAdd(HttpServletRequest request,@RequestParam("type")int type,@RequestParam("id")int id) {
+		//读取性别字典，角色字典
+		List<Dictionarydate> listSex = userService.getQuerySex("sex");
+		List<Dictionarydate> listStatus = userService.getQuerySex("status");
 		if(type == 2) {
 			request.setAttribute("user", userService.queryUpdate(id));
 		}
 		request.setAttribute("type", type);
+		request.setAttribute("listSex", listSex);
+		request.setAttribute("listStatus", listStatus);
 		return "admin-role-add";
 	}
 	/**
@@ -172,15 +177,6 @@ public class IndexController {
 		int result = userService.deleteUserList(arr);
 		return result;
 	}
-	
-	/**
-	 * 权限管理
-	 */
-	@RequestMapping("admin-permission.do")
-	public String adminPremission() {
-		return "admin-permission";
-	}
-	
 	/**
 	 * 添加用户
 	 */
@@ -309,7 +305,6 @@ public class IndexController {
 		//会员密码加密
 		user.setPwd(CheckUtil.getSha1(user.getPwd()));
 		int result = this.userService.addUser(user);
-		System.out.println(result);
 		if(result > 0) {
 			return "1";
 		}else {
@@ -372,10 +367,15 @@ public class IndexController {
 	 */
 	@RequestMapping("member-add.do")
 	public String memberAdd(HttpServletRequest request,@RequestParam("type")Integer type,@RequestParam("id")Integer id) {		
+		//读取性别字典，角色字典
+		List<Dictionarydate> listSex = userService.getQuerySex("sex");
+		List<Dictionarydate> listStatus = userService.getQuerySex("status");
 		if(type == 2) {
 			request.setAttribute("user", userService.updateUserid(id));
 		}
 		request.setAttribute("type", type);
+		request.setAttribute("listSex", listSex);
+		request.setAttribute("listStatus", listStatus);
 		return "member-add";
 	}
 	/**

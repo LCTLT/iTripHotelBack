@@ -62,7 +62,6 @@ public class ProductServiceImpl implements ProductService {
 	public int deleteHotel(int hotelId) {
 		// TODO Auto-generated method stub
 		try {
-			System.out.println(hotelId);
 			int deleteHotel = 0;
 			deleteHotel = productMapper.deleteHouse(hotelId);
 			deleteHotel = productMapper.deleteHotel(hotelId);

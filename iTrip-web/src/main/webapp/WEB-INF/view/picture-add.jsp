@@ -37,13 +37,18 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">预定房型：</label>
 			<div class="formControls col-xs-8 col-sm-9">
+				<select>
+					<c:forEach var="house" items="${house}">
+						<option value="${house.houseId}" <c:if test="${house.houseId eq picture.houseId}">selected</c:if>>${house.houseType}</option>
+					</c:forEach>
+				</select>
 				<input type="text" class="input-text" value="${picture.houseType}" placeholder="" id="houseType" name="">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预定房间数量：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="${picture.store}" placeholder="" id="" name="">
+				<input type="text" class="input-text" value="${picture.houseCount}" placeholder="" id="" name="">
 			</div>
 		</div>
 		<div class="row cl">
@@ -63,10 +68,7 @@
 			<div class="formControls col-xs-8 col-sm-9">
 				<select id="" name="" class="select"> <!-- 字典表查询 -->
 					<c:forEach items="${dictionarydate}" var="dictionarydate">
-					<option value="${dictionarydate.dictCode}"<c:if test="${dictionarydate.dictCode eq 0}"></c:if>>${dictionarydate.info}</option>
-					<option value="${dictionarydate.dictCode}"<c:if test="${dictionarydate.dictCode eq 1}"></c:if>>${dictionarydate.info}</option>
-					<option value="${dictionarydate.dictCode}"<c:if test="${dictionarydate.dictCode eq 2}"></c:if>>${dictionarydate.info}</option>
-					<option value="${dictionarydate.dictCode}"<c:if test="${dictionarydate.dictCode eq 3}"></c:if>>${dictionarydate.info}</option>
+					<option value="${dictionarydate.dictCode}"<c:if test="${dictionarydate.dictCode eq picture.dictCode}">selected</c:if>>${dictionarydate.info}</option>
 				</c:forEach>
 				</select>
 			</div>
@@ -127,7 +129,11 @@ $(function(){
 		var massage = $("#massage");
 		
 		if(checkInDates == ""|| checkOutDates == "" || payAmount == "" || place == ""){
-			$("#massage").text("请确认填写完!");
+			layer.msg('信息不完整!', {
+				icon : 2,
+				time : 1000
+			});
+			return;
 		}else{
 			$.ajax({
 				url:"picture-addList.do",
@@ -145,6 +151,7 @@ $(function(){
 						});
 						setTimeout(function(){
 							location = "picture-list.do";
+							parent.layer.close();
 						}, 2000);
 					}else{
 						layer.msg('修改失败!', {

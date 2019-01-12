@@ -5,7 +5,6 @@ public class LoginDate {
 	 * 本次登录时间
 	 */
 	public static String benTime;
-	
 	/**
 	 * 上次登录时间
 	 */

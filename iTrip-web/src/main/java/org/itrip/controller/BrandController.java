@@ -48,7 +48,6 @@ public class BrandController {
 	@ResponseBody
 	public int deleteDelList(HttpServletRequest request,int[] arr) {
 		int i = brandService.deleteDelList(arr);
-		System.out.println("删除状态值：="+i);
 		return i;
 	}
 	

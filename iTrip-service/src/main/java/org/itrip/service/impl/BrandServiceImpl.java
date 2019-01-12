@@ -16,7 +16,6 @@ public class BrandServiceImpl implements BrandService{
 
 	@Override
 	public List<House> querylist(String houseName,String hotelName) {
-		System.out.println("hotelName="+hotelName);
 		//查询出酒店id
 		Hotel hotel = new Hotel();
 		if(hotelName != null && !hotelName.equals("")) {

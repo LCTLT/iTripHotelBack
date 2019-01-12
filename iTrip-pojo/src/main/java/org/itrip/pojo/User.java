@@ -24,6 +24,13 @@ public class User implements Serializable{
 	private String address;//地址
 	private int status;//用户权限
 	private String numbs; //验证码
+	private String info;
+	public String getInfo() {
+		return info;
+	}
+	public void setInfo(String info) {
+		this.info = info;
+	}
 	public String getIdcard() {
 		return idcard;
 	}

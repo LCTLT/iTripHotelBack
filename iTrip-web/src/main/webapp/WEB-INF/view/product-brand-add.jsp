@@ -239,6 +239,7 @@
 																setTimeout(
 																		function() {
 																			location = "product-brand.do";
+																			article_save();
 																		}, 1500);
 															} else {
 																layer
@@ -269,6 +270,7 @@
 																setTimeout(
 																		function() {
 																			location = "product-brand.do";
+																			article_save();
 																		}, 1500);
 															} else {
 																layer
@@ -287,7 +289,6 @@
 		});
 
 		function article_save() {
-			alert("刷新父级的时候会自动关闭弹层。")
 			window.parent.location.reload();
 		}
 

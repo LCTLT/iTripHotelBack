@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.itrip.mapper.UserMapper;
+import org.itrip.pojo.Dictionarydate;
 import org.itrip.pojo.User;
 import org.itrip.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,13 @@ public class UserServiceImpl implements UserService {
 //	private RedisCache redis = new RedisCache();
 	@Autowired
 	UserMapper userMapper;
+	
+	/**
+	 * 读取字典
+	 */
+	public List<Dictionarydate> getQuerySex(String typeCode){
+		return userMapper.getQuerySex(typeCode);
+	}
 	
 	public int loginUser(@Param("phone")String phone) {
 		return userMapper.countLoginUser(phone);

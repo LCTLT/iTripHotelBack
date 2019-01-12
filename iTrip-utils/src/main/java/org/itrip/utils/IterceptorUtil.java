@@ -18,7 +18,8 @@ public class IterceptorUtil implements HandlerInterceptor {
 		if(request.getSession().getAttribute("userSession") != null) {
 			return true;
 		}else {
-			response.sendRedirect("login.do");
+			request.setAttribute("status", 1);
+			request.getRequestDispatcher("login.do").forward(request, response);
 		}
 		return false;
 	}

@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -23,7 +24,6 @@
   <div id="loginform" class="loginBox">
     <form class="form form-horizontal" action="" method="post">
       <div class="row cl">
-      <div style="color:red;margin-left:27%" id="massage"></div>
         <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
         <div class="formControls col-xs-8">
           <input id="phone" name="" type="text" placeholder="账户" class="input-text size-L">
@@ -42,13 +42,6 @@
       </div>
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
-          <label for="online">
-            <input type="checkbox" name="online" id="online" value="">
-             使我保持登录状态</label>
-        </div>
-      </div>
-      <div class="row cl">
-        <div class="formControls col-xs-8 col-xs-offset-3">
           <input name="" id="sub" type="button" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
           <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
         </div>
@@ -59,6 +52,14 @@
 <div class="footer">Copyright 你的公司名称 乐游 v3.1</div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<c:if test="${not empty status}">
+	<script type="text/javascript">
+	$(function(){
+		layer.msg('请先登录!',{icon:2,time:1500});
+	});
+	</script>
+</c:if>
 <script type="text/javascript">
 //图片验证码
 function change(){
@@ -72,24 +73,23 @@ $(function(){
         var userName = $.trim($("#phone").val());//取输入的用户名
         var pwd = $.trim($("#pwd").val());//取输入的密码
         var numbs = $.trim($("#numbs").val()); //获取输入图片验证码
-        var massage = $("#massage"); //提示
-        if(phone == ""){
-        	massage.text("请输入账户");
+        if(userName == ""){
+        	layer.msg('请输入账户!',{icon:2,time:1500});
         }else if(pwd == ""){
-        	massage.text("请输入密码");
+        	layer.msg('请输入密码!',{icon:2,time:1500});
         }else if(pwd.length < 6){
-        	massage.text("密码格式至少为6位字符");
+        	layer.msg('密码格式至少为6位字符!',{icon:2,time:1500});
         }else if(numbs == "验证码:" || numbs == ""){
-        	massage.text("请输入验证码");
+        	layer.msg('请输入验证码!',{icon:2,time:1500});
         }else{
         	$.post("loginlist.do",{phone:userName,pwd:pwd,numbs:numbs},function(data){
         		if(data == "2"){
         			window.location = "index.do";
         		}else if(data == "1"){
-        			massage.text("用户名或密码不正确");
+        			layer.msg('用户名或密码不正确!',{icon:2,time:1500});
         			change();
         		}else{
-        			massage.text("验证码输入错误");
+        			layer.msg('验证码输入错误!',{icon:2,time:1500});
         			change();
         		}
         	});

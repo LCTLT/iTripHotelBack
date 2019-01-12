@@ -2,7 +2,9 @@ package org.itrip.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.itrip.pojo.Dictionarydate;
+import org.itrip.pojo.House;
 import org.itrip.pojo.Order;
 import org.springframework.stereotype.Component;
 
@@ -46,7 +48,7 @@ public interface SystemMapper {
 	/**
 	 * 查询订单
 	 */
-	List<Order> orderQuery();
+	List<Order> orderQuery(Order order);
 	
 	/**
 	 * 点击编辑订单
@@ -66,7 +68,19 @@ public interface SystemMapper {
 	/**
 	 * 数据总和
 	 */
-	int countorder();
+	int countorder(Order order);
+	/*
+	 * 查询所属酒店所有房间类型
+	 */
+	List<House> getQueryHouseOrder(@Param("hotelId")Integer hotelId);
+	/**
+	 * 删除用户
+	 */
+	int deletePicOne(@Param("id")int id);
+	/**
+	 * 删除多个用户
+	 */
+	Integer deletePics(int[] idarr);
 }
 
 
