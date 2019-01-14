@@ -37,12 +37,11 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">预定房型：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<select>
+				<select id="" name="" class="select">
 					<c:forEach var="house" items="${house}">
 						<option value="${house.houseId}" <c:if test="${house.houseId eq picture.houseId}">selected</c:if>>${house.houseType}</option>
 					</c:forEach>
 				</select>
-				<input type="text" class="input-text" value="${picture.houseType}" placeholder="" id="houseType" name="">
 			</div>
 		</div>
 		<div class="row cl">

@@ -21,6 +21,7 @@ public class Order implements Serializable{
 	private int id;//主键id
 	private String orderNo;//订单编号
 	private int hotelId;//酒店id
+	private int houseId;
 	private String houseCount;//预订房间数量
 	private int bookingDays;//预订天数
 	private Date checkInDate;//入住日期
@@ -45,6 +46,14 @@ public class Order implements Serializable{
 	private String name;
 	private String dictCode;
 	
+	
+	
+	public int getHouseId() {
+		return houseId;
+	}
+	public void setHouseId(int houseId) {
+		this.houseId = houseId;
+	}
 	public String getDictCode() {
 		return dictCode;
 	}
