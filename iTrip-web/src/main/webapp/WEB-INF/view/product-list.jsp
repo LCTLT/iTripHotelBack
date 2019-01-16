@@ -40,10 +40,10 @@ table {
 </head>
 <body class="pos-r">
 	<div class="pos-a"
-		style="width: 120px; left: 0; top: 0; bottom: 0; height: 100%; border-right: 1px solid #e5e5e5; background-color: #f5f5f5; overflow: auto;">
+		style="width: 0px; left: 0; top: 0; bottom: 0; height: 100%; border-right: 1px solid #e5e5e5; background-color: #f5f5f5; overflow: auto;">
 		<ul id="treeDemo" class="ztree"></ul>
 	</div>
-	<div style="margin-left: 120px;">
+	<div style="margin-left: 0px;">
 		<nav class="breadcrumb">
 			<i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
 			酒店管理 <span class="c-gray en">&gt;</span> 酒店列表 <a
@@ -101,9 +101,7 @@ table {
 							<td class="text-l">${hotel.hotelPrice}</td>
 							<td class="td-status"><span
 								class="label label-success radius">已发布</span></td>
-							<td class="td-manage"><a style="text-decoration: none"
-								onClick="product_stop(this,'10001')" href="javascript:;"
-								title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a
+							<td class="td-manage"><a
 								style="text-decoration: none" class="ml-5"
 								onClick="product_edit('酒店编辑','product-add.do?type=2&hotelId=${hotel.hotelId}','10001')"
 								href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>

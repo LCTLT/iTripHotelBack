@@ -49,6 +49,13 @@ $(function() {
 		if(chart == null || chart == "pie"){
 			suffix = "%";
 			prefix = "";
+			if(nameType == "price"){
+				dataName = "销售额";
+				deci = 4;
+			}else{
+				dataName = "订单数";
+			}
+			getDataByTypePrice($type.val());
 		}else{
 			if(nameType == "price"){ //销售额选中
 				//销售额保留4位小数
@@ -66,8 +73,8 @@ $(function() {
 				getDataByType($type.val());
 			}
 		}
-		Highcharts.chart('container', getChat(chart));
-	});
+	Highcharts.chart('container', getChat(chart));
+});
 });
 
 //根据参数值用ajax传到后台获取数据

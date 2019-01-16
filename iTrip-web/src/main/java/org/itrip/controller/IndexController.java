@@ -1,11 +1,13 @@
 package org.itrip.controller;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.itrip.pojo.Dictionarydate;
 import org.itrip.pojo.User;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 用户管理
  * @author Administrator
@@ -28,6 +32,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IndexController {
 	@Autowired
 	UserService userService;
+	
+	/**
+	 * 管理员信息
+	 * @param phone
+	 * @return
+	 */
+	@RequestMapping("admin.do")
+	@ResponseBody
+	public String admin(HttpSession session,HttpServletResponse response)throws Exception {
+		User user = (User)session.getAttribute("userSession");
+		return JSON.toJSONString(user);
+	}
+	
 	
 	/*
 	 * 修改验证唯一性

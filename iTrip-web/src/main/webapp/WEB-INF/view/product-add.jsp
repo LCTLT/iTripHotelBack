@@ -122,7 +122,7 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button class="btn btn-primary radius" type="button" id="subs"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
 				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
@@ -206,86 +206,111 @@ $(function(){
 	});
 	
 	
-	$("button[type=submit]").click(function(){
+	$("#subs").click(function(){
 		var fig = true;
 		if(form.hotelName.value==""){
 			{layer.msg('酒店标题不能为空!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
+			});}
+			fig = false;
+			return;
 		}
 		if(form.hotelAddress.value==""){
 			{layer.msg('酒店地址不能为空!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
+			});}
+			fig = false;
+			return;
 		}
 		if(form.level1.value=="" || form.level1.value== "请选择"){
 			{layer.msg('请选择酒店一级分类!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
+			});}
+			fig = false;
+			return;
 		}
 		if(form.level2.value=="" || form.level2.value== "请选择"){
 			{layer.msg('请选择酒店二级分类!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
+			});}
+			fig = false;
+			return;
 		}
 		if(form.hotelRatings.value==""){
 			{layer.msg('酒店评分不能为空!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
+			});}
+			fig = false;
+			return;
 		}else if(!((/^[0-5]{1}.[0-5]{1}|[0-5]$/).test(form.hotelRatings.value))){
 			{layer.msg('酒店评分为0.1-5.0分!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
+			});}
+			fig = false;
+			return;
 		}
 		if(form.hotelAddress.value=="0"){
 			{layer.msg('酒店星级不能为空!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
+			});}
+			fig = false;
+			return;
 		}
 		if(form.hotelphone.value==""){
 			{layer.msg('联系电话不能为空!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
+			});}
+			fig = false;
+			return;
 		}else if(!((/^[1][3456789][0-9]{9}$/).test(form.hotelphone.value))){
 			{layer.msg('联系电话格式不正确!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
+			});}
+			fig = false;
+			return;
 		}
 		if(form.hotelPrice.value==""){
 			{layer.msg('请填写酒店价格!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
+			});}
+			fig = false;
+			return;
 		}else if(!(/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/).test(form.hotelPrice.value)){
 			{layer.msg('酒店价格格式不正确!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
-		}
+			});}
+			fig = false;
+			return;
+		} 
 		if($("input[name=fileUrl]").val() == ""){
 			{layer.msg('请选择酒店图片!', {
 				icon : 2,
 				time : 2000
-			});fig = false;}
+			});}
+			fig = false;
+			return;
 		}
-		if(fig){
-			$("#form-article-add").submit();
-			setTimeout(function(){
+			if(fig){
+				$("#form-article-add").submit();
 				article_save();
-				layer.close();
-			}, 800);
-		}
+				setTimeout(function(){
+					
+				}, 800);
+			}
 	});
 });
+//刷新父级弹出
 function article_save() {
 	window.parent.location.reload();
 }

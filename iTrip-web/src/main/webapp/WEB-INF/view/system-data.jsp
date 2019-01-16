@@ -42,8 +42,8 @@
 	<div class="page-container">
 		<div class="text-c">
 			<div style="color: red; margin-left: 26%;" id="massage"></div>
-			对应外键: <input type="text" class="input-text" id="typeCode" name=""
-				style="width: 80px"> 配置项名称: <input type="text"
+			字段英文标识: <input type="text" class="input-text" id="typeCode" name=""
+				style="width: 80px"> 业务内容: <input type="text"
 				class="input-text" id="info" name="" style="width: 80px">
 			业务代码编号: <input type="text" class="input-text" id="dictCode" name=""
 				style="width: 80px"> 字段说明: <input type="text"
@@ -68,9 +68,9 @@
 					<tr class="text-c">
 						<th width="25"><input type="checkbox" name="" value=""></th>
 						<th width="100">ID</th>
-						<th>对应外键</th>
+						<th>字段英文标识</th>
 						<th width="135">业务代码编号</th>
-						<th width="135">配置项名称</th>
+						<th width="135">业务内容</th>
 						<th width="120">字段说明</th>
 						<th width="120">操作</th>
 					</tr>

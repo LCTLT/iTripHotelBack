@@ -42,9 +42,9 @@ public class ProductController {
 	 */
 	@RequestMapping("product-category.do")
 	public String productCategory(HttpServletRequest request) {
-		String name = request.getParameter("name");
-		request.setAttribute("name", name);
-		List<Level> levels=productService.seleLevel(name);
+		String nameQuery = request.getParameter("nameQuery");
+		request.setAttribute("nameQuery", nameQuery);
+		List<Level> levels=productService.seleLevel(nameQuery);
 		request.setAttribute("level", levels);
 		return "product-category";
 	}

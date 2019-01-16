@@ -54,9 +54,9 @@
 		<form action="product-category.do" method="post" id="from1">
 			<div class="text-c">
                 <input type="text" class="input-text" style="width: 250px"
-					placeholder="输入分类名称" id="name" name="name" value="${name}">
+					placeholder="输入分类名称" id="nameQuery" name="nameQuery" value="${nameQuery}">
 				<input type="submit" class="btn btn-success radius" id="radius"
-					name="" value="搜分类"></input>
+					name="" value="搜分类"></input><span style="font-size:12px;color:red;">不支持模糊查询</span>
 			</div>
 		</form>
 	</div>
@@ -225,7 +225,8 @@
 								if (str == "编辑" && bool) {
 									var url = "?id=" + ids + "&name=" + name
 											+ "&parentId=" + parentId
-											+ "&type=" + type;
+											+ "&type=" + type
+											+ "&nameQuery=" +$("#nameQuery").val();
 									location = "product-updateLevel.do" + url;
 								}
 							});

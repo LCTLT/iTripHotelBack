@@ -69,7 +69,7 @@
 					<td>${pricture.name}</td>
 					<td class="td-status"><span class="label label-success radius">${pricture.info}</span></td>
 					<td class="td-manage">
-					<a style="text-decoration:none" class="ml-5" href="picture-add.do?id=${pricture.id}" title="编辑">
+					<a style="text-decoration:none" class="ml-5" href="picture-add.do?id=${pricture.id}" title="查看">
 					<i class="Hui-iconfont">&#xe6df;</i></a> 
 					<a style="text-decoration:none" class="ml-5" onClick="picture_del(this,${pricture.id})" href="javascript:;" title="删除">
 					<i class="Hui-iconfont">&#xe6e2;</i></a></td>

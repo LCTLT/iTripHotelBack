@@ -115,6 +115,9 @@ public class ProductServiceImpl implements ProductService {
 		//根据name查询出某一个id
 		if(name != null && !name.equals("")) {
 			level = productMapper.getQueryNameLevel(name);
+			if(level == null) {
+				return null;
+			}
 			fig = true;
 		}
 		List<Level> seleLevel = productMapper.seleLevel(level.getId());

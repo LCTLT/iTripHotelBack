@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
 <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
-<title>订单修改</title>
+<title>订单详情</title>
 <link href="lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -37,7 +37,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">预定房型：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<select id="" name="" class="select">
+				<select id="" name="" class="select" disabled>
 					<c:forEach var="house" items="${house}">
 						<option value="${house.houseId}" <c:if test="${house.houseId eq picture.houseId}">selected</c:if>>${house.houseType}</option>
 					</c:forEach>
@@ -47,25 +47,25 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预定房间数量：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="${picture.houseCount}" placeholder="" id="" name="">
+				<input type="text" class="input-text" value="${picture.houseCount}" placeholder="" id="" name="" readonly>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">入住日期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" value="${picture.checkInDates}" id="checkInDates" class="input-text Wdate">
+				<input type="text" value="${picture.checkInDates}" id="checkInDates" class="input-text Wdate" readonly>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">退房日期：</label>
 			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
-				<input type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" value="${picture.checkOutDates}" id="checkOutDates" class="input-text Wdate">
+				<input type="text" value="${picture.checkOutDates}" id="checkOutDates" class="input-text Wdate" readonly>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>订单状态：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<select id="" name="" class="select"> <!-- 字典表查询 -->
+				<select id="" name="" class="select" disabled> <!-- 字典表查询 -->
 					<c:forEach items="${dictionarydate}" var="dictionarydate">
 					<option value="${dictionarydate.dictCode}"<c:if test="${dictionarydate.dictCode eq picture.dictCode}">selected</c:if>>${dictionarydate.info}</option>
 				</c:forEach>
@@ -75,13 +75,13 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>支付金额：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="${picture.payAmount}" placeholder="" id="payAmount" name="">
+				<input type="text" class="input-text" value="${picture.payAmount}" placeholder="" id="payAmount" name="" readonly>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">出发地：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="${picture.place}" placeholder="" id="place" name="">
+				<input type="text" class="input-text" value="${picture.place}" placeholder="" id="place" name="" readonly>
 			</div>
 		</div>
 		<div class="row cl">
@@ -92,8 +92,7 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button id="all" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i>修改</button>
-				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+				<button id="" class="btn btn-primary radius" type="button" onClick="layer_close();"><i class="Hui-iconfont">&#xe632;</i>取消</button>
 			</div>
 		</div>
 	</form>
@@ -615,10 +614,7 @@ $(function(){
                     });
                 } else {
                     $wrap.css( 'filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+ (~~((file.rotation/90)%4 + 4)%4) +')');
-
                 }
-
-
             });
 
             $li.appendTo( $queue );

@@ -12,7 +12,7 @@
 	
 	<!-- 数据库字段 -->
 	<sql id="Base_Column_List">
-		id, name, phone,pwd,sex,birthday,email,address,status
+		id, name,idcard,phone,pwd,sex,birthday,email,address,status
 	</sql>
 	
 	<!-- 读取字典 -->

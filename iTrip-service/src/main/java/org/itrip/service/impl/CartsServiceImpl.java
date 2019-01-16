@@ -48,24 +48,25 @@ public class CartsServiceImpl implements CartsService{
 		//转换为数组
 		if(yearParam != null) {
 			Double[] array = new Double[] {
-					Double.valueOf(yearParam.getOne()),
-					Double.valueOf(yearParam.getTow()),
-					Double.valueOf(yearParam.getThree()),
-					Double.valueOf(yearParam.getFour()),
-					Double.valueOf(yearParam.getFive()),
-					Double.valueOf(yearParam.getSix()),
-					Double.valueOf(yearParam.getSeven()),
-					Double.valueOf(yearParam.getEight()),
-					Double.valueOf(yearParam.getNine()),
-					Double.valueOf(yearParam.getTen()),
-					Double.valueOf(yearParam.getEleven()),
-					Double.valueOf(yearParam.getTwelve())
+					Double.valueOf(yearParam.getOne()!=null?yearParam.getOne():"0"),
+					Double.valueOf(yearParam.getTow()!=null?yearParam.getOne():"0"),
+					Double.valueOf(yearParam.getThree()!=null?yearParam.getOne():"0"),
+					Double.valueOf(yearParam.getFour()!=null?yearParam.getOne():"0"),
+					Double.valueOf(yearParam.getFive()!=null?yearParam.getOne():"0"),
+					Double.valueOf(yearParam.getSix()!=null?yearParam.getOne():"0"),
+					Double.valueOf(yearParam.getSeven()!=null?yearParam.getOne():"0"),
+					Double.valueOf(yearParam.getEight()!=null?yearParam.getOne():"0"),
+					Double.valueOf(yearParam.getNine()!=null?yearParam.getOne():"0"),
+					Double.valueOf(yearParam.getTen()!=null?yearParam.getOne():"0"),
+					Double.valueOf(yearParam.getEleven()!=null?yearParam.getOne():"0"),
+					Double.valueOf(yearParam.getTwelve()!=null?yearParam.getOne():"0")
 			};
 			//换算成万
 			for (int i = 0; i < array.length; i++) {
-				array[i] = array[i]/yearParam.getNumPrice();
+				if(array[i] > 0) {
+					array[i] = array[i]/yearParam.getNumPrice();
+				}
 			}
-			
 			return array;
 		}
 		return null;
